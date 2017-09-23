@@ -19,7 +19,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Chuẩn Like | Check live token</title>
+        <title>Chuẩn Like | Thêm Cộng Tác Viên</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -37,7 +37,6 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- <link href="../assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" /> -->
         <!-- <link href="../assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" /> -->
         <!-- <link href="../assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" /> -->
-        <link rel="stylesheet" href="../assets/pages/css/masonry.css" type="text/css">
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -104,7 +103,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <a href="CHUANLIKE_account-profile.html">
                                             <i class="icon-user"></i> My Profile </a>
                                     </li>
-                                  
+                                   
                                     <li class="divider"> </li>
                                     
                                     <li>
@@ -164,13 +163,13 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <span class="title">Tăng trực tiếp</span>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a href="CHUANLIKE_checklivetoken.html" class="nav-link nav-toggle">
                                 <i class="icon-diamond"></i>
                                 <span class="title">Check Live Token</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a href="CHUANLIKE_themctv.html" class="nav-link nav-toggle">
                                 <i class="icon-diamond"></i>
                                 <span class="title">Thêm cộng tác viên (Chỉ dành cho admin)</span>
@@ -197,7 +196,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
                             <h1>Chuẩn like
-                                <small>Check live token</small>
+                                <small>Thêm cộng tác viên</small>
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -211,108 +210,167 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Check live token</span>
+                            <span class="active">Thêm cộng tác viên</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
-                    
-                    <div class="row">
-                        <!-- BEGIN VALIDATION STATES-->
-                        <div class="col-md-6">
-                            <div class="portlet light portlet-fit portlet-form bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-cog font-green"></i>
-                                        <span class="caption-subject font-green sbold uppercase">Cấu hình check token</span>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <!-- BEGIN FORM-->
-                                    <form action="#" class="form-horizontal">
-                                        <div class="form-body">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <textarea placeholder="List Token" class="form-control" name="token" id="token" rows="20" style="resize: none;"></textarea>
-                                                <textarea id="fblive" style="display: none;"></textarea>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn green col-md-12">Thực hiện check live token</button>
-                                        </div>
-                                    </form>
-                                    <!-- END FORM-->
-
-                                    <div class="alert alert-danger">
-                                        <h4>NOTE</h4>
-                                        <span>- Để token 1 dòng</span>
-                                        <br>
-                                        <span>- Token die sẽ tự động xóa khi check xong</span>
-                                        <br>
-                                        <span>- Copy Token live ở mục báo cáo</span>
-                                    </div>
-                                </div>
+                    <!-- BEGIN VALIDATION STATES-->
+                    <div class="portlet light portlet-fit portlet-form bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class=" icon-layers font-green"></i>
+                                <span class="caption-subject font-green sbold uppercase">Thêm cộng tác viên</span>
                             </div>
                         </div>
-                    <!-- END VALIDATION STATES-->
+                        <div class="portlet-body">
+                            <!-- BEGIN FORM-->
 
-                        <!-- BEGIN VALIDATION STATES-->
-                        <div class="col-md-6">
-                            <div class="portlet light portlet-fit portlet-form bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-bar-chart-o font-green"></i>
-                                        <span class="caption-subject font-green sbold uppercase">Báo cáo check token</span>
-                                    </div>
+                            <form action="#" class="form-horizontal" id="form_sample_1">
+                                <div class="form-body">
+                                    <div class="alert alert-danger display-hide">
+                                        <button class="close" data-close="alert"></button> Lỗi nhập dữ liệu. Vui lòng kiểm tra lại! </div>
+                                    <div class="alert alert-success display-hide">
+                                        <button class="close" data-close="alert"></button> Thao tác thành công! </div>
 
-                                    <div class="tools">
-                                        Tổng: <span>0</span>
-                                        Live: <span>0</span>
-                                        Die: <span>0</span>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <!-- BEGIN FORM-->
-                                    <form action="#" class="form-horizontal">
-                                        <div class="form-body">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Token<br>Live</span>
-                                                <textarea placeholder="List Token" class="form-control" name="live" id="live" rows="10" style="resize: none;" readonly="readonly" onclick="this.select();"></textarea>
-                                                <textarea id="fblive" style="display: none;"></textarea>
-                                            </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Tên tài khoản
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="" name="id">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập tên tài khoản</span>
                                         </div>
-
-                                        <form action="#" class="form-horizontal">
-                                        <div class="form-body">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Token<br>Die</span>
-                                                <textarea placeholder="List Token" class="form-control" name="live" id="live" rows="10" style="resize: none;" readonly="readonly" onclick="this.select();"></textarea>
-                                                <textarea id="fblive" style="display: none;"></textarea>
-                                            </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Mật khẩu
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="" name="name">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập mật khẩu</span>
                                         </div>
-
-
-
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-md-offset-5 col-md-7">
-                                                    <button type="submit" class="btn green">Thực hiện</button>
+                                    </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Email
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="email" class="form-control" placeholder="" name="name">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập Email</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Số điện thoại
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="" name="name">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập số điện thoại</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Địa chỉ
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="" name="name">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập địa chỉ</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Số lượng gói combo
+                                            <span class="required">*</span>
+                                        </label>
+                                        <!-- <div class="col-md-6">
+                                            <p>Gói 1: 299k gồm: 50 like + 3 comments + hệ thống thả tim</p>
+                                            <p>Gói 1: 299k gồm: 50 like + 3 comments + hệ thống thả tim</p>
+                                            <p>Gói 1: 299k gồm: 50 like + 3 comments + hệ thống thả tim</p>
+                                            <p>Gói 1: 299k gồm: 50 like + 3 comments + hệ thống thả tim</p>
+                                            <p>Gói 1: 299k gồm: 50 like + 3 comments + hệ thống thả tim</p>
+                                        </div> -->
+                                        <div class="col-md-9">
+                                            <div class="row margin-bottom-20">
+                                                <div class="col-md-9">
+                                                    <label for="packet1" class="margin-top-10">Gói 1: 299k gồm: 
+                                                    50 like + 3 comments + hệ thống thả tim</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" id="packet1" type="number" value="0">
+                                                    <div class="form-control-focus"> </div>
+                                                    <span class="help-block">Nhập số lượng gói 1</span>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-bottom-20">
+                                                <div class="col-md-9">
+                                                    <label for="packet2" class="margin-top-10">Gói 2: 699k gồm: 150 like + 10 comments + hệ thống thả tim</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" id="packet2" type="number" value="0">
+                                                    <div class="form-control-focus"> </div>
+                                                    <span class="help-block">Nhập số lượng gói 2</span>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-bottom-20">
+                                                <div class="col-md-9">
+                                                    <label for="packet3" class="margin-top-10">Gói 3: 999k gồm: 300 like + 20 comments + hệ thống thả tim</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" id="packet3" type="number" value="0">
+                                                    <div class="form-control-focus"> </div>
+                                                    <span class="help-block">Nhập số lượng gói 3</span>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-bottom-20">
+                                                <div class="col-md-9">
+                                                    <label for="packet4" class="margin-top-10">Gói 4: 1299k gồm: 600 like + 30 comments + hệ thống thả tim<</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" id="packet4" type="number" value="0">
+                                                    <div class="form-control-focus"> </div>
+                                                    <span class="help-block">Nhập số lượng gói 4</span>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-bottom-20">
+                                                <div class="col-md-9">
+                                                    <label for="packet5" class="margin-top-10">Gói 5: 1499k gồm: 1000 like + 50 comments + hệ thống thả tim</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" id="packet5" type="number" value="0">
+                                                    <div class="form-control-focus"> </div>
+                                                    <span class="help-block">Nhập số lượng gói 5</span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                    <!-- END FORM-->
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group form-md-line-input">
+                                        <label class="col-md-3 control-label">Số lượng tăng trực tiếp
+                                        </label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control" placeholder="" name="name">
+                                            <div class="form-control-focus"> </div>
+                                            <span class="help-block">Nhập số lượng tăng trực tiếp</span>
+                                        </div>
+                                    </div>
+
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="submit" class="btn green">Thực hiện</button>
+                                            <button type="reset" class="btn default">Tạo lại</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- END FORM-->
                         </div>
-                        <!-- END VALIDATION STATES-->
-
-                        
                     </div>
-                    
-
-
-                    
+                    <!-- END VALIDATION STATES-->
 
                     <!-- BEGIN Portlet PORTLET-->
                     <div class="portlet light">
@@ -345,6 +403,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <script src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
