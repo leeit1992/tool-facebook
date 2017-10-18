@@ -38,8 +38,14 @@
                 $(".avt-has-filter").text(dataResult.start);
                 var recent = dataResult.start / totalToken * 100;
                 $(".avt-total-token-check-bar").css('width', recent+'%' );
+
+                $(".avt-c-token-live").text(dataResult.tokenLive);
+                $(".avt-c-token-die").text(dataResult.tokenDie);
+
                 if( dataResult.start < totalToken ) {
                     self.ajajxCheckToken(dataResult.start, limit, totalToken);
+                }else{
+                   // $(".avt-filter-token-live").hide();
                 }
             });
         }

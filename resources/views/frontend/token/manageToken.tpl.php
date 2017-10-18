@@ -3,8 +3,8 @@
             <div class="uk-overflow-container">
                 <ul class="uk-tab uk-tab-grid">
                     <li class="uk-width-1-3 uk-active"><a href="<?php echo url('/user-tool/manage-token') ?>" class="uk-text-small">Toàn bộ token (<?php echo ($countAll) ?>)</a></li>
-                    <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=live') ?>" class="uk-text-small">Token Live (<?php echo ($countTokenLive) ?>)</a></li>
-                    <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=die') ?>" class="uk-text-small">Token Die (<?php echo ($countTokenDie) ?>)</a></li>
+                    <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=live') ?>" class="uk-text-small">Token Live (<span class="avt-c-token-live"><?php echo ($countTokenLive) ?></span>)</a></li>
+                    <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=die') ?>" class="uk-text-small">Token Die (<span class="avt-c-token-die"><?php echo ($countTokenDie) ?></span>)</a></li>
                 </ul>
 
                 <div class="avt-load-page">
@@ -16,6 +16,11 @@
                 </div>
                 <table class="uk-table">
                     <h3>Danh sách Token</h3>
+                    <thead>
+                        <tr>
+                            <td colspan="6"><button class="md-btn avt-action-filter">Lọc token live</button></td>
+                        </tr>
+                    </thead>
                     <thead>
                         <tr>
                             <td>

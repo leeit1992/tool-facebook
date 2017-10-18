@@ -85,40 +85,40 @@ class DataMenu
         $menu['action-tool'] = [
             'label'   => 'Tools',
             'icon'    => '<i class="material-icons md-36">mail</i>',
-            'conditionOpen' => ['Backend\MailboxController'],
+            'conditionOpen' => ['Frontend\ToolController'],
             'display' => '',
             'submenu' => [
                 [
                     'label' => 'Tăng like bài viết',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/up-like'),
+                    'conditionOpen' => ['upLikePost'],
                 ],
                 [
                     'label' => 'Tăng like fanpage',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/up-lie-page'),
+                    'conditionOpen' => ['upLikePage'],
                 ],
                 [
                     'label' => 'Tăng comments',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/add-comment'),
+                    'conditionOpen' => ['addComment'],
                 ],
                 [
                     'label' => 'Tăng share',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/up-share'),
+                    'conditionOpen' => ['upShare'],
                 ],
 
                 [
                     'label' => 'Tăng follow',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/up-follow'),
+                    'conditionOpen' => ['upFollow'],
                 ],
 
                 [
                     'label' => 'Auto like/ Thả tim',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/ser-tool/up-like-and-heart'),
+                    'conditionOpen' => ['upLineAndDropHeart'],
                 ]
             ]
         ];
@@ -132,7 +132,7 @@ class DataMenu
                 [
                     'label' => 'Quản lý TK facebook',
                     'link'  => url('/user-tool/facebook-acc'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'conditionOpen' => ['facebookManage'],
                 ],
                 [
                     'label' => 'Quản lý token',

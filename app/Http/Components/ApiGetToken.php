@@ -92,7 +92,15 @@ class ApiGetToken
     }
 
     public function checkToken($token){
-        $data = file_get_contents('https://graph.facebook.com/me?access_token='. $token);
+        $url = 'https://graph.facebook.com/me?access_token='. $token;
+
+        $curl_handle=curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL,$url);
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Your application name');
+        $data = curl_exec($curl_handle);
+        curl_close($curl_handle);
 
         return json_decode($data, true);
     }
