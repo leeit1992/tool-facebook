@@ -1,0 +1,83 @@
+#atl-popin-notified-booking{
+    .atl-intinerary{
+        .atl-intinerary--item{
+            .md-card-content{
+                background: #f5f5f5;
+            }
+            .md-card-toolbar{
+                background: #f5f5f5;
+            }
+        }
+        .md-card-content.atl-intinerary--item-content.close {
+            display: none;
+        }
+
+        &--minimize{
+            font-size: 17px;
+        }
+        
+
+        &--item-sv-content{
+            display: none;
+            margin-top: 10px;
+        }
+    }
+}
+.atl-modal-dialog{
+    width: 100% !important;
+    position: relative;
+    box-sizing: border-box;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 100%;
+    max-width: calc(100% - 20px);
+    background: #fff;
+    opacity: 1;
+}
+.atl-modal-head {
+    h1 {
+        color: white;
+        font-size: 21px;
+        padding: 0;
+        margin-left: 2%;
+        margin-bottom: 0;
+    }
+    .uk-modal-close.uk-close {
+        color: white;
+        display: inline-block;
+        position: absolute;
+        right: 5%;
+        top: 27%;
+    }
+    .uk-close:after{
+        color: white;
+    }
+    display: inline-block;
+    width: 100%;
+    background: #1976d2;
+    transform: scale(1.06);
+}
+.atl-modal-content {
+    .atl-card-toolbar{
+        background: rgba(195, 195, 195, 0.4) !important;
+    }
+    .atl-grid-divider{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-top: 1px solid #ddd;
+    }
+    padding-top: 30px;
+}
+.atl-price-border{
+        border: 1px solid red !important;
+    }
+.atl-del-border{
+    border-width: 0 0 0px;
+    font: 400 15px/18px Roboto,sans-serif;
+    background: 0 0;
+    width: 100%;
+    display: block;
+}
+.atl-backg-totalp{
+    background: rgba(195, 195, 195, 0.4) !important;
+}

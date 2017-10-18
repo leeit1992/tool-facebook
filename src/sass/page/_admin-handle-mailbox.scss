@@ -1,0 +1,51 @@
+.atl-page-handle-mailbox{
+	.atl-intinerary{
+		.atl-intinerary--item{
+			.md-card-content{
+				background: #f5f5f5;
+			}
+			.md-card-toolbar{
+				background: #f5f5f5;
+			}
+		}
+		.md-card-content.atl-intinerary--item-content.close {
+			display: none;
+		}
+
+		&--minimize{
+			font-size: 17px;
+		}
+		
+
+		&--item-sv-content{
+			display: none;
+			margin-top: 10px;
+		}
+		.atl-del-border{
+		    border-width: 0 0 0px;
+		    font: 400 15px/18px Roboto,sans-serif;
+		    background: 0 0;
+		    width: 100%;
+		    display: block;
+		}
+		.atl-backg-totalp{
+			background: rgba(195, 195, 195, 0.4) !important;
+		}
+	}
+	.atl-booking-icon{
+		.atl-booking-icon--save{
+			color: white;
+			position: absolute;
+    		right: 8%;
+		}
+		.atl-booking-icon--print{
+			color: white;
+			margin-right: 5px;
+			position: absolute;
+    		right: 12%;
+		}
+		float: right;
+		margin-top: 6px;
+	}
+
+}
