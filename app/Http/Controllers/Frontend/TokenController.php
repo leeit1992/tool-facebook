@@ -70,12 +70,15 @@ class TokenController extends baseController
                 $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb'));
 
                 if (isset($getToken['access_token'])) {
+                    $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']);
                     $this->mdToken->save([
                         'account' => $request->get('avt_user_name_fb'),
                         'password' => $request->get('avt_password_fb'),
                         'token' => $getToken['access_token'],
                         'fb_id' => $getToken['uid'],
                         'token_status' => 1,
+                        'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                        'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
                     ]);
                 } else {
                     $err_mgs = $getToken['error_data'];
@@ -113,6 +116,12 @@ class TokenController extends baseController
             if (!isset($infoToken['id'])) {
                 $this->mdToken->save([
                     'token_status' => 2,
+                ], $value['id']);
+            }else{
+                 $this->mdToken->save([
+                    'token_status' => 1,
+                    'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                    'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
                 ], $value['id']);
             }
         }
