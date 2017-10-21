@@ -19,7 +19,6 @@
                             <li class="uk-active"><a href="#">Basic</a></li>
                             <li><a href="#">Account</a></li>
                             <?php endif;  ?>
-                            <li><a href="#">Role</a></li>
                         </ul>
                         <ul id="user_edit_tabs_content" class="uk-switcher uk-margin">
                             <?php 
@@ -34,8 +33,6 @@
                                     );
                                     View('backend/user/layout/addUserAccount.tpl', ['user' => $user] );
                                 }
-
-                                View('backend/user/layout/addUserRole.tpl', ['user' => $user] );
                             ?>
                         </ul>
                     </div>
@@ -74,19 +71,6 @@
                             </select>
                         </div>
                         <hr class="md-hr">
-                        <div class="uk-form-row">
-                            <h3 class="heading_c uk-margin-bottom">User Office</h3>
-                            <select data-md-selectize name="atl_user_office">
-                                <option value="">Choose Office</option>
-                                <?php
-                                    foreach ($listOffice as $office) {
-                                        $selected = isset( $meta['user_office'] ) ? selected( $meta['user_office'], $office['id'] ) : '';
-                                    ?>
-                                    <option <?php echo $selected ?> value="<?php echo $office['id']; ?>"> <?php echo $office['office_name'] ?></option>
-                                    <?php }
-                                ?>
-                            </select>
-                        </div>
                         <?php 
                             if( !empty( $user ) ) {
                                 echo $self->renderInput( 
@@ -94,13 +78,6 @@
                                         'name' => 'atl_user_id', 
                                         'type' => 'hidden', 
                                         'value' => $user['id']
-                                    ) 
-                                );
-                                echo $self->renderInput( 
-                                    array( 
-                                        'name' => 'atl_user_avatar', 
-                                        'type' => 'hidden', 
-                                        'value' => $meta['user_avatar']
                                     ) 
                                 );
                                 View(
@@ -121,6 +98,6 @@
 </div>
 
 <?php 
-    registerScrips( array(
-        'page-admin-user' => assets('backend/js/page-admin-user.min.js'),
-    ) );
+registerScrips( array(
+    'page-admin-user' => assets('frontend/js/page-admin-user.min.js'),
+) );

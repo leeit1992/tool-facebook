@@ -7,7 +7,7 @@ class ToolController extends baseController{
     
     public function __construct(){
 		parent::__construct();
-		// $this->userAccess();
+		$this->userAccess();
 	}
 
     public function upLikePost(){

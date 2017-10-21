@@ -136,10 +136,7 @@ class UserModel extends AtlModel
 	public function getRoleUser( $roleKey = null ){
 		$roles = [
 			'admin' => 'Administrator',
-			'operator' => 'Operator',
-			'sale' => 'Sale',
-			'act' => 'Accountant',
-			'rect' => 'Revenue expenditure accounting',
+			'customer' => 'Customer'
 		];
 
 		if( null !== $roleKey ){

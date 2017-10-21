@@ -1,20 +1,17 @@
 <?php
-namespace app\Http\Components\Frontend;
+namespace app\Http\Components;
 
 use Atl\Routing\Controller as baseController;
 use App\Http\Components\Frontend\DataMenu;
-use App\Model\LogsModel;
-use App\Model\MailboxModel;
 use App\Model\UserModel;
-use App\Model\SettingsModel;
-use App\Http\Components\ApiSetting;
-use App\Http\Components\ApiMailbox;
 
 class Controller extends baseController
 {
     public function __construct()
     {
         parent::__construct();
+        $this->addButton = 'backend/template/addButton.tpl';
+        $this->manageAction = 'backend/template/manageAction.tpl';
     }
 
     /**
@@ -32,6 +29,7 @@ class Controller extends baseController
             'backend/layout/header.tpl',
             [
                 'menuAdmin' => DataMenu::getInstance($this->getRoute()),
+                'editor' => !empty($options['editor']) ? $options : false,
             ]
         );
 
@@ -66,7 +64,7 @@ class Controller extends baseController
      */
     public function getNumberPagination()
     {
-        $settings = $this->apiSetting->getSettings();
+        //$settings = $this->apiSetting->getSettings();
         if (!empty($settings['number_pagination'])) {
             return $settings['number_pagination'];
         }

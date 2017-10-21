@@ -5,8 +5,6 @@ use Atl\Foundation\Request;
 use Atl\Validation\Validation;
 use App\Http\Components\Controller as baseController;
 use App\Model\UserModel;
-use App\Model\LogsModel;
-use App\Model\OfficeModel;
 use Atl\Pagination\Pagination;
 
 class UserController extends baseController
@@ -17,8 +15,6 @@ class UserController extends baseController
 
 		// Model data system.
 		$this->mdUser = new UserModel;
-		$this->mdLogs = new LogsModel;
-		$this->mdOffice = new OfficeModel;
 	}
 
 	/**
@@ -28,7 +24,8 @@ class UserController extends baseController
 	 * @return string
 	 */
 	public function manageUsers( $page = null ){
-		$ofset                = $this->getNumberPagination();
+		//$ofset                = $this->getNumberPagination();
+		$ofset                = 10;
         $config['pageStart']  = $page;
         $config['ofset']      = $ofset;
         $config['totalRow']   = $this->mdUser->count();
@@ -77,8 +74,6 @@ class UserController extends baseController
 				redirect( url('/atl-admin/error-404?url=' . $_SERVER['REDIRECT_URL']) );
 			}
 		}
-		// get list All offices
-        $listOffice = $this->mdOffice->getListOffice();
 
 		// Load template
 		return $this->loadTemplate(
@@ -89,7 +84,6 @@ class UserController extends baseController
 				'actionName' => ( !$id ) ? 'Created User' : $infoUser[0]['user_name'],
 				'social' => $userSocial,
 				'mdUser' => $this->mdUser,
-				'listOffice' => $listOffice,
 				'notify' => Session()->getFlashBag()->get('userFormNotice'),
 				'self'   => $this,
                 'addButton' => $this->addButton,
@@ -107,7 +101,6 @@ class UserController extends baseController
 	public function validateUser(Request $request){
 		if( !empty( $request->get('formData') ) ) {
 			parse_str($request->get('formData'), $formData);
-
 			$notice    = array();
 			$validator = new Validation;
 			// Check validate user.
@@ -138,22 +131,7 @@ class UserController extends baseController
 						],
 						isset( $formData['atl_user_id'] ) ? $formData['atl_user_id'] : null
 					);
-					/**
-					 * Upload avatar
-					 */
-					$linkAvatar = isset( $formData['atl_user_avatar'] ) ? $formData['atl_user_avatar'] : null;
-					if( !empty( $request->files->get('avatar') ) ) {
-						$dir = FOLDER_UPLOAD . '/avatar_user';
-						// Check if dir.
-						if( !is_dir( $dir ) ) {
-							mkdir( $dir );
-						}
-						// Custom link avatar.
-						$linkAvatar =  '/uploads/avatar_user/avatar-user-' . $lastID . '.png';
-						
-						// Move to folder upload.
-						$request->files->get('avatar')->move( $dir, 'avatar-user-' . $lastID . '.png' );
-					}
+					
 					/**
 					 * Add meta data for user.
 					 */
@@ -164,8 +142,6 @@ class UserController extends baseController
 						'user_phone'    => $formData['atl_user_phone'],
 						'user_social'   => $formData['atl_user_social'],
 						'user_role'     => $formData['atl_user_role'],
-						'user_office'     => $formData['atl_user_office'],
-						'user_avatar'   => $linkAvatar,
 
 					];
 					// Loop add add | update meta data.
@@ -176,8 +152,6 @@ class UserController extends baseController
 					// Set notice success
 					$nameAction = isset( $formData['atl_user_id'] ) ? 'Update' : 'Create';
 					Session()->getFlashBag()->set( 'userFormNotice', $nameAction . ' account successfully' );
-
-					$this->mdLogs->add( $this->mdLogs->logTemplate( $nameAction . ' User <b> ' . $formData['atl_user_email'] . ' </b>', 'User' ) );
 
 					// Set notice success
 					$notice['id']      = $lastID;
@@ -248,27 +222,10 @@ class UserController extends baseController
 	public function ajaxDelete(Request $request){
 		$id = $request->get('id');
 		// Remove user
-		$output = $this->mdUser->delete( $id );
+		$this->mdUser->delete( $id );
 		// Remove metadata
 		$this->mdUser->deleteMetaData( $id );
-		if (is_array($id)) {
-			//Loop list user_id
-			foreach ($id as $value) {
-				// Custom link avatar
-				$linkAvatar =  FOLDER_UPLOAD . '/avatar_user/avatar-user-' . $value . '.png';
-				//Check file avatar and delete
-				if (file_exists($linkAvatar)) {
-					unlink($linkAvatar);
-				}
-			}
-		}else{
-			// Custom link avatar
-			$linkAvatar =  FOLDER_UPLOAD . '/avatar_user/avatar-user-' . $id . '.png';
-			//Check file avatar and delete
-			if (file_exists($linkAvatar)) {
-				unlink($linkAvatar);
-			}
-		}
+		
 		$message['status'] = true;
 		if( empty( $request->get('id') ) ){
 			$message['status'] = false;
