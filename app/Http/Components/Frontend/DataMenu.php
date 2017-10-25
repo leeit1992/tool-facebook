@@ -65,7 +65,7 @@ class DataMenu
 
         $menu['service'] = [
             'label'   => 'Dịch vụ',
-            'icon'    => '<i class="material-icons md-36">mail</i>',
+            'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
             'conditionOpen' => ['Backend\MailboxController'],
             'display' => '',
             'submenu' => [
@@ -84,7 +84,7 @@ class DataMenu
 
         $menu['action-tool'] = [
             'label'   => 'Tools',
-            'icon'    => '<i class="material-icons md-36">mail</i>',
+            'icon'    => '<i class="material-icons md-36">&#xE8DC;</i>',
             'conditionOpen' => ['Frontend\ToolController'],
             'display' => '',
             'submenu' => [
@@ -125,7 +125,7 @@ class DataMenu
 
         $menu['token'] = [
             'label'   => 'Taì khoản facebook',
-            'icon'    => '<i class="material-icons md-36">mail</i>',
+            'icon'    => '<i class="material-icons md-36">&#xE853;</i>',
             'conditionOpen' => ['Frontend\TokenController'],
             'display' => '',
             'submenu' => [
