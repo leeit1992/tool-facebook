@@ -75,5 +75,5 @@
 
 <?php 
     registerScrips( array(
-        'page-admin-user' => assets('backend/js/page-admin-user.min.js'),
+        'page-admin-user' => assets('frontend/js/page-admin-user.min.js'),
     ) );

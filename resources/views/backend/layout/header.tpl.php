@@ -62,7 +62,7 @@
                     <ul class="uk-navbar-nav user_actions">
                         <li><a href="#" id="main_search_btn" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE8B6;</i></a></li>
                        
-                        <?php View('backend/layout/messages.tpl', [ 'mdUser' => $mdUser, 'listMessage' => $listMessage, 'listBooking' => $listBooking, 'qtyNotifiedNew' => $qtyNotifiedNew, 'qtyBookingNew' => $qtyBookingNew, 'qtyMessageNew' => $qtyMessageNew, 'roleUser' => $roleUser] ) ?>
+                        <?php View('backend/layout/messages.tpl', [ ] ) ?>
 
                         <li data-uk-dropdown="{mode:'click'}">
                             <a href="#" class="user_action_image">
