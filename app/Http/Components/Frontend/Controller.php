@@ -3,18 +3,14 @@ namespace app\Http\Components\Frontend;
 
 use Atl\Routing\Controller as baseController;
 use App\Http\Components\Frontend\DataMenu;
-use App\Model\LogsModel;
-use App\Model\MailboxModel;
 use App\Model\UserModel;
-use App\Model\SettingsModel;
-use App\Http\Components\ApiSetting;
-use App\Http\Components\ApiMailbox;
 
 class Controller extends baseController
 {
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
+        $this->addButton    = 'frontend/template/addButton.tpl';
+        $this->manageAction = 'frontend/template/manageAction.tpl';
     }
 
     /**
@@ -27,7 +23,6 @@ class Controller extends baseController
      */
     public function loadTemplate($path, $parameters = array(), $options = array())
     {
-
         $output = View(
             'frontend/layout/header.tpl',
             [
@@ -196,18 +191,5 @@ class Controller extends baseController
     public function convertDateToYmd($dateString)
     {
         return date('Y-m-d', strtotime($dateString));
-    }
-
-    /**
-     * convertDateTojFY 
-     * Handle format date.
-     * 
-     * @param string $dateString Date string.
-     *
-     * @return string
-     */
-    public function convertDateTojFY($dateString)
-    {
-        return date('j F Y', strtotime($dateString));
     }
 }

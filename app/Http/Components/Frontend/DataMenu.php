@@ -20,15 +20,7 @@ class DataMenu
 
     protected static $route = null;
 
-    protected $menuService = [ 
-                                'car', 
-                                'guider', 
-                                'otherservice', 
-                                'partner',
-                                'accomodation',
-                                'driver',
-                                'cruise'
-                            ];
+    protected $menuService = [];
 
     private function __wakeup(){}
 
@@ -59,25 +51,30 @@ class DataMenu
                 'icon'  => '<i class="material-icons md-36">&#xE8F0;</i>',
                 'conditionOpen' => ['Backend\MainController'],
                 'display' => '',
-                'link'  => url('/atl-admin'),
+                'link'  => url('/user-tool'),
                 'display' => '',
             ];
 
         $menu['service'] = [
             'label'   => 'Dịch vụ',
             'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
-            'conditionOpen' => ['Backend\MailboxController'],
+            'conditionOpen' => ['Frontend\ServiceController'],
             'display' => '',
             'submenu' => [
                 [
                     'label' => 'Đăng ký dịch vụ',
-                    'link'  => url('/atl-admin/send-mailbox'),
+                    'link'  => url('/user-tool/send-mailbox'),
                     'conditionOpen' => ['sendMailbox'],
                 ],
                 [
                     'label' => 'Quản lý dịch vụ',
-                    'link'  => url('/atl-admin/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
+                    'link'  => url('/user-tool/manage-service'),
+                    'conditionOpen' => ['manageService'],
+                ],
+                [
+                    'label' => 'Thêm gói dịch vụ',
+                    'link'  => url('/user-tool/add-packet-service'),
+                    'conditionOpen' => ['handlePacketService'],
                 ]
             ]
         ];
@@ -142,21 +139,39 @@ class DataMenu
             ]
         ];
 
+        $menu['bank'] = [
+            'label'   => 'Tài chính',
+            'icon'    => '<i class="material-icons md-36">attach_money</i>',
+            'conditionOpen' => ['Frontend\PayController'],
+            'display' => '',
+            'submenu' => [
+                [
+                    'label' => 'Thông tin thanh toán',
+                    'link'  => url('/user-tool/manage-pay'),
+                    'conditionOpen' => ['managePay'],
+                ],
+                [
+                    'label' => 'Thêm TT thanh toán',
+                    'link'  => url('/user-tool/add-pay'),
+                    'conditionOpen' => ['handlePay'],
+                ]
+            ]
+        ];
 
         $menu['user'] = [
                 'label'   => 'Thành viên',
                 'icon'    => '<i class="material-icons md-36">&#xE87C;</i>',
-                'conditionOpen' => ['Backend\UserController'],
+                'conditionOpen' => ['Frontend\UserController'],
                 'display' => '',
                 'submenu' => [
                     [
                         'label' => 'Quản lý thành viên',
-                        'link'  => url('/atl-admin/manage-user'),
+                        'link'  => url('/user-tool/manage-user'),
                         'conditionOpen' => ['manageUsers'],
                     ],
                     [
                         'label' => 'Thêm thành viên',
-                        'link'  => url('/atl-admin/add-user'),
+                        'link'  => url('/user-tool/add-user'),
                         'conditionOpen' => ['handleUser'],
                     ]
                 ]
@@ -181,144 +196,7 @@ class DataMenu
             ]
         ];
 
-        $this->serviceTab($menu);
-
         return $menu;
-    }
-
-    public function serviceTab( &$menu ){
-            $menu['car'] = [
-                'label'   => 'Cars',
-                'icon'    => '<i class="material-icons md-36">directions_car</i>',
-                'conditionOpen' => ['Backend\CarController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Cars Management',
-                        'link'  => url('/atl-admin/manage-car'),
-                        'conditionOpen' => ['manageCars'],
-                    ],
-                    [
-                        'label' => 'Add Car',
-                        'link'  => url('/atl-admin/add-car'),
-                        'conditionOpen' => ['handleCar'],
-                    ]
-                ]
-            ];
-
-            $menu['guider'] = [
-                'label'   => 'Guiders',
-                'icon'    => '<i class="material-icons md-36">tag_faces</i>',
-                'conditionOpen' => ['Backend\GuiderController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Guiders Management',
-                        'link'  => url('/atl-admin/manage-guider'),
-                        'conditionOpen' => ['manageGuiders'],
-                    ],
-                    [
-                        'label' => 'Add Guider',
-                        'link'  => url('/atl-admin/add-guider'),
-                        'conditionOpen' => ['handleGuider'],
-                    ]
-                ]
-            ];
-
-            $menu['otherservice'] = [
-                'label'   => 'Other Service',
-                'icon'    => '<i class="material-icons md-36">note_add</i>',
-                'conditionOpen' => ['Backend\OtherServiceController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Other Service Management',
-                        'link'  => url('/atl-admin/manage-otherservice'),
-                        'conditionOpen' => ['manageOtherService'],
-                    ],
-                    [
-                        'label' => 'Add Other Service',
-                        'link'  => url('/atl-admin/add-otherservice'),
-                        'conditionOpen' => ['manageOtherService'],
-                    ]
-                ]
-            ];
-
-            $menu['partner'] = [
-                'label'   => 'Partners',
-                'icon'    => '<i class="material-icons md-36">people</i>',
-                'conditionOpen' => ['Backend\PartnerController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Partners Management',
-                        'link'  => url('/atl-admin/manage-partner'),
-                        'conditionOpen' => ['managePartners'],
-                    ],
-                    [
-                        'label' => 'Add Partner',
-                        'link'  => url('/atl-admin/add-partner'),
-                        'conditionOpen' => ['handlePartner'],
-                    ]
-                ]
-            ];
-
-            $menu['accomodation'] = [
-                'label'   => 'Accomodation',
-                'icon'    => '<i class="material-icons md-36">local_hotel</i>',
-                'conditionOpen' => ['Backend\AccomodationController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Accomodation Management',
-                        'link'  => url('/atl-admin/manage-accomodation'),
-                        'conditionOpen' => ['manageAccomodation'],
-                    ],
-                    [
-                        'label' => 'Add Accomodation',
-                        'link'  => url('/atl-admin/add-accomodation'),
-                        'conditionOpen' => ['handleAccomodation'],
-                    ]
-                ]
-            ];
-
-            $menu['cruise'] = [
-                'label'   => 'Cruise',
-                'icon'    => '<i class="material-icons md-36">directions_boat</i>',
-                'conditionOpen' => ['Backend\CruiseController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Cruise Management',
-                        'link'  => url('/atl-admin/manage-cruise'),
-                        'conditionOpen' => ['manageCruise'],
-                    ],
-                    [
-                        'label' => 'Add Cruise',
-                        'link'  => url('/atl-admin/add-cruise'),
-                        'conditionOpen' => ['handleCruise'],
-                    ]
-                ]
-            ];
-
-            $menu['driver'] = [
-                'label'   => 'Drivers',
-                'icon'    => '<i class="material-icons md-36">airline_seat_recline_normal</i>',
-                'conditionOpen' => ['Backend\DriverController'],
-                'display' => '',
-                'submenu' => [
-                    [
-                        'label' => 'Drivers Management',
-                        'link'  => url('/atl-admin/manage-driver'),
-                        'conditionOpen' => ['manageDrivers'],
-                    ],
-                    [
-                        'label' => 'Add Driver',
-                        'link'  => url('/atl-admin/add-driver'),
-                        'conditionOpen' => ['handleDriver'],
-                    ]
-                ]
-            ];
     }
 
     /**

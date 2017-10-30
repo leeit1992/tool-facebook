@@ -53,8 +53,6 @@
                     <span class="sSwitchIcon"></span>
                 </a>
 
-                 <?php View('frontend/layout/menuTop.tpl', [ 'menuAdmin' => $menuAdmin ]) ?>
-     
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav user_actions">
                         <li><a href="#" id="main_search_btn" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE8B6;</i></a></li>

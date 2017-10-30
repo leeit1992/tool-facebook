@@ -17,9 +17,9 @@ class Login implements RouterInterface{
 	} 
 
 	public function router(&$route){
-		$route->get('/atl-login','Backend\LoginController@login');
-		$route->post('/check-login','Backend\LoginController@checkLogin');
-		$route->get('/logout','Backend\LoginController@logout');
+		$route->get('/atl-login','Frontend\LoginController@login');
+		$route->post('/check-login','Frontend\LoginController@checkLogin');
+		$route->get('/logout','Frontend\LoginController@logout');
 	}
 
 }
