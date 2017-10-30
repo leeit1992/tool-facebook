@@ -1,4 +1,4 @@
-<div class="page-admin-accommodation">
+<div>
     <form action="<?php echo url('/user-tool/facebook-acc-add') ?>" class="uk-form-stacked" method="POST">
         
         <div class="uk-grid" data-uk-grid-margin>
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="uk-width-medium-1-1">
-                                <button class="md-btn">Save</button>
+                            <button class="md-btn">Save</button>
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
                             <th>Tài khoản</th>
                             <th>Mật khẩu</th>
                             <th>UID</th>
+                            <th>Giới tính</th>
                             <th>#</th>
                         </tr>
                     </thead>
@@ -82,10 +83,12 @@
                             <td><?php echo $value['account'] ?></td>
                             <td><?php echo $value['password'] ?></td>
                             <td><?php echo $value['fb_id'] ?></td>
+                             <td><?php echo ( 'male' == $value['gender'] ) ? 'Nam' : 'Nữ'  ?></td>
                             <td>
                                 <a href=""><i class="uk-icon-edit"></i></a> | 
                                 <a href=""><i class="uk-icon-remove"></i></a>
                             </td>
+
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -94,3 +97,4 @@
         </div>
     </div>
 </div>
+

@@ -23,6 +23,14 @@ class Tool implements RouterInterface{
 		$route->get('/user-tool/up-share','Frontend\ToolController@upShare');
 		$route->get('/user-tool/up-follow','Frontend\ToolController@upFollow');
 		$route->get('/user-tool/up-like-and-heart','Frontend\ToolController@upLineAndDropHeart');
+
+
+
+
+		$route->post('/user-tool/ajax-tool-action','Frontend\ToolController@handleAction');
+
+
+
 		
 	}
 

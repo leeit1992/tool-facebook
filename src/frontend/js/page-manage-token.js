@@ -20,7 +20,7 @@
         filterToken: function(){
             $(".avt-filter-token-live").show();
             var startFilter = $(".avt-has-filter").attr('data-start');
-            var totalToken = $(".avt-total-token-check").attr('data-total')
+            var totalToken = $(".avt-total-token-check").attr('data-total');
 
             this.ajajxCheckToken(startFilter, 1, totalToken);
         },
@@ -38,9 +38,6 @@
                 $(".avt-has-filter").text(dataResult.start);
                 var recent = dataResult.start / totalToken * 100;
                 $(".avt-total-token-check-bar").css('width', recent+'%' );
-
-                $(".avt-c-token-live").text(dataResult.tokenLive);
-                $(".avt-c-token-die").text(dataResult.tokenDie);
 
                 if( dataResult.start < totalToken ) {
                     self.ajajxCheckToken(dataResult.start, limit, totalToken);

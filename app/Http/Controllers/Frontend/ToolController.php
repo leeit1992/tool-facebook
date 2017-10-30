@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\Frontend;
-
+use Atl\Foundation\Request;
 use App\Http\Components\Frontend\Controller as baseController;
 
 class ToolController extends baseController{
@@ -32,5 +32,11 @@ class ToolController extends baseController{
 
     public function upLineAndDropHeart(){
     	return $this->loadTemplate('frontend/main.tpl');
+    }
+
+    public function handleAction(Request $request){
+        echo json_encode([
+            'start' => $request->get('start') + $request->get('limit'),
+        ]);
     }
 }
