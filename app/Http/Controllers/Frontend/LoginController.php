@@ -43,12 +43,12 @@ class LoginController extends baseController
             $user = new UserModel();
 
             $checkUser = $user->checkLogin($request->get('atl_login_acc'), md5($request->get('atl_login_pass')));
-
             if (!empty($checkUser)) {
                 Session()->set('atl_user_id', $checkUser[0]['id']);
                 Session()->set('atl_user_name', $checkUser[0]['user_name']);
                 Session()->set('atl_user_email', $checkUser[0]['user_email']);
                 Session()->set('atl_user_meta',  $user->getAllMetaData($checkUser[0]['id']));
+                Session()->set('atl_user_role',  $user->getMetaData( $checkUser[0]['id'], 'user_role' ));
 
                 redirect(url('/user-tool'));
             } else {
@@ -57,7 +57,7 @@ class LoginController extends baseController
         } else {
             $error[] = 'error';
         }
-
+        
         if (!empty($error)) {
             Session()->getFlashBag()->set('loginError', 'Account or Password not match !');
             redirect(url('/atl-login'));

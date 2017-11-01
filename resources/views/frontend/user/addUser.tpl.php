@@ -97,13 +97,6 @@
                                         'value' => $user['id']
                                     ) 
                                 );
-                                View(
-                                    $addButton,
-                                    [
-                                        'link' => url('/user-tool/add-user'),
-                                        'title' => 'user'
-                                    ]
-                                );
                             }
                         ?>
                     </div>

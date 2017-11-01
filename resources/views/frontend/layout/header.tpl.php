@@ -11,18 +11,16 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no"/>
 
-    <title>Atl Travel Manage - </title>
+    <title>Tool Facebook - </title>
     
     <?php  
-		enqueueStyle(
-			array(
-					'uikit.almost'  => assets('backend/bower_components/uikit/css/uikit.almost-flat.min.css'),
-                    'flags'  => assets('backend/assets/icons/flags/flags.min.css'),
-					'flags'  => assets('backend/bower_components/jquery-ui/jquery-ui.min.css'),
-                    'main'  => assets('backend/assets/css/main.min.css'),
-					'main-admin'  => assets('frontend/css/main.css'),
-				)
-		);
+		enqueueStyle( [
+			'uikit.almost'  => assets('backend/bower_components/uikit/css/uikit.almost-flat.min.css'),
+            'flags'  => assets('backend/assets/icons/flags/flags.min.css'),
+			'flags'  => assets('backend/bower_components/jquery-ui/jquery-ui.min.css'),
+            'main'  => assets('backend/assets/css/main.min.css'),
+			'main-admin'  => assets('frontend/css/main.css'),
+		  ] );
 	?>
 
     <script type="text/javascript">
@@ -65,7 +63,7 @@
                             </a>
                             <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
                                 <ul class="uk-nav js-uk-prevent">
-                                    <li><a href="<?php echo url('/atl-admin/edit-user/' . $userId) ?>">My profile</a></li>
+                                    <li><a href="<?php echo url('/user-tool/edit-user/' . Session()->get('atl_user_id') ) ?>">My profile</a></li>
                                     <li><a href="<?php echo url('/logout') ?>">Logout</a></li>
                                 </ul>
                             </div>

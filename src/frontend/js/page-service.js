@@ -14,6 +14,8 @@
 
         events: {
             'submit #avt-form-service' : 'handleForm',
+            'click .atl-manage-packet-service-delete-js' : 'removePacketService',
+            'click .atl-action-apply-js' : 'actionManage',
         },
 
         errorFormTpl: _.template('<div class="uk-notify-message <%= classes %>">\
@@ -37,6 +39,8 @@
                     },3000 )
                 }
             });
+            // Auto check all
+            AVTLIB.checkAll(this.el);
         },
 
         /**
@@ -100,12 +104,66 @@
                         },3000 );
                     } 
                     else {
-                        window.location = location.href = AVTDATA.SITE_URL + '/add-packet-service';
+                        window.location = location.href = AVTDATA.SITE_URL + '/edit-packet-service/' + dataResult.id;
                     }
                 }
             });
         },
+        /**
+         * Handle remove packet service
+         * 
+         * @return void
+         */
+        removePacketService: function(e){
+            var dataID = $( e.currentTarget ).attr('data-id');
+            UIkit.modal.confirm('Are you sure?', function(){ 
+                var data = { id: dataID };
+                $.post(AVTDATA.SITE_URL + '/delete-packet-service', data, function(result) {
 
+                    $( e.currentTarget ).closest('tr').remove();
+
+                    UIkit.modal.alert('Delete Success!');
+                });
+            })
+            return false;
+        },
+
+        /**
+         * Handle remove multi packet service
+         * 
+         * @return void
+         */
+        actionManage: function( e ){
+            // Get action.
+            var action = $( e.currentTarget ).closest('.atl-action-manage').find("select[name=atl-action-manage]").val();
+            var argsID = new Array;
+
+            if( 'delete' == action ) {
+                altair_helpers.content_preloader_show();
+                // Get list id remove checked.
+                $(".atl-checkbox-child-js", this.el).each(function(){
+                    if(this.checked){
+                        argsID.push($(this).val());
+                    }
+                })
+                // Send to server handle.
+                var data = { id: argsID };
+                $.post(AVTDATA.SITE_URL + '/delete-packet-service', data, function(result) {
+                    var dataResult = JSON.parse( result );
+                    $.each(argsID,function(i, el){
+                        $(".atl-packet-service-item-" + el).remove();
+                    })
+                    altair_helpers.content_preloader_hide();
+                    if( dataResult.status ){
+                        UIkit.modal.alert('Delete Success!');
+                    }else{
+                        UIkit.modal.alert('Delete False!');
+                    }
+                });
+            }else{
+                UIkit.modal.alert('Please choose Action!');
+            }
+        },
     });
     new ATL_SERVICE;
     

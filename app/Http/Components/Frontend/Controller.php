@@ -56,6 +56,18 @@ class Controller extends baseController
             redirect(url('/atl-login'));
         }
     }
+
+    /**
+     * Check curent access. admin or not admin.
+     */
+    public function checkAdmin()
+    {
+        if ( 'admin' !== Session()->get('atl_user_role') ) {
+            redirect(url('/user-tool/error-404?url='.$route));
+        }
+    }
+
+
     /**
      * Get number pagination.
      */
@@ -177,7 +189,7 @@ class Controller extends baseController
      */
     public function redirect404($route)
     {
-        redirect(url('/atl-admin/error-404?url='.$route));
+        redirect(url('/user-tool/error-404?url='.$route));
     }
 
     /**

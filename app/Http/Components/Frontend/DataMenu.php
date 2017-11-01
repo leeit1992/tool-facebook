@@ -54,30 +54,37 @@ class DataMenu
                 'link'  => url('/user-tool'),
                 'display' => '',
             ];
-
+        $submenu = [];
+        $submenu = [ [
+                        'label' => 'Đăng ký dịch vụ',
+                        'link'  => url('/user-tool/send-mailbox'),
+                        'conditionOpen' => ['sendMailbox'],
+                    ],
+                    [
+                        'label' => 'Quản lý dịch vụ',
+                        'link'  => url('/user-tool/manage-service'),
+                        'conditionOpen' => ['manageService'],
+                    ] ];
+        if ( 'admin' === Session()->get('atl_user_role') ) {
+            array_push( $submenu, 
+                    [
+                        'label' => 'Thêm gói dịch vụ',
+                        'link'  => url('/user-tool/add-packet-service'),
+                        'conditionOpen' => ['handlePacketService'],
+                    ],
+                    [
+                        'label' => 'Quản lý gói dịch vụ',
+                        'link'  => url('/user-tool/manage-packet-service'),
+                        'conditionOpen' => ['managePacketService'],
+                    ] );
+        }
         $menu['service'] = [
-            'label'   => 'Dịch vụ',
-            'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
-            'conditionOpen' => ['Frontend\ServiceController'],
-            'display' => '',
-            'submenu' => [
-                [
-                    'label' => 'Đăng ký dịch vụ',
-                    'link'  => url('/user-tool/send-mailbox'),
-                    'conditionOpen' => ['sendMailbox'],
-                ],
-                [
-                    'label' => 'Quản lý dịch vụ',
-                    'link'  => url('/user-tool/manage-service'),
-                    'conditionOpen' => ['manageService'],
-                ],
-                [
-                    'label' => 'Thêm gói dịch vụ',
-                    'link'  => url('/user-tool/add-packet-service'),
-                    'conditionOpen' => ['handlePacketService'],
-                ]
-            ]
-        ];
+                'label'   => 'Dịch vụ',
+                'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
+                'conditionOpen' => ['Frontend\ServiceController'],
+                'display' => '',
+                'submenu' => $submenu
+            ];
 
         $menu['action-tool'] = [
             'label'   => 'Tools',
@@ -157,8 +164,8 @@ class DataMenu
                 ]
             ]
         ];
-
-        $menu['user'] = [
+        if ( 'admin' === Session()->get('atl_user_role') ) {
+            $menu['user'] = [
                 'label'   => 'Thành viên',
                 'icon'    => '<i class="material-icons md-36">&#xE87C;</i>',
                 'conditionOpen' => ['Frontend\UserController'],
@@ -175,7 +182,9 @@ class DataMenu
                         'conditionOpen' => ['handleUser'],
                     ]
                 ]
-        ];
+            ];
+        }
+        
 
         $menu['config'] = [
             'label'   => 'Cài đặt',

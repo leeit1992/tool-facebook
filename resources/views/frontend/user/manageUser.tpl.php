@@ -66,7 +66,7 @@
                 $addButton,
                 [
                     'link' => url('/user-tool/add-user'),
-                    'title' => 'partner'
+                    'title' => 'user'
                 ]
             );
         ?>

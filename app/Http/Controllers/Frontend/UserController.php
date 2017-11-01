@@ -13,7 +13,7 @@ class UserController extends baseController
 	public function __construct(){
 		parent::__construct();
 		$this->userAccess();
-
+		
 		// Model data system.
 		$this->mdUser = new UserModel;
 		$this->helpPrice  = ApiHandlePrice::getInstance();
@@ -26,7 +26,7 @@ class UserController extends baseController
 	 * @return string
 	 */
 	public function manageUsers( $page = null ){
-		//$ofset                = $this->getNumberPagination();
+		$this->checkAdmin();
 		$ofset                = 10;
         $config['pageStart']  = $page;
         $config['ofset']      = $ofset;
@@ -62,6 +62,9 @@ class UserController extends baseController
 	 * @return string
 	 */
 	public function handleUser( $id = null ) {
+		if ( !$id ) {
+			$this->checkAdmin();
+		}
 		$infoUser   = [];
 		$metaData   = [];
 		$userSocial = [];
@@ -173,48 +176,6 @@ class UserController extends baseController
 			}
 			echo json_encode($notice);
 		}	
-	}
-
-	/**
-	 * Handle filter user
-	 * 
-	 * @param  Request $request POST | GET
-	 * @return json
-	 */
-	public function ajaxManageUser(Request $request){
-		$output = '';
-		/**
-		 * Check type get list user manage.
-		 */
-		switch ( $request->get('getBy') ) {
-			case 'role':
-				ob_start();
-				$output .= View(
-					'frontend/user/manageUserJs.tpl',
-					[
-						'users'  => $this->mdUser->getAllUserByMeta( 'user_role', $request->get('roleStatus') ),
-						'mdUser' => $this->mdUser,
-					]
-				);
-				$output .= ob_get_clean();
-				break;
-			case 'search':
-				ob_start();
-				$output .= View(
-					'frontend/user/manageUserJs.tpl',
-					[
-						'users'  => $this->mdUser->searchBy( $request->get('keyup') ),
-						'mdUser' => $this->mdUser,
-					]
-				);
-				$output .= ob_get_clean();
-				break;
-		}
-		echo json_encode( 
-			[
-				'output' => $output
-			]
-		);
 	}
 
 	/**

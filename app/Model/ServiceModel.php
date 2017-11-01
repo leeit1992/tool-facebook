@@ -70,4 +70,14 @@ class ServiceModel extends Model
             ]
         );
     }
+
+    public function delete( $args ){
+        return $this->db->delete(
+            $this->table,
+            [
+            "AND" => [
+                "id" => $args,
+            ]
+        ]);
+    }
 }
