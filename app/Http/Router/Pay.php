@@ -22,6 +22,8 @@ class Pay implements RouterInterface
 		$route->get('/user-tool/manage-pay/page/{page}','Frontend\PayController@managePay');
 		$route->get('/user-tool/ajax-manage-pay','Frontend\PayController@ajaxManagePay');
 
+		$route->get('/user-tool/info-pay','Frontend\PayController@infoPay');
+
 		$route->post('/user-tool/validate-pay','Frontend\PayController@validatePay' );
 		$route->post('/user-tool/delete-pay','Frontend\PayController@ajaxDelete' );
 	}

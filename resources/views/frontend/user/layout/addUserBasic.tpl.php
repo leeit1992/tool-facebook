@@ -1,18 +1,18 @@
 <li>
     <div class="uk-margin-top">
         <h3 class="full_width_in_card heading_c">
-            General info
+            Thông tin chung
         </h3>
         <div class="uk-grid" data-uk-grid-margin>
             <div class="uk-width-medium-1-2">
-                <label>User name</label>
+                <label>Họ và tên</label>
                 <input class="md-input" type="text" name="atl_user_name" value="<?php echo isset( $user['user_name'] ) ? $user['user_name'] : '' ?>" />
             </div>
             <div class="uk-width-medium-1-2">
                 <div class="uk-input-group">
                     <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                     <div class="md-input-wrapper <?php echo isset( $meta['user_birthday'] ) ? 'md-input-filled' : '' ?>">
-                        <label>Birthday</label>
+                        <label>Ngày sinh</label>
                         <input class="md-input" type="text" name="atl_user_birthday" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?php echo isset( $meta['user_birthday'] ) ? $meta['user_birthday'] : '' ?>">
                         <span class="md-input-bar"></span>
                     </div>
@@ -21,12 +21,12 @@
         </div>
         <div class="uk-grid">
             <div class="uk-width-1-1">
-                <label>More information</label>
+                <label>Giới thiệu</label>
                 <textarea class="md-input" name="atl_user_moreinfo" cols="30" rows="4"><?php echo isset( $meta['user_moreinfo'] ) ? $meta['user_moreinfo'] : '' ?></textarea>
             </div>
         </div>
         <h3 class="full_width_in_card heading_c">
-            Contact info
+            Thông tin liên lạc
         </h3>
         <div class="uk-grid">
             <div class="uk-width-1-1">
@@ -36,7 +36,7 @@
                             <span class="uk-input-group-addon">
                                 <i class="md-list-addon-icon material-icons material-icons">home</i>
                             </span>
-                            <label>Address</label>
+                            <label>Địa chỉ</label>
                             <input type="text" class="md-input" name="atl_user_address" value="<?php echo isset( $meta['user_address'] ) ? $meta['user_address'] : '' ?>" />
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <span class="uk-input-group-addon">
                                 <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                             </span>
-                            <label>Phone Number</label>
+                            <label>Số điện thoại</label>
                             <input type="text" class="md-input" name="atl_user_phone" value="<?php echo isset( $meta['user_phone'] ) ? $meta['user_phone'] : '' ?>" />
                         </div>
                     </div>
@@ -56,24 +56,6 @@
                             </span>
                             <label>Facebook</label>
                             <input type="text" class="md-input" name="atl_user_social[fb]" value="<?php echo isset( $social['fb'] ) ? $social['fb'] : '' ?>" />
-                        </div>
-                    </div>
-                    <div>
-                        <div class="uk-input-group">
-                            <span class="uk-input-group-addon">
-                                <i class="md-list-addon-icon uk-icon-twitter"></i>
-                            </span>
-                            <label>Twitter</label>
-                            <input type="text" class="md-input" name="atl_user_social[twitter]" value="<?php echo isset( $social['twitter'] ) ? $social['twitter'] : '' ?>" />
-                        </div>
-                    </div>
-                    <div>
-                        <div class="uk-input-group">
-                            <span class="uk-input-group-addon">
-                                <i class="md-list-addon-icon uk-icon-linkedin"></i>
-                            </span>
-                            <label>Linkdin</label>
-                            <input type="text" class="md-input" name="atl_user_social[linkedin]"  value="<?php echo isset( $social['linkedin'] ) ? $social['linkedin'] : '' ?>" />
                         </div>
                     </div>
                     <div>

@@ -24,18 +24,11 @@ class PayController extends baseController
      * @return string
      */
     public function managePay( $page = null ) {
-        $ofset                = 10;
-        $config['pageStart']  = $page;
-        $config['ofset']      = $ofset;
-        $config['totalRow']   = $this->mdPay->getCount();
-        $config['baseUrl']    = url('/user-tool/manage-pay/page/');
-        $config['classes']    = 'uk-pagination uk-margin-medium-top';
-        $config['nextLink']   = '<i class="uk-icon-angle-double-right"></i>';
-        $config['prevLink']   = '<i class="uk-icon-angle-double-left"></i>';
-        $config['tagOpenPageCurrent']   = '<li class="uk-active"><span>';
-        $config['tagClosePageCurrent']  = '<span></li>';
-        $config['tagOpen']    = '';
-        $config['tagClose']   = '';
+        $this->checkAdmin();
+        $ofset      = 10;
+        $totalRow   = $this->mdPay->getCount();
+        $baseUrl    = url('/user-tool/manage-pay/page/');
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
 
         $pagination           = new Pagination($config);
 
@@ -59,7 +52,8 @@ class PayController extends baseController
      * @return string
      */
     public function handlePay( $id = null ) {
-        $infoUser   = [];
+        $this->checkAdmin();
+        $infoPay   = [];
         if( $id ) {
             $infoPay   = $this->mdPay->getBy( 'id', $id );
             if( empty( $infoPay ) ) {
@@ -72,7 +66,7 @@ class PayController extends baseController
             'frontend/pay/add-pay.tpl',
             [
                 'pay'   => !empty( $infoPay[0] ) ? $infoPay[0] : [],
-                'actionName' => ( !$id ) ? 'Created Pay' : 'Info '. $infoPay[0]['bank_user_name'],
+                'actionName' => ( !$id ) ? 'Tạo ' : 'Thay đổi ',
                 'mdPay' => $this->mdPay,
                 'notify' => Session()->getFlashBag()->get('payFormNotice'),
                 'self'   => $this,
@@ -160,5 +154,15 @@ class PayController extends baseController
         }
 
         echo json_encode( $message );
+    }
+
+    public function infoPay() {
+        // Load template
+        return $this->loadTemplate(
+            'frontend/pay/info-pay.tpl',
+            [
+                'listPay' => $this->mdPay->getAll()
+            ]
+        );
     }
 }

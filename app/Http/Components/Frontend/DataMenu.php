@@ -54,19 +54,11 @@ class DataMenu
                 'link'  => url('/user-tool'),
                 'display' => '',
             ];
-        $submenu = [];
-        $submenu = [ [
-                        'label' => 'Đăng ký dịch vụ',
-                        'link'  => url('/user-tool/send-mailbox'),
-                        'conditionOpen' => ['sendMailbox'],
-                    ],
-                    [
-                        'label' => 'Quản lý dịch vụ',
-                        'link'  => url('/user-tool/manage-service'),
-                        'conditionOpen' => ['manageService'],
-                    ] ];
+        $submenuSer = [];
+        $conditionOpen = [];
         if ( 'admin' === Session()->get('atl_user_role') ) {
-            array_push( $submenu, 
+            $conditionOpen = ['Frontend\ServiceController'];
+            array_push( $submenuSer, 
                     [
                         'label' => 'Thêm gói dịch vụ',
                         'link'  => url('/user-tool/add-packet-service'),
@@ -76,14 +68,49 @@ class DataMenu
                         'label' => 'Quản lý gói dịch vụ',
                         'link'  => url('/user-tool/manage-packet-service'),
                         'conditionOpen' => ['managePacketService'],
-                    ] );
+                    ],
+                    [
+                        'label' => 'Thêm gói tăng like',
+                        'link'  => url('/user-tool/add-packet-like'),
+                        'conditionOpen' => ['handlePacketLike'],
+                    ],
+                    [
+                        'label' => 'Quản lý gói tăng like',
+                        'link'  => url('/user-tool/manage-packet-like'),
+                        'conditionOpen' => ['managePacketLike'],
+                    ],
+                    [
+                        'label' => 'Thêm gói tăng comment',
+                        'link'  => url('/user-tool/add-packet-comment'),
+                        'conditionOpen' => ['handlePacketComment'],
+                    ],
+                    [
+                        'label' => 'Quản lý tăng comment',
+                        'link'  => url('/user-tool/manage-packet-comment'),
+                        'conditionOpen' => ['managePacketComment'],
+                    ]
+                );
+        } else {
+            $conditionOpen = ['Frontend\BuyController'];
+            array_push( $submenuSer, 
+                    [
+                        'label' => 'Mua gói like',
+                        'link'  => url('/user-tool/buy-packet-like'),
+                        'conditionOpen' => ['handleBuyLike'],
+                    ],
+                    [
+                        'label' => 'Mua gói comment',
+                        'link'  => url('/user-tool/buy-packet-comment'),
+                        'conditionOpen' => ['handleBuyComment'],
+                    ]
+                );
         }
         $menu['service'] = [
                 'label'   => 'Dịch vụ',
                 'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
-                'conditionOpen' => ['Frontend\ServiceController'],
+                'conditionOpen' => $conditionOpen,
                 'display' => '',
-                'submenu' => $submenu
+                'submenu' => $submenuSer
             ];
 
         $menu['action-tool'] = [
@@ -145,15 +172,11 @@ class DataMenu
                 ]
             ]
         ];
-
-        $menu['bank'] = [
-            'label'   => 'Tài chính',
-            'icon'    => '<i class="material-icons md-36">attach_money</i>',
-            'conditionOpen' => ['Frontend\PayController'],
-            'display' => '',
-            'submenu' => [
+        $submenuBank = [];
+        if ( 'admin' === Session()->get('atl_user_role') ) {
+            array_push( $submenuBank, 
                 [
-                    'label' => 'Thông tin thanh toán',
+                    'label' => 'Quản lý TT thanh toán',
                     'link'  => url('/user-tool/manage-pay'),
                     'conditionOpen' => ['managePay'],
                 ],
@@ -161,8 +184,23 @@ class DataMenu
                     'label' => 'Thêm TT thanh toán',
                     'link'  => url('/user-tool/add-pay'),
                     'conditionOpen' => ['handlePay'],
+                ]  
+            );
+        } else {
+            array_push( $submenuBank, 
+                [
+                    'label' => 'Thông tin thanh toán',
+                    'link'  => url('/user-tool/info-pay'),
+                    'conditionOpen' => ['infoPay'],
                 ]
-            ]
+            );
+        }
+        $menu['bank'] = [
+            'label'   => 'Tài chính',
+            'icon'    => '<i class="material-icons md-36">attach_money</i>',
+            'conditionOpen' => ['Frontend\PayController'],
+            'display' => '',
+            'submenu' => $submenuBank
         ];
         if ( 'admin' === Session()->get('atl_user_role') ) {
             $menu['user'] = [

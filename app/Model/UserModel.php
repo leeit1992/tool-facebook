@@ -208,8 +208,10 @@ class UserModel extends AtlModel
 			$this->table,
 			'*',
 			[
-				"user_email[~]" => $key,
-				"user_name[~]"  => $key,
+				"OR" => [
+                        "user_email[~]" => $key,
+                        "user_name[~]" => $key
+                    ]
 			]
 		);
 		$argsUsers = [];

@@ -204,4 +204,25 @@ class Controller extends baseController
     {
         return date('Y-m-d', strtotime($dateString));
     }
+
+    /**
+     * Setting config pagination
+     * 
+     * @return void
+     */
+    public function configPagination( $page='', $ofset='', $totalRow='', $baseUrl='' ) {
+        $config['pageStart']  = $page;
+        $config['ofset']      = $ofset;
+        $config['totalRow']   = $totalRow;
+        $config['baseUrl']    = $baseUrl;
+        $config['classes']    = 'uk-pagination uk-margin-medium-top';
+        $config['nextLink']   = '<i class="uk-icon-angle-double-right"></i>';
+        $config['prevLink']   = '<i class="uk-icon-angle-double-left"></i>';
+        $config['tagOpen']    = '';
+        $config['tagClose']   = '';
+        $config['tagOpenPageCurrent']  = '<li class="uk-active"><span>';
+        $config['tagClosePageCurrent'] = '<span></li>';
+        
+        return $config;
+    }
 }

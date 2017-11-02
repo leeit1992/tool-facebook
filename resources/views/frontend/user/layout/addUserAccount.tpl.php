@@ -7,17 +7,17 @@
             </div>
             <div class="uk-width-medium-1-2">
                 <div class="md-input-wrapper <?php echo !empty( $user ) ? 'md-input-filled' : '' ?>">
-                    <label for="user_edit_position_control">Password</label>
+                    <label for="user_edit_position_control">Mật khẩu</label>
                     <input class="md-input atl-required-js" type="password" name="atl_user_pass" value="<?php echo isset( $user['user_password'] ) ? $user['user_password'] : '' ?>" />
-                    <a href="#" class="uk-form-password-toggle" data-uk-form-password="">Show</a>
+                    <a href="#" class="uk-form-password-toggle" data-uk-form-password="">Hiển thị</a>
                     <span class="md-input-bar"></span>
                 </div>
             </div>
             <div class="uk-width-medium-1-2">
                 <div class="md-input-wrapper <?php echo !empty( $user ) ? 'md-input-filled' : '' ?>">
-                    <label for="user_edit_position_control">Confirm password</label>
+                    <label for="user_edit_position_control">Xác nhận mật khẩu</label>
                     <input class="md-input atl-required-js" type="password" name="atl_user_cf_pass" value="<?php echo isset( $user['user_password'] ) ? $user['user_password'] : '' ?>" />
-                    <a href="#" class="uk-form-password-toggle" data-uk-form-password="">Show</a>
+                    <a href="#" class="uk-form-password-toggle" data-uk-form-password="">Hiển thị</a>
                     <span class="md-input-bar"></span>
                 </div>
             </div>

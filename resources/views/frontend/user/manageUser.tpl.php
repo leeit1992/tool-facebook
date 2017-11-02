@@ -13,35 +13,36 @@
                         <th class="uk-text-center uk-text-nowrap">
                             <input type="checkbox" class="atl-checkbox-primary-js" />
                         </th>
-                        <th class="uk-text-center uk-text-nowrap"> 
-                            Avatar 
-                        </th>
-                        <th class="uk-width-2-5 uk-text-nowrap">Email</th>
-                        <th class="uk-width-1-5 uk-text-center uk-text-nowrap">Role</th>
-                        <th class="uk-width-2-5 uk-text-center uk-text-nowrap">Actions</th>
+                        <th class="uk-text-center uk-text-nowrap">#</th>
+                        <th class="uk-text-center uk-text-nowrap">Name</th>
+                        <th class="uk-text-center uk-text-nowrap">Email</th>
+                        <th class="uk-text-center uk-text-nowrap">Role</th>
+                        <th class="uk-text-center uk-text-nowrap">Tiền</th>
+                        <th class="uk-text-center uk-text-nowrap">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="atl-list-user-not-js">
-                        <?php foreach ($listUser as $value): ?>
-                        <tr class="atl-user-item-<?php echo $value['id'] ?>">
-                            <td class="uk-text-center">
+                        <?php 
+                            $i = 1;
+                            foreach ($listUser as $value): ?>
+                        <tr class="atl-user-item-<?php echo $value['id'] ?> uk-text-center">
+                            <td>
                                 <input type="checkbox" class="atl-checkbox-child-js" value="<?php echo $value['id'] ?>" />
                             </td>
-                            <td class="uk-text-center">
-                            <?php
-                                $avatar = $mdUser->getMetaData( $value['id'], 'user_avatar' );
-                            ?>
-                                <img class="md-user-image" style="height: 34px;" src="<?php echo url(!empty($avatar)?$avatar:'/public/backend/assets/img/user.png') ?>">
+                            <td><?php echo $i; ?></td>
+                            <td>
+                                <?php echo $value['user_name'] ?>
                             </td>
                             <td>
                                 <?php echo $value['user_email'] ?>
                             </td>
-                            <td class="uk-text-center">
+                            <td>
                                 <span class="uk-badge <?php echo ('admin' == $mdUser->getMetaData( $value['id'], 'user_role' ) ? 'uk-badge-danger': '') ?>">
                                     <?php echo $mdUser->getRoleUser( $mdUser->getMetaData( $value['id'], 'user_role' ) ) ?>
                                 </span>
                             </td>
-                            <td class="uk-text-center">
+                            <td><?php echo $helpPrice->formatPrice( $value['user_money'] ); ?></td>
+                            <td>
                                 <a href="<?php echo url('/user-tool/edit-user/' . $value['id']) ?>">
                                     <i class="md-icon material-icons">edit</i>
                                 </a>
@@ -50,7 +51,9 @@
                                 </a>
                             </td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php 
+                            $i++;
+                        endforeach; ?>
                     </tbody>
                     <tbody class="atl-list-user-js"></tbody>
                 </table>

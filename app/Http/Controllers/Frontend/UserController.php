@@ -27,29 +27,22 @@ class UserController extends baseController
 	 */
 	public function manageUsers( $page = null ){
 		$this->checkAdmin();
-		$ofset                = 10;
-        $config['pageStart']  = $page;
-        $config['ofset']      = $ofset;
-        $config['totalRow']   = $this->mdUser->count();
-        $config['baseUrl']    = url('/user-tool/manage-user/page/');
-        $config['classes']    = 'uk-pagination uk-margin-medium-top';
-        $config['nextLink']   = '<i class="uk-icon-angle-double-right"></i>';
-        $config['prevLink']   = '<i class="uk-icon-angle-double-left"></i>';
-        $config['tagOpenPageCurrent']   = '<li class="uk-active"><span>';
-        $config['tagClosePageCurrent']  = '<span></li>';
-        $config['tagOpen']    = '';
-        $config['tagClose']   = '';
+		$ofset      = 10;
+        $totalRow   = $this->mdUser->count();
+        $baseUrl    = url('/user-tool/manage-user/page/');
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
 
-        $pagination           = new Pagination($config);
+        $pagination = new Pagination($config);
 
         // Load template
 		return $this->loadTemplate(
 			'frontend/user/manageUser.tpl',
 			[	
-				'listUser'   => $this->mdUser->getUserLimit( $pagination->getStartResult( $page ), $ofset ),
-				'pagination' => $pagination->link(),
-				'mdUser'     => $this->mdUser,
-                'addButton' => $this->addButton,
+				'listUser'     => $this->mdUser->getUserLimit( $pagination->getStartResult( $page ), $ofset ),
+				'pagination'   => $pagination->link(),
+				'mdUser'       => $this->mdUser,
+				'helpPrice'    => $this->helpPrice,
+                'addButton'    => $this->addButton,
                 'manageAction' => $this->manageAction
 			]
 		);
@@ -134,7 +127,6 @@ class UserController extends baseController
 							'user_status'       => !empty( $formData['atl_user_status'] ) ? $formData['atl_user_status'] : 0,
 							'user_display_name' => empty( $formData['atl_user_name'] ) ? $formData['atl_user_email'] : $formData['atl_user_name'],
 							'user_money'        => $this->helpPrice->convertPriceToInt( $formData['atl_user_money'] )
-
 						],
 						isset( $formData['atl_user_id'] ) ? $formData['atl_user_id'] : null
 					);
@@ -176,6 +168,45 @@ class UserController extends baseController
 			}
 			echo json_encode($notice);
 		}	
+	}
+	/**
+ 	 * Handle filter user
+	 *
+	 * @param  Request $request POST | GET
+	 * @return json
+	 */
+	public function ajaxManageUser( Request $request ) {
+		$output = '';
+		/**
+		 * Check type get list user manage.
+		 */	
+		switch ( $request->get('getBy') ) {
+			case 'role':
+				ob_start();
+				$output .= View(
+					'frontend/user/manageUserJs.tpl',
+					[
+ 						'users'  => $this->mdUser->getAllUserByMeta( 'user_role', $request->get('roleStatus') ),
+ 						'mdUser' => $this->mdUser,
+ 						'helpPrice'    => $this->helpPrice
+					]
+				);
+				$output .= ob_get_clean();
+				break;
+			case 'search':
+				ob_start();
+				$output .= View(		
+					'frontend/user/manageUserJs.tpl',
+					[
+						'users'  => $this->mdUser->searchBy( $request->get('keyup') ),
+	 					'mdUser' => $this->mdUser,
+	 					'helpPrice'    => $this->helpPrice
+	 				]
+				);
+ 			$output .= ob_get_clean();
+ 			break;
+ 		}
+		echo json_encode( [	'output' => $output	] );
 	}
 
 	/**

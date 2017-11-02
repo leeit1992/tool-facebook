@@ -5,7 +5,7 @@
                 <div class="md-card">
                     <div class="user_heading" data-uk-sticky="{ top: 48, media: 960 }">
                         <h2 class="heading_b">
-                            <span class="uk-text-truncate" style="color: white;"><?php echo $actionName ?></span>
+                            <span class="uk-text-truncate" style="color: white;"><?php echo $actionName ?> thông tin thanh toán</span>
                         </h2>
                     </div>
                     <div class="user_content" data-uk-grid-margin>
@@ -58,7 +58,7 @@
                                     echo $self->renderInput( [
                                             'name'  => 'avt_bank_address',
                                             'type'  => 'text',
-                                            'class' => 'md-input avt-required-js',
+                                            'class' => 'md-input',
                                             'value' => isset( $pay['bank_address'] ) ? $pay['bank_address'] : ''
                                         ] );
                                 ?>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="uk-form-row">
-                            <button type="submit" class="md-btn md-btn-primary">Thêm</button>
+                            <button type="submit" class="md-btn md-btn-primary"><?php echo $actionName; ?></button>
                         </div>
                         <?php 
                             if( !empty( $pay ) ) {

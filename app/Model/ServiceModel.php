@@ -3,12 +3,30 @@ namespace App\Model;
 
 use Atl\Database\Model;
 
-class ServiceModel extends Model
+class ServiceModel extends AtlModel
 {
     public function __construct() {
         parent::__construct('services');
     }
 
+    /**
+     * Sett meta table.
+     * 
+     * @return string
+     */
+    public function metaDataTable(){
+        return 'servicemeta';
+    }
+
+    /**
+     * Set meta query.
+     * 
+     * @return stirng
+     */
+    public function metaDataQueryBy(){
+        return 'service_id';
+    }
+    
     public function save( $argsData, $id = null ) {
         if ( $id ) {
             $this->db->update(
@@ -26,15 +44,16 @@ class ServiceModel extends Model
         }
     }
 
-    public function getAll() {
+    public function getAllbyType($type = '') {
         return $this->db->select(
             $this->table,
             '*',
             [
-                    'ORDER' => [
-                        'id' => 'DESC',
-                    ],
-                ]
+                'service_type' => $type,
+                'ORDER' => [
+                        'id' => 'ASC',
+                    ]
+            ]
         );
     }
 
@@ -58,11 +77,12 @@ class ServiceModel extends Model
         );
     }
 
-    public function getLinmit( $ofset = 0, $limit = 10 ) {
+    public function getLinmitbyType( $ofset = 0, $limit = 10, $type = '' ) {
         return $this->db->select(
             $this->table,
             '*',
             [
+                'service_type' => $type,
                 'ORDER' => [
                     'id' => 'DESC',
                 ],

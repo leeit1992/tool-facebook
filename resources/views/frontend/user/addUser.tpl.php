@@ -12,12 +12,12 @@
                     <div class="user_content">
                         <ul id="user_edit_tabs" class="uk-tab" data-uk-tab="{connect:'#user_edit_tabs_content'}">
                             <?php if( empty( $user ) ) : ?>
-                            <li class="uk-active"><a href="#">Account</a></li>
-                            <li><a href="#">Basic</a></li>
+                            <li class="uk-active"><a href="#">Tài khoản</a></li>
+                            <li><a href="#">Thông tin</a></li>
                             <?php endif;  ?>
                             <?php if( !empty( $user ) ) : ?>
-                            <li class="uk-active"><a href="#">Basic</a></li>
-                            <li><a href="#">Account</a></li>
+                            <li class="uk-active"><a href="#">Thông tin</a></li>
+                            <li><a href="#">Tài khoản</a></li>
                             <?php endif;  ?>
                         </ul>
                         <ul id="user_edit_tabs_content" class="uk-switcher uk-margin">
@@ -41,7 +41,7 @@
             <div class="uk-width-large-3-10">
                 <div class="md-card">
                     <div class="md-card-content">
-                        <h3 class="heading_c uk-margin-medium-bottom">Other settings</h3>
+                        <h3 class="heading_c uk-margin-medium-bottom">Tùy chọn</h3>
                         <div class="uk-form-row">
                             <?php 
                                 echo $self->renderInput( 
@@ -62,20 +62,38 @@
                         </div>
                         <hr class="md-hr">
                         <div class="uk-form-row">
-                            <h3 class="heading_c uk-margin-bottom">User Role</h3>
-                            <select data-md-selectize name="atl_user_role">
-                                <?php foreach ($mdUser->getRoleUser() as $key => $value) {
-                                    $selected = isset( $meta['user_role'] ) ? selected($meta['user_role'], $key) : '';
-                                    echo '<option ' . $selected . ' value="' . $key . '">' . $value . ' </option>';
-                                } ?>
-                            </select>
+                            <h3 class="heading_c uk-margin-bottom">Phân quyền</h3>
+                            <?php if ( 'admin' === Session()->get('atl_user_role') ): ?>
+                                <select data-md-selectize name="atl_user_role">
+                                    <?php 
+                                        foreach ($mdUser->getRoleUser() as $key => $value) {
+                                            $selected = isset( $meta['user_role'] ) ? selected($meta['user_role'], $key) : '';
+                                            echo '<option ' . $selected . ' value="' . $key . '">' . $value . ' </option>';
+                                        }
+                                    ?>
+                                </select>   
+                            <?php else: ?>
+                                <select data-md-selectize disabled>
+                                    <?php 
+                                        foreach ($mdUser->getRoleUser() as $key => $value) {
+                                            $selected = isset( $meta['user_role'] ) ? selected($meta['user_role'], $key) : '';
+                                            echo '<option ' . $selected . ' value="' . $key . '">' . $value . ' </option>';
+                                        }
+                                        echo $self->renderInput( [
+                                            'type'  => 'hidden',
+                                            'name' => 'atl_user_role',
+                                            'value' => $meta['user_role']
+                                        ] ); 
+                                    ?>
+                                </select>
+                            <?php endif ?>
                         </div>
                         <hr class="md-hr">
                         <div class="uk-form-row">
-                            <h3 class="heading_c">Money (VNĐ)</h3>
+                            <h3 class="heading_c">Tiền hiện có (VNĐ)</h3>
                             <?php
-                                echo $self->renderInput( 
-                                    array( 
+                                if ( 'admin' === Session()->get('atl_user_role') ) {
+                                    echo $self->renderInput( [
                                         'type'  => 'text',
                                         'name'  => 'atl_user_money', 
                                         'class' => 'md-input masked_input',
@@ -84,8 +102,24 @@
                                                     'data-inputmask' => "'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'",
                                                     'data-inputmask-showmaskonhover' => 'false'
                                                 ]
-                                    )
-                                ); 
+                                    ] ); 
+                                } else {
+                                    echo $self->renderInput( [
+                                        'type'  => 'text',
+                                        'class' => 'md-input masked_input',
+                                        'value' => $user['user_money'],
+                                        'attr' => [
+                                                    'data-inputmask' => "'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'",
+                                                    'data-inputmask-showmaskonhover' => 'false',
+                                                    'disabled' => ''
+                                                ]
+                                    ] );
+                                    echo $self->renderInput( [
+                                        'type'  => 'hidden',
+                                        'name' => 'atl_user_money',
+                                        'value' => $user['user_money']
+                                    ] ); 
+                                }
                             ?>
                         </div>
                         <?php 

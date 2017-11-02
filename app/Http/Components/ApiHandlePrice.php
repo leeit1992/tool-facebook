@@ -36,16 +36,14 @@ class ApiHandlePrice
      * formatPrice
      * Handle display price for setting.
      * 
-     * @param int $price Prices need to be format.
-     *
+     * @param  int $price Prices need to be format.
      * @return string
      */
-    public function formatPrice($price = 0)
-    {
+    public function formatPrice( $price = 0, $currency = 'VNĐ' ){
         global $apbSettings;
 
-        $currencyPos = 'left';
-        switch ($currencyPos) {
+        $currencyPos = 'right_space';
+        switch ( $currencyPos ) {
             case 'left':
                 $priceFormat = '%2$s%1$s';
             break;
@@ -64,17 +62,17 @@ class ApiHandlePrice
         }
 
         $args = array(
-            'currency' => '$ ',
+            'currency'          => $currency,
             'thousandSeparator' => ',',
-            'decimalSeparator' => '.',
-            'decimals' => 2,
-            'priceFormat' => $priceFormat,
+            'decimalSeparator'  => '.',
+            'decimals'          => 0,
+            'priceFormat'       => $priceFormat,
         );
 
-        extract($args);
-        $price = number_format($price, $decimals, $decimalSeparator, $thousandSeparator);
+        extract( $args );
+        $price = number_format( $price, $decimals, $decimalSeparator, $thousandSeparator );
 
-        return sprintf($priceFormat, $price, $currency);
+        return sprintf( $priceFormat, $price, $currency );
     }
 
     public function convertPriceToInt($price)

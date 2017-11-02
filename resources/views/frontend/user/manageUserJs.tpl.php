@@ -1,27 +1,32 @@
-<?php foreach ($users as $user) : ?>
-    <tr class="atl-user-item-<?php echo $user['id'] ?>">
-        <td class="uk-text-center">
-            <input type="checkbox" class="atl-checkbox-child-js" value="<?php echo $user['id'] ?>" />
-        </td>
-        <td class="uk-text-center">
-            <?php
-                $avatar = $mdUser->getMetaData( $user['id'], 'user_avatar' );
-            ?>
-            <img class="md-user-image" style="height: 34px;" src="<?php echo url(!empty($avatar)?$avatar:'/public/backend/assets/img/user.png') ?>">
-        </td>
-        <td><?php echo $user['user_email'] ?></td>
-        <td class="uk-text-center">
-            <span class="uk-badge <?php echo ('admin' == $user['user_role'] ) ? 'uk-badge-danger': '' ?>">
-                <?php echo $mdUser->getRoleUser( $user['user_role']) ?>
-            </span>
-        </td>
-        <td class="uk-text-center">
-            <a href="<?php echo url('/user-tool/edit-user/' . $user['id']) ?>">
-                <i class="md-icon material-icons">&#xE254;</i>
-            </a>
-            <a href="#" class="atl-manage-user-delete-js" data-id="<?php echo $user['id'] ?>">
-                <i class="md-icon material-icons">&#xE872;</i>
-            </a>
-        </td>
-    </tr>
-<?php endforeach; ?>
+<?php 
+    $i = 1;
+    foreach ($users as $value): ?>
+        <tr class="atl-user-item-<?php echo $value['id'] ?> uk-text-center">
+            <td class="uk-text-center">
+                <input type="checkbox" class="atl-checkbox-child-js" value="<?php echo $value['id'] ?>" />
+            </td>
+            <td><?php echo $i; ?></td>
+            <td>
+                <?php echo $value['user_name'] ?>
+            </td>
+            <td>
+                <?php echo $value['user_email'] ?>
+            </td>
+            <td>
+                <span class="uk-badge <?php echo ('admin' == $mdUser->getMetaData( $value['id'], 'user_role' ) ? 'uk-badge-danger': '') ?>">
+                    <?php echo $mdUser->getRoleUser( $mdUser->getMetaData( $value['id'], 'user_role' ) ) ?>
+                </span>
+            </td>
+            <td><?php echo $helpPrice->formatPrice( $value['user_money'] ); ?></td>
+            <td>
+                <a href="<?php echo url('/user-tool/edit-user/' . $value['id']) ?>">
+                    <i class="md-icon material-icons">edit</i>
+                </a>
+                <a href="#" class="atl-manage-user-delete-js" data-id="<?php echo $value['id'] ?>">
+                    <i class="md-icon material-icons">delete</i>
+                </a>
+            </td>
+        </tr>
+    <?php 
+    $i++;
+endforeach; ?>
