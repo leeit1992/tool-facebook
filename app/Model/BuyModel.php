@@ -25,4 +25,38 @@ class BuyModel extends Model
             return $this->db->id();
         }
     }
+
+    public function getCount( $args = null ) {
+        return $this->db->count(
+            $this->table,
+            !empty( $args ) ? $args : null
+        );
+    }
+
+    public function getBy( $key, $value ) {
+        return $this->db->select(
+            $this->table,
+            '*',
+            [
+                    $key => $value,
+                    'ORDER' => [
+                        'id' => 'DESC',
+                    ],
+                ]
+        );
+    }
+
+    public function getLinmitByUser( $ofset = 0, $limit = 10, $type = '' ) {
+        return $this->db->select(
+            $this->table,
+            '*',
+            [
+                'buy_user' => $type,
+                'ORDER' => [
+                    'id' => 'DESC',
+                ],
+                "LIMIT" => [$ofset, $limit]
+            ]
+        );
+    }
 }

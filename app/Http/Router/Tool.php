@@ -16,7 +16,8 @@ class Tool implements RouterInterface{
         return self::$getInstance;
 	} 
 
-	public function router(&$route){
+	public function router( &$route ) {
+		$route->get('/user-tool/up-like-comment','Frontend\ToolController@upLikeComment');
 		$route->get('/user-tool/up-like','Frontend\ToolController@upLikePost');
 		$route->get('/user-tool/up-lie-page','Frontend\ToolController@upLikePage');
 		$route->get('/user-tool/add-comment','Frontend\ToolController@addComment');
@@ -24,14 +25,8 @@ class Tool implements RouterInterface{
 		$route->get('/user-tool/up-follow','Frontend\ToolController@upFollow');
 		$route->get('/user-tool/up-like-and-heart','Frontend\ToolController@upLineAndDropHeart');
 
-
-
-
+		$route->post('/user-tool/get-info-packet','Frontend\ToolController@getInfoPacket');
 		$route->post('/user-tool/ajax-tool-action','Frontend\ToolController@handleAction');
 
-
-
-		
 	}
-
 }

@@ -11,11 +11,24 @@
         el : '.pita-page-like',
 
         events: {
+            'change #pita-like-number' : 'changePacket',
             'click .pita-start-action' : 'startAction'
         },
 
         initialize: function() {
 
+        },
+
+        changePacket : function(){
+            var data = {
+                id : $('#pita-like-number', this.el).val() },
+                self = this;
+
+            // Send to server handle.
+            $.post(AVTDATA.SITE_URL + '/get-info-packet', data, function(result) {
+                var dataResult = JSON.parse( result );
+                $(".avt-admcp-orders-js", self.el).html( dataResult.output );
+            });
         },
 
         startAction : function(){

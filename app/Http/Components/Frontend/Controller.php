@@ -225,4 +225,18 @@ class Controller extends baseController
         
         return $config;
     }
+
+    public function countDay($startDate, $endDate){
+        $startTimeStamp = strtotime($startDate);
+        $endTimeStamp = strtotime($endDate);
+
+        $timeDiff = abs($endTimeStamp - $startTimeStamp);
+
+        $numberDays = $timeDiff/86400;  // 86400 seconds in one day
+
+        // and you might want to convert to integer
+        $numberDays = intval($numberDays);
+
+        return $numberDays;
+    }
 }

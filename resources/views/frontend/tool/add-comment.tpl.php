@@ -21,15 +21,15 @@
                     <span class="uk-form-help-block">Mẫu comment nam: Hàng đẹp quá | Nam.  </span>
                 </div>
                 <div class="uk-form-row">
-                    <h3 class="heading_a">Số Lượng</h3>
+                    <h3 class="heading_a">Gói dịch vụ COMMENT</h3>
                     <br>
                     <div class="parsley-row">
                         <select id="pita-like-number" required data-md-selectize>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="200">200</option>
-                            <option value="500">500</option>
-                            <option value="1000">1000</option>
+                            <?php foreach ($services as $value): ?>
+                                <option value="<?php echo $value['id'] ?>">
+                                    <?php echo $value['service_name'] ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
                     </div>
                 </div>

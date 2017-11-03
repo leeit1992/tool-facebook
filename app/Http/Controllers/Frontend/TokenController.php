@@ -14,6 +14,7 @@ class TokenController extends baseController
         parent::__construct();
         $this->userAccess();
         $this->mdToken = new TokenModel();
+        $this->checkAdmin();
     }
 
     public function manageToken(Request $request)

@@ -1,6 +1,6 @@
-<div class="md-card pita-page-like">
+<div class="md-card pita-page-like-comment">
     <div class="md-card-content">
-        <h3 class="heading_a">Tăng LIKE bài viết.</h3>
+        <h3 class="heading_a">Tăng LIKE + COMMENT bài viết.</h3>
         <div class="uk-grid" data-uk-grid-margin="">
             <div class="uk-width-medium-1-1">
                 <div class="uk-form-row">
@@ -12,29 +12,23 @@
                 </div>
 
                 <div class="uk-form-row">
-                	<h3 class="heading_a">Gói dịch vụ LIKE đã mua</h3>
+                	<h3 class="heading_a">Gói dịch vụ like + comment</h3>
                 	<br>
                 	<div class="parsley-row">
                         <select id="pita-like-number" required data-md-selectize>
-                            <?php
-                            foreach ($listPackageBy as $value): 
-                                $infoPackage = $mdService->getBy('id', $value['buy_packet']);
-                                if( 'like' == $infoPackage[0]['service_type'] ) :
-                            ?>
-                                <option value="<?php echo uniqid() .'-'. $value['id'] ?>">
-                                    <?php echo $infoPackage[0]['service_name'] ?> 
-                                    ( <?php echo $value['buy_speed'] ?>p )
-                                </option> 
-                            <?php endif; endforeach ?> 
+                            <?php foreach ($services as $value): ?>
+                                <option value="<?php echo $value['id'] ?>">
+                                    <?php echo $value['service_name'] ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
                     </div>
                 </div>
-
-                <input type="hidden" name="avt_like_numner">
                 <div class="uk-form-row">
                 	<h3 class="heading_a">Thời Gian (ms)</h3>
                     <div class="md-input-wrapper">
-                        <input type="text" class="md-input pita-setinteval" value="2000"><span class="md-input-bar"></span>
+                        <input type="text" class="md-input pita-setinteval" value="2000" disabled>
+                        <span class="md-input-bar"></span>
                     </div>
                     <span class="uk-form-help-block">Khoảng cách giữa các like. 2000ms = 2s, nên để 2s/1 Like. </span>
                 </div>

@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Http\Components\Frontend;
 
+use App\Model\BuyModel;
+use App\Model\ServiceModel;
 /**
  * adminDataMenu
  * Config data menu nav admin.
@@ -45,7 +46,6 @@ class DataMenu
      */
     public function dataMenu()
     {   
-
         $menu['Dashboard'] = [
                 'label' => 'Dashboard',
                 'icon'  => '<i class="material-icons md-36">&#xE8F0;</i>',
@@ -104,6 +104,11 @@ class DataMenu
                         'label' => 'Mua gói comment',
                         'link'  => url('/user-tool/buy-packet-comment'),
                         'conditionOpen' => ['handleBuyComment'],
+                    ],
+                    [
+                        'label' => 'Danh sách dịch vụ đã mua',
+                        'link'  => url('/user-tool/manage-buy'),
+                        'conditionOpen' => ['manageBuy'],
                     ]
                 );
         }
@@ -114,66 +119,102 @@ class DataMenu
                 'display' => '',
                 'submenu' => $submenuSer
             ];
+        $submenuTools = [];
+        $mdBuy = new BuyModel();
+        $mdService = new ServiceModel();
+        $userTools = [];
+        $listBuy = $mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        foreach ($listBuy as $item) {
+            $packetS = $mdService->getBy( 'id', $item['buy_packet'] );
+            if ( !in_array( $packetS[0]['service_type'], $userTools ) ) {
+                array_push( $userTools, $packetS[0]['service_type'] );
+            }
+        }
+        if (is_array( $userTools )) {
+            foreach ( $userTools as $items) {
+                switch ( $items ) {
+                    case 'service':
+                        array_push( $submenuTools, 
+                            [
+                                'label' => 'Tăng like + comments',
+                                'link'  => url('/user-tool/up-like-comment'),
+                                'conditionOpen' => ['upLikeComment'],
+                            ]
+                        );
+                        break;
+                    case 'like':
+                        array_push( $submenuTools, 
+                            [
+                                'label' => 'Tăng like bài viết',
+                                'link'  => url('/user-tool/up-like'),
+                                'conditionOpen' => ['upLikePost'],
+                            ]
+                        );
+                        break;
+                    case 'comment':
+                        array_push( $submenuTools, 
+                            [
+                                'label' => 'Tăng comments',
+                                'link'  => url('/user-tool/add-comment'),
+                                'conditionOpen' => ['addComment'],
+                            ]
+                        );
+                        break;
+                }
+            }
+        }
+            // [
+            //     [
+            //         'label' => 'Tăng like fanpage',
+            //         'link'  => url('/user-tool/up-lie-page'),
+            //         'conditionOpen' => ['upLikePage'],
+            //     ],
+            //     [
+            //         'label' => 'Tăng share',
+            //         'link'  => url('/user-tool/up-share'),
+            //         'conditionOpen' => ['upShare'],
+            //     ],
 
+            //     [
+            //         'label' => 'Tăng follow',
+            //         'link'  => url('/user-tool/up-follow'),
+            //         'conditionOpen' => ['upFollow'],
+            //     ],
+
+            //     [
+            //         'label' => 'Auto like/ Thả tim',
+            //         'link'  => url('/ser-tool/up-like-and-heart'),
+            //         'conditionOpen' => ['upLineAndDropHeart'],
+            //     ]
+            // ]
         $menu['action-tool'] = [
             'label'   => 'Tools',
             'icon'    => '<i class="material-icons md-36">&#xE8DC;</i>',
             'conditionOpen' => ['Frontend\ToolController'],
             'display' => '',
-            'submenu' => [
-                [
-                    'label' => 'Tăng like bài viết',
-                    'link'  => url('/user-tool/up-like'),
-                    'conditionOpen' => ['upLikePost'],
-                ],
-                [
-                    'label' => 'Tăng like fanpage',
-                    'link'  => url('/user-tool/up-lie-page'),
-                    'conditionOpen' => ['upLikePage'],
-                ],
-                [
-                    'label' => 'Tăng comments',
-                    'link'  => url('/user-tool/add-comment'),
-                    'conditionOpen' => ['addComment'],
-                ],
-                [
-                    'label' => 'Tăng share',
-                    'link'  => url('/user-tool/up-share'),
-                    'conditionOpen' => ['upShare'],
-                ],
-
-                [
-                    'label' => 'Tăng follow',
-                    'link'  => url('/user-tool/up-follow'),
-                    'conditionOpen' => ['upFollow'],
-                ],
-
-                [
-                    'label' => 'Auto like/ Thả tim',
-                    'link'  => url('/ser-tool/up-like-and-heart'),
-                    'conditionOpen' => ['upLineAndDropHeart'],
-                ]
-            ]
+            'submenu' => $submenuTools
         ];
-
-        $menu['token'] = [
-            'label'   => 'Taì khoản facebook',
-            'icon'    => '<i class="material-icons md-36">&#xE853;</i>',
-            'conditionOpen' => ['Frontend\TokenController'],
-            'display' => '',
-            'submenu' => [
-                [
-                    'label' => 'Quản lý TK facebook',
-                    'link'  => url('/user-tool/facebook-acc'),
-                    'conditionOpen' => ['facebookManage'],
-                ],
-                [
-                    'label' => 'Quản lý token',
-                    'link'  => url('/user-tool/manage-token'),
-                    'conditionOpen' => ['manageToken'],
+        if ( 'admin' === Session()->get('atl_user_role') ) {
+            $menu['token'] = [
+                'label'   => 'Taì khoản facebook',
+                'icon'    => '<i class="material-icons md-36">&#xE853;</i>',
+                'conditionOpen' => ['Frontend\TokenController'],
+                'display' => '',
+                'submenu' => [
+                    [
+                        'label' => 'Quản lý TK facebook',
+                        'link'  => url('/user-tool/facebook-acc'),
+                        'conditionOpen' => ['facebookManage'],
+                    ],
+                    [
+                        'label' => 'Quản lý token',
+                        'link'  => url('/user-tool/manage-token'),
+                        'conditionOpen' => ['manageToken'],
+                    ]
                 ]
-            ]
-        ];
+            ];
+        }
+        
         $submenuBank = [];
         if ( 'admin' === Session()->get('atl_user_role') ) {
             array_push( $submenuBank, 

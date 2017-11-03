@@ -49,7 +49,6 @@ class LoginController extends baseController
                 Session()->set('atl_user_email', $checkUser[0]['user_email']);
                 Session()->set('atl_user_meta',  $user->getAllMetaData($checkUser[0]['id']));
                 Session()->set('atl_user_role',  $user->getMetaData( $checkUser[0]['id'], 'user_role' ));
-
                 redirect(url('/user-tool'));
             } else {
                 $error[] = 'error';

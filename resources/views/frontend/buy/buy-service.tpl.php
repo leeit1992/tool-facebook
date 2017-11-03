@@ -66,6 +66,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="uk-width-medium-1-1">
+                                <div class="uk-form-row">
+                                    <label>Nội dung comment</label>
+                                    <textarea class="md-input" name="avt_buy_comment" cols="100" rows="4"></textarea>
+                                    <span class="uk-form-help-block">Ngăn cách các comment bằng cách xuống dòng.  </span>
+                                   
+                                </div>
+                            </div>
                         </div>
                         <div class="uk-form-row uk-text-center">
                             <button type="submit" class="md-btn md-btn-success">Thanh toán</button>

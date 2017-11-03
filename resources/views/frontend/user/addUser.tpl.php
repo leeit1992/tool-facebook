@@ -47,7 +47,6 @@
                                 $hidden = 'style="display:none"';
                             }
                         ?>
-                        <h3 class="heading_c uk-margin-medium-bottom">Tùy chọn</h3>
                         <div class="uk-form-row" <?php echo $hidden; ?>>
                             <?php 
                                 echo $self->renderInput( 
@@ -64,7 +63,7 @@
                                     ) 
                                 ); 
                             ?>
-                            <label for="user_edit_active" class="inline-label">User Active</label>
+                            <label for="user_edit_active" class="inline-label">Active</label>
                             <hr class="md-hr">
                         </div>
                         <div class="uk-form-row" <?php echo $hidden; ?>>
