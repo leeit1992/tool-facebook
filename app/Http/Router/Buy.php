@@ -16,9 +16,11 @@ class Buy implements RouterInterface
 	} 
 
 	public function router( &$route ) {
+		$route->get('/user-tool/buy-packet-service','Frontend\BuyController@handleBuyService');
 		$route->get('/user-tool/buy-packet-like','Frontend\BuyController@handleBuyLike');
 		$route->get('/user-tool/buy-packet-comment','Frontend\BuyController@handleBuyComment');
 
+		$route->post('/user-tool/validate-buy-service','Frontend\BuyController@validateBuyService' );
 		$route->post('/user-tool/validate-buy-like','Frontend\BuyController@validateBuyLike' );
 		$route->post('/user-tool/validate-buy-comment','Frontend\BuyController@validateBuyComment' );
 	}

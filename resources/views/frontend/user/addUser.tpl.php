@@ -41,8 +41,14 @@
             <div class="uk-width-large-3-10">
                 <div class="md-card">
                     <div class="md-card-content">
+                        <?php
+                            $hidden = '';
+                            if ( 'admin' !== Session()->get('atl_user_role') ) {
+                                $hidden = 'style="display:none"';
+                            }
+                        ?>
                         <h3 class="heading_c uk-margin-medium-bottom">Tùy chọn</h3>
-                        <div class="uk-form-row">
+                        <div class="uk-form-row" <?php echo $hidden; ?>>
                             <?php 
                                 echo $self->renderInput( 
                                     array( 
@@ -59,11 +65,10 @@
                                 ); 
                             ?>
                             <label for="user_edit_active" class="inline-label">User Active</label>
+                            <hr class="md-hr">
                         </div>
-                        <hr class="md-hr">
-                        <div class="uk-form-row">
+                        <div class="uk-form-row" <?php echo $hidden; ?>>
                             <h3 class="heading_c uk-margin-bottom">Phân quyền</h3>
-                            <?php if ( 'admin' === Session()->get('atl_user_role') ): ?>
                                 <select data-md-selectize name="atl_user_role">
                                     <?php 
                                         foreach ($mdUser->getRoleUser() as $key => $value) {
@@ -71,24 +76,10 @@
                                             echo '<option ' . $selected . ' value="' . $key . '">' . $value . ' </option>';
                                         }
                                     ?>
-                                </select>   
-                            <?php else: ?>
-                                <select data-md-selectize disabled>
-                                    <?php 
-                                        foreach ($mdUser->getRoleUser() as $key => $value) {
-                                            $selected = isset( $meta['user_role'] ) ? selected($meta['user_role'], $key) : '';
-                                            echo '<option ' . $selected . ' value="' . $key . '">' . $value . ' </option>';
-                                        }
-                                        echo $self->renderInput( [
-                                            'type'  => 'hidden',
-                                            'name' => 'atl_user_role',
-                                            'value' => $meta['user_role']
-                                        ] ); 
-                                    ?>
                                 </select>
-                            <?php endif ?>
+                            <hr class="md-hr">
                         </div>
-                        <hr class="md-hr">
+                        
                         <div class="uk-form-row">
                             <h3 class="heading_c">Tiền hiện có (VNĐ)</h3>
                             <?php

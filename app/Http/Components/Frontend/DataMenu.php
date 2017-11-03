@@ -55,10 +55,8 @@ class DataMenu
                 'display' => '',
             ];
         $submenuSer = [];
-        $conditionOpen = [];
         if ( 'admin' === Session()->get('atl_user_role') ) {
-            $conditionOpen = ['Frontend\ServiceController'];
-            array_push( $submenuSer, 
+            array_push( $submenuSer,
                     [
                         'label' => 'Thêm gói dịch vụ',
                         'link'  => url('/user-tool/add-packet-service'),
@@ -91,8 +89,12 @@ class DataMenu
                     ]
                 );
         } else {
-            $conditionOpen = ['Frontend\BuyController'];
-            array_push( $submenuSer, 
+            array_push( $submenuSer,
+                    [
+                        'label' => 'Mua gói dịch vụ',
+                        'link'  => url('/user-tool/buy-packet-service'),
+                        'conditionOpen' => ['handleBuyService'],
+                    ],
                     [
                         'label' => 'Mua gói like',
                         'link'  => url('/user-tool/buy-packet-like'),
@@ -108,7 +110,7 @@ class DataMenu
         $menu['service'] = [
                 'label'   => 'Dịch vụ',
                 'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
-                'conditionOpen' => $conditionOpen,
+                'conditionOpen' => ['Frontend\ServiceController', 'Frontend\BuyController'],
                 'display' => '',
                 'submenu' => $submenuSer
             ];
