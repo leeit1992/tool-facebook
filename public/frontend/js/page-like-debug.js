@@ -16,7 +16,7 @@
         },
 
         initialize: function() {
-
+            this.changePacket();
         },
 
         changePacket : function(){
@@ -25,9 +25,10 @@
                 self = this;
 
             // Send to server handle.
-            $.post(AVTDATA.SITE_URL + '/get-info-packet', data, function(result) {
+            $.post(AVTDATA.SITE_URL + '/get-packet-like', data, function(result) {
                 var dataResult = JSON.parse( result );
-                $(".avt-admcp-orders-js", self.el).html( dataResult.output );
+                $(".pita-setinteval").val(dataResult.numberS);
+                $(".avt_like_numner").val(dataResult.speedTime);
             });
         },
 
@@ -36,8 +37,8 @@
 
             var numberS = $(".pita-setinteval").val();
             
-            $(".avt-total-token-check").attr('data-total', $("#pita-like-number").val());
-            $(".avt-total-token-check").text($("#pita-like-number").val() + ' Like ');
+            $(".avt-total-token-check").attr('data-total', $(".avt_like_numner").val());
+            $(".avt-total-token-check").text($(".avt_like_numner").val() + ' Like ');
 
             var startFilter = $(".avt-has-filter").attr('data-start');
             var totalToken = $(".avt-total-token-check").attr('data-total');

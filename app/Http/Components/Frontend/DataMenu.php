@@ -130,7 +130,7 @@ class DataMenu
                 array_push( $userTools, $packetS[0]['service_type'] );
             }
         }
-        if (is_array( $userTools )) {
+        if (is_array( $userTools ) && !empty( $userTools )) {
             foreach ( $userTools as $items) {
                 switch ( $items ) {
                     case 'service':
@@ -162,6 +162,13 @@ class DataMenu
                         break;
                 }
             }
+            $menu['action-tool'] = [
+                'label'   => 'Tools',
+                'icon'    => '<i class="material-icons md-36">&#xE8DC;</i>',
+                'conditionOpen' => ['Frontend\ToolController'],
+                'display' => '',
+                'submenu' => $submenuTools
+            ];
         }
             // [
             //     [
@@ -187,13 +194,7 @@ class DataMenu
             //         'conditionOpen' => ['upLineAndDropHeart'],
             //     ]
             // ]
-        $menu['action-tool'] = [
-            'label'   => 'Tools',
-            'icon'    => '<i class="material-icons md-36">&#xE8DC;</i>',
-            'conditionOpen' => ['Frontend\ToolController'],
-            'display' => '',
-            'submenu' => $submenuTools
-        ];
+        
         if ( 'admin' === Session()->get('atl_user_role') ) {
             $menu['token'] = [
                 'label'   => 'Taì khoản facebook',

@@ -53,7 +53,7 @@
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Tốc độ /Phút</label>
-                                    <input type="text" name="avt_buy_speed" data-ion-slider data-min="0" data-max="100" data-from="50" />
+                                    <input type="text" name="avt_buy_speed" data-ion-slider data-min="1" data-max="100" data-from="50" />
                                 </div>
                             </div>
                             <div class="uk-width-medium-1-2">

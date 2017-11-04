@@ -41,6 +41,7 @@ class BuyController extends baseController
             [   
                 'listBuy'      => $this->mdBuy->getLinmitByUser( $pagination->getStartResult( $page ), $ofset, Session()->get('atl_user_id') ),
                 'pagination'   => $pagination->link(),
+                'self'         => $this,
                 'mdBuy'        => $this->mdBuy,
                 'mdService'    => $this->mdService,
                 'addButton'    => $this->addButton,

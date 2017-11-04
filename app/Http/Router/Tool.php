@@ -25,8 +25,9 @@ class Tool implements RouterInterface{
 		$route->get('/user-tool/up-follow','Frontend\ToolController@upFollow');
 		$route->get('/user-tool/up-like-and-heart','Frontend\ToolController@upLineAndDropHeart');
 
-		$route->post('/user-tool/get-info-packet','Frontend\ToolController@getInfoPacket');
+		$route->post('/user-tool/get-packet-like','Frontend\ToolController@getPacketLike');
+		$route->post('/user-tool/get-packet-comment','Frontend\ToolController@getPacketComment');
+		$route->post('/user-tool/get-packet-like-comment','Frontend\ToolController@getPacketLikeComment');
 		$route->post('/user-tool/ajax-tool-action','Frontend\ToolController@handleAction');
-
 	}
 }

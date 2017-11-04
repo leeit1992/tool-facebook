@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 02, 2017 lúc 09:15 AM
+-- Thời gian đã tạo: Th10 04, 2017 lúc 04:16 AM
 -- Phiên bản máy phục vụ: 10.1.25-MariaDB
 -- Phiên bản PHP: 5.6.31
 
@@ -50,6 +50,7 @@ CREATE TABLE `avt_buy` (
   `buy_speed` int(11) DEFAULT NULL,
   `buy_date` int(11) DEFAULT NULL,
   `buy_comment` text,
+  `buy_user` int(11) DEFAULT NULL,
   `buy_created` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -71,15 +72,15 @@ CREATE TABLE `avt_servicemeta` (
 --
 
 INSERT INTO `avt_servicemeta` (`id`, `service_id`, `meta_key`, `meta_value`) VALUES
-(51, 27, 'like_number', '100'),
+(51, 27, 'like_number', '90'),
 (52, 27, 'like_post', '100'),
-(53, 28, 'like_number', '100'),
+(53, 28, 'like_number', '91'),
 (54, 28, 'like_post', '100'),
-(55, 29, 'like_number', '100'),
+(55, 29, 'like_number', '92'),
 (56, 29, 'like_post', '100'),
-(57, 30, 'like_number', '100'),
+(57, 30, 'like_number', '93'),
 (58, 30, 'like_post', '100'),
-(59, 31, 'like_number', '100'),
+(59, 31, 'like_number', '94'),
 (60, 31, 'like_post', '100'),
 (61, 32, 'comment_number', '100'),
 (62, 32, 'comment_post', '100'),
@@ -88,7 +89,17 @@ INSERT INTO `avt_servicemeta` (`id`, `service_id`, `meta_key`, `meta_value`) VAL
 (65, 34, 'comment_number', '100'),
 (66, 34, 'comment_post', '100'),
 (67, 35, 'comment_number', '100'),
-(68, 35, 'comment_post', '100');
+(68, 35, 'comment_post', '100'),
+(71, 37, 'service_like', '10'),
+(72, 37, 'service_comment', '10'),
+(73, 38, 'service_like', '20'),
+(74, 38, 'service_comment', '40'),
+(75, 39, 'service_like', '30'),
+(76, 39, 'service_comment', '30'),
+(77, 40, 'service_like', '40'),
+(78, 40, 'service_comment', '40'),
+(79, 41, 'service_like', '50'),
+(80, 41, 'service_comment', '50');
 
 -- --------------------------------------------------------
 
@@ -116,7 +127,12 @@ INSERT INTO `avt_services` (`id`, `service_name`, `service_price`, `service_type
 (32, 'C-100', '30000', 'comment'),
 (33, 'C-200', '50000', 'comment'),
 (34, 'C-300', '75000', 'comment'),
-(35, 'C-400', '100000', 'comment');
+(35, 'C-400', '100000', 'comment'),
+(37, 'S-100', '10000', 'service'),
+(38, 'S-200', '20000', 'service'),
+(39, 'S-300', '30000', 'service'),
+(40, 'S-400', '40000', 'service'),
+(41, 'S-500', '50000', 'service');
 
 -- --------------------------------------------------------
 
@@ -170,11 +186,11 @@ INSERT INTO `avt_usermeta` (`id`, `user_id`, `meta_key`, `meta_value`) VALUES
 (4, 1, 'user_phone', ''),
 (5, 1, 'user_social', '{\"fb\":\"\",\"gplus\":\"\"}'),
 (6, 1, 'user_role', 'admin'),
-(13, 3, 'user_birthday', ''),
-(14, 3, 'user_address', ''),
+(13, 3, 'user_birthday', '22.11.2017'),
+(14, 3, 'user_address', '1'),
 (15, 3, 'user_moreinfo', ''),
-(16, 3, 'user_phone', ''),
-(17, 3, 'user_social', '{\"fb\":\"\",\"gplus\":\"\"}'),
+(16, 3, 'user_phone', '2'),
+(17, 3, 'user_social', '{\"fb\":\"4\",\"gplus\":\"3\"}'),
 (18, 3, 'user_role', 'customer');
 
 -- --------------------------------------------------------
@@ -200,7 +216,7 @@ CREATE TABLE `avt_users` (
 
 INSERT INTO `avt_users` (`id`, `user_name`, `user_password`, `user_email`, `user_registered`, `user_status`, `user_display_name`, `user_money`) VALUES
 (1, 'Admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', '2017-11-02 09:15:22', 1, 'Admin', 100000000),
-(3, 'NOWAY', 'e10adc3949ba59abbe56e057f20f883e', 'a@gmail.com', '2017-11-02 09:14:20', 1, 'NOWAY', 1000000);
+(3, 'NOWAY', 'e10adc3949ba59abbe56e057f20f883e', 'a@gmail.com', '2017-11-04 03:52:40', 1, 'NOWAY', 360000);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -266,12 +282,12 @@ ALTER TABLE `avt_buy`
 -- AUTO_INCREMENT cho bảng `avt_servicemeta`
 --
 ALTER TABLE `avt_servicemeta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT cho bảng `avt_services`
 --
 ALTER TABLE `avt_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT cho bảng `avt_tokens`
 --
@@ -281,12 +297,12 @@ ALTER TABLE `avt_tokens`
 -- AUTO_INCREMENT cho bảng `avt_usermeta`
 --
 ALTER TABLE `avt_usermeta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT cho bảng `avt_users`
 --
 ALTER TABLE `avt_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

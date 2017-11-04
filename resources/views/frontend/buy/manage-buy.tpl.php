@@ -11,6 +11,7 @@
                         <th class="uk-text-center uk-text-nowrap">Gói dịch vụ</th>
                         <th class="uk-text-center uk-text-nowrap">Ngày đăng kí</th>
                         <th class="uk-text-center uk-text-nowrap">Thời hạn</th>
+                        <th class="uk-text-center uk-text-nowrap">Tình trạng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,15 @@
                         <td>
                             <?php echo $value['buy_date']; ?> tháng
                         </td>
+                        <td><?php 
+                            $date = $self->countDay( $value['buy_created'], date("Y-m-d H:i:s") );
+                            if ( $date > $value['buy_date']*30 ) {
+                                echo '<span class="uk-text-danger uk-text-bold"> Đã hết hạn</span>';
+                            } else {
+                                $subDate = $value['buy_date']*30 - $date;
+                                echo '<span class="uk-text-success uk-text-bold">Còn '. $subDate . ' ngày</span>';
+                            }
+                        ?> </td>
                     </tr>
                     <?php $i++; endforeach; ?>
                 </tbody>

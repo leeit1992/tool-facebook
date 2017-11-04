@@ -7,15 +7,29 @@
  */
 (function($){
     "use strict";
-    var PAGE_FOLLOW = Backbone.View.extend({
+    var PAGE_COMMENT = Backbone.View.extend({
         el : '.pita-page-comment',
 
         events: {
+            'change #pita-comment-number' : 'changePacket',
             'click .pita-start-action' : 'startAction'
         },
 
         initialize: function() {
+            this.changePacket();
+        },
 
+        changePacket : function(){
+            var data = {
+                id : $('#pita-comment-number', this.el).val() },
+                self = this;
+
+            // Send to server handle.
+            $.post(AVTDATA.SITE_URL + '/get-packet-comment', data, function(result) {
+                var dataResult = JSON.parse( result );
+                $(".pita-setinteval").val(dataResult.numberS);
+                $(".avt_comment_number").val(dataResult.speedTime);
+            });
         },
 
         startAction : function(){
@@ -23,8 +37,8 @@
 
             var numberS = $(".pita-setinteval").val();
             
-            $(".avt-total-token-check").attr('data-total', $("#pita-like-number").val());
-            $(".avt-total-token-check").text($("#pita-like-number").val() + ' Comments ');
+            $(".avt-total-token-check").attr('data-total', $(".avt_comment_number").val());
+            $(".avt-total-token-check").text($(".avt_comment_number").val() + ' Comments ');
 
             var startFilter = $(".avt-has-filter").attr('data-start');
             var totalToken = $(".avt-total-token-check").attr('data-total');
@@ -61,6 +75,6 @@
         }
 
     });
-    new PAGE_FOLLOW;
+    new PAGE_COMMENT;
     
 })(jQuery);
