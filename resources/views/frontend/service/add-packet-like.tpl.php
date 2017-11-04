@@ -64,7 +64,7 @@
                                                     'name'  => 'avt_like_post',
                                                     'type'  => 'text',
                                                     'class' => 'md-input avt-required-js',
-                                                    'value' => isset( $meta['like_post'] ) ? $meta['like_post'] : ''
+                                                    'value' => isset( $meta['post_limit'] ) ? $meta['post_limit'] : ''
                                                 ] );
                                             ?>
                                         <span class="md-input-bar"></span>

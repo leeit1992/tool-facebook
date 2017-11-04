@@ -15,6 +15,7 @@
                         <th class="uk-text-center uk-text-nowrap">Tên dịch vụ</th>
                         <th class="uk-text-center uk-text-nowrap">Số like</th>
                         <th class="uk-text-center uk-text-nowrap">Số comment</th>
+                        <th class="uk-text-center uk-text-nowrap">POST/Ngày</th>
                         <th class="uk-text-center uk-text-nowrap">Giá tiền</th>
                         <th class="uk-text-center uk-text-nowrap">Actions</th>
                     </tr>
@@ -28,6 +29,7 @@
                             <td><?php echo $value['service_name']; ?></td>
                             <td><?php echo $mdService->getMetaData( $value['id'], 'service_like' ); ?></td>
                             <td><?php echo $mdService->getMetaData( $value['id'], 'service_comment' ); ?></td>
+                            <td><?php echo $mdService->getMetaData( $value['id'], 'post_limit' ); ?></td>
                             <td><?php echo $helpPrice->formatPrice( $value['service_price'] ); ?></td>
                             <td>
                                 <a href="<?php echo url('/user-tool/edit-packet-service/' . $value['id']) ?>">

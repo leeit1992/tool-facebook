@@ -12,6 +12,7 @@
                         <th class="uk-text-center uk-text-nowrap">Ngày đăng kí</th>
                         <th class="uk-text-center uk-text-nowrap">Thời hạn</th>
                         <th class="uk-text-center uk-text-nowrap">Tình trạng</th>
+                        <th class="uk-text-center uk-text-nowrap">Giới hạn ngày</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,7 @@
                                 echo '<span class="uk-text-success uk-text-bold">Còn '. $subDate . ' ngày</span>';
                             }
                         ?> </td>
+                        <td>88/100</td>
                     </tr>
                     <?php $i++; endforeach; ?>
                 </tbody>

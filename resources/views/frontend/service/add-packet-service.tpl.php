@@ -42,13 +42,13 @@
                                 </div>
                                 <div class="uk-form-row">
                                     <div class="md-input-wrapper <?php echo $input_filled; ?>">
-                                        <label>Giới hạn post / Bài</label>
+                                        <label>Giới hạn post / Ngày</label>
                                         <?php
                                             echo $self->renderInput( [
                                                     'name'  => 'avt_service_post',
                                                     'type'  => 'text',
                                                     'class' => 'md-input',
-                                                    'value' => isset( $meta['service_post'] ) ? $meta['service_post'] : ''
+                                                    'value' => isset( $meta['post_limit'] ) ? $meta['post_limit'] : ''
                                                 ] );
                                             ?>
                                         <span class="md-input-bar"></span>

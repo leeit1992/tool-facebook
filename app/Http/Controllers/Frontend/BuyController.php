@@ -72,14 +72,16 @@ class BuyController extends baseController
             if ( $user[0]['user_money'] >= $total_price) {
                 $this->mdBuy->save( 
                     [
-                        'buy_fb'      => $formData['avt_buy_fb'],
-                        'buy_name'    => $formData['avt_buy_name'],
-                        'buy_packet'  => $formData['avt_buy_packet'],
-                        'buy_speed'   => $formData['avt_buy_speed'],
-                        'buy_date'    => $formData['avt_buy_date'],
-                        'buy_comment' => $formData['avt_buy_comment'],
-                        'buy_user'    => Session()->get('atl_user_id'),
-                        'buy_created' => date("Y-m-d H:i:s")
+                        'buy_fb'       => $formData['avt_buy_fb'],
+                        'buy_name'     => $formData['avt_buy_name'],
+                        'buy_packet'   => $formData['avt_buy_packet'],
+                        'buy_speed'    => $formData['avt_buy_speed'],
+                        'buy_date'     => $formData['avt_buy_date'],
+                        'buy_comment'  => $formData['avt_buy_comment'],
+                        'buy_user'     => Session()->get('atl_user_id'),
+                        'buy_used_day' => date("Y-m-d"),
+                        'buy_run_day'  => 0,
+                        'buy_created'  => date("Y-m-d H:i:s")
                     ],
                     null
                 );
@@ -130,6 +132,8 @@ class BuyController extends baseController
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => '',
                         'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_used_day' => date("Y-m-d"),
+                        'buy_run_day'  => 0,
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null
@@ -181,6 +185,8 @@ class BuyController extends baseController
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => $formData['avt_buy_comment'],
                         'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_used_day' => date("Y-m-d"),
+                        'buy_run_day'  => 0,
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null

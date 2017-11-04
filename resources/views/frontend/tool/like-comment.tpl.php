@@ -39,6 +39,7 @@
                     <span class="uk-form-help-block">Khoảng cách giữa các like. 2000ms = 2s, nên để 2s/1 Like. </span>
                 </div>
                 <div class="uk-form-row">
+                    <span class="avt-message-limit uk-text-bold uk-text-danger" data-stt="" ></span><br>
                 	<a class="md-btn md-btn-primary pita-start-action" type="button" href="#">Thực Hiện</a>
                 </div>
             </div>

@@ -64,7 +64,7 @@
                                                     'name'  => 'avt_comment_post',
                                                     'type'  => 'text',
                                                     'class' => 'md-input avt-required-js',
-                                                    'value' => isset( $meta['comment_post'] ) ? $meta['comment_post'] : ''
+                                                    'value' => isset( $meta['post_limit'] ) ? $meta['post_limit'] : ''
                                                 ] );
                                             ?>
                                         <span class="md-input-bar"></span>

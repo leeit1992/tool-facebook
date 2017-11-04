@@ -26,7 +26,7 @@
                             </td>
                             <td><?php echo $value['service_name']; ?></td>
                             <td><?php echo $mdService->getMetaData( $value['id'], 'like_number' ); ?></td>
-                            <td><?php echo $mdService->getMetaData( $value['id'], 'like_post' ); ?></td>
+                            <td><?php echo $mdService->getMetaData( $value['id'], 'post_limit' ); ?></td>
                             <td><?php echo $helpPrice->formatPrice( $value['service_price'] ); ?></td>
                             <td>
                                 <a href="<?php echo url('/user-tool/edit-packet-like/' . $value['id']) ?>">

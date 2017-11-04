@@ -94,7 +94,7 @@ class ServiceController extends baseController
 
             // Add meta data for service.
             $serviceMeta = [
-                'service_post'    => $formData['avt_service_post'],
+                'post_limit'    => $formData['avt_service_post'],
                 'service_like'    => $formData['avt_service_like'],
                 'service_comment' => $formData['avt_service_comment']
             ];
@@ -190,7 +190,7 @@ class ServiceController extends baseController
             // Add meta data for service.
             $serviceMeta = [
                 'like_number' => $formData['avt_like_number'],
-                'like_post'   => $formData['avt_like_post']
+                'post_limit'   => $formData['avt_like_post']
             ];
             // Loop add add | update meta data.
             foreach ($serviceMeta as $mtaKey => $metaValue) {
@@ -284,7 +284,7 @@ class ServiceController extends baseController
             // Add meta data for service.
             $serviceMeta = [
                 'comment_number' => $formData['avt_comment_number'],
-                'comment_post'   => $formData['avt_comment_post']
+                'post_limit'   => $formData['avt_comment_post']
             ];
             // Loop add add | update meta data.
             foreach ($serviceMeta as $mtaKey => $metaValue) {

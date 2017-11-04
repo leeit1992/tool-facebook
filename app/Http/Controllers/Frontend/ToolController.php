@@ -5,15 +5,13 @@ use App\Http\Components\Frontend\Controller as baseController;
 use App\Model\BuyModel;
 use App\Model\ServiceModel;
 
-class ToolController extends baseController{
-    
+class ToolController extends baseController
+{
     public function __construct(){
 		parent::__construct();
 		$this->userAccess();
         $this->mdBuy = new BuyModel();
         $this->mdService = new ServiceModel();
-
-        
 	}  
 
     public function upLikeComment(){
@@ -141,33 +139,51 @@ class ToolController extends baseController{
     	return $this->loadTemplate('frontend/main.tpl');
     }
 
-    public function handleAction(Request $request){
-        echo json_encode([
-            'start' => $request->get('start') + $request->get('limit'),
-        ]);
-    }
-
     public function getPacketLike( Request $request ) {
         $data = [];
+        $data['status'] = true;
+
         $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
         $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
 
         $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'like_number' );
         $data['speedTime'] = $speedTime;
-        
+
+        $dateCurrent = date("Y-m-d");
+        if ( $infoBuy[0]['buy_used_day'] === $dateCurrent ) {
+            $limitPost = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'post_limit' );
+            if ( $infoBuy[0]['buy_run_day'] >= $limitPost ) {
+                $data['status'] = false;
+            }
+        }
         echo json_encode( $data );
     }
+
     public function getPacketComment( Request $request ) {
         $data = [];
+        $data['status'] = true;
+
         $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
         $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
 
         $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'comment_number' );
         $data['speedTime'] = $speedTime;
+
+        $dateCurrent = date("Y-m-d");
+        if ( $infoBuy[0]['buy_used_day'] === $dateCurrent ) {
+            $limitPost = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'post_limit' );
+            if ( $infoBuy[0]['buy_run_day'] >= $limitPost ) {
+                $data['status'] = false;
+            }
+        }
+
         echo json_encode( $data );
     }
+
     public function getPacketLikeComment( Request $request ) {
         $data = [];
+        $data['status'] = true;
+
         $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
         $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
 
@@ -176,6 +192,50 @@ class ToolController extends baseController{
 
         $speedComment = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'service_comment' );
         $data['speedComment'] = $speedComment;
+
+        $dateCurrent = date("Y-m-d");
+        if ( $infoBuy[0]['buy_used_day'] === $dateCurrent ) {
+            $limitPost = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'post_limit' );
+            if ( $infoBuy[0]['buy_run_day'] >= $limitPost ) {
+                $data['status'] = false;
+            }
+        }
+        
         echo json_encode( $data );
+    }
+
+    public function updateCountUsing( Request $request ) {
+        $data = [];
+        $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
+
+        $limitPost = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'post_limit' );
+        $buyDate = $infoBuy[0]['buy_used_day'];
+        $dateCurrent = date("Y-m-d");
+        if ( $buyDate === $dateCurrent && $infoBuy[0]['buy_run_day'] >= $limitPost) {
+            $data['status'] = false;
+        } else {
+            if ( $buyDate !== $dateCurrent ) {
+                $usedDate = $dateCurrent;
+                $runDay = 1;
+            } else {
+                $usedDate = $buyDate;
+                $runDay = $infoBuy[0]['buy_run_day'] + 1;
+            }
+            $this->mdBuy->save( 
+                [
+                    'buy_used_day' => $usedDate,
+                    'buy_run_day'  => $runDay
+                ],
+                $request->get('id')
+            );
+            $data['status'] = true;
+        }
+        echo json_encode( $data );
+    }
+    
+    public function handleAction(Request $request){
+        echo json_encode([
+            'start' => $request->get('start') + $request->get('limit'),
+        ]);
     }
 }

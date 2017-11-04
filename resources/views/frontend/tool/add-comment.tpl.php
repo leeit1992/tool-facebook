@@ -46,6 +46,7 @@
                     <span class="uk-form-help-block">Khoảng cách giữa các comments. 2000ms = 2s, nên để 2s/1 comment. </span>
                 </div>
                 <div class="uk-form-row">
+                    <span class="avt-message-limit uk-text-bold uk-text-danger"></span><br>
                     <a class="md-btn md-btn-primary pita-start-action" href="#">Thực Hiện</a>
                 </div>
             </div>
