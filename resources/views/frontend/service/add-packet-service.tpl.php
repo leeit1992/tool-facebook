@@ -39,6 +39,20 @@
                                         ?>
                                         <span class="md-input-bar"></span>
                                     </div>
+                                </div>
+                                <div class="uk-form-row">
+                                    <div class="md-input-wrapper <?php echo $input_filled; ?>">
+                                        <label>Giới hạn post / Bài</label>
+                                        <?php
+                                            echo $self->renderInput( [
+                                                    'name'  => 'avt_service_post',
+                                                    'type'  => 'text',
+                                                    'class' => 'md-input',
+                                                    'value' => isset( $meta['service_post'] ) ? $meta['service_post'] : ''
+                                                ] );
+                                            ?>
+                                        <span class="md-input-bar"></span>
+                                    </div>
                                 </div><br>
                             </div>
                             <div class="uk-width-large-1-2">

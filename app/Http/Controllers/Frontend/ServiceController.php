@@ -94,6 +94,7 @@ class ServiceController extends baseController
 
             // Add meta data for service.
             $serviceMeta = [
+                'service_post'    => $formData['avt_service_post'],
                 'service_like'    => $formData['avt_service_like'],
                 'service_comment' => $formData['avt_service_comment']
             ];
