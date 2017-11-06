@@ -17,7 +17,9 @@
                 </thead>
                 <tbody>
                     <?php $i = 1;
-                    foreach ($listBuy as $value): ?>
+                        $dateCurrent = date("Y-m-d");
+                    foreach ($listBuy as $value): 
+                    ?>
                     <tr class="uk-text-center">
                         <td><?php echo $i; ?></td>
                         <td>
@@ -47,7 +49,15 @@
                                 echo '<span class="uk-text-success uk-text-bold">Còn '. $subDate . ' ngày</span>';
                             }
                         ?> </td>
-                        <td>88/100</td>
+                        <td><?php 
+                            $post_limit = $mdService->getMetaData( $value['buy_packet'], 'post_limit' );
+                            $countUsed = ( $value['buy_used_day'] != $dateCurrent ) ? 0 : $value['buy_run_day'];
+                            if ( $countUsed == $post_limit ) {
+                                echo '<span class="uk-text-danger uk-text-bold">'.$countUsed. '/'. $post_limit .'</span>';
+                            } else {
+                                echo '<span class="uk-text-success uk-text-bold">'.$countUsed. '/'. $post_limit . '</span>';
+                            }
+                        ?></td>
                     </tr>
                     <?php $i++; endforeach; ?>
                 </tbody>
