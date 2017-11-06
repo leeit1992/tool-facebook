@@ -1,4 +1,4 @@
-<div>
+<div id="page-manage-acc-fb">
     <form action="<?php echo url('/user-tool/facebook-acc-add') ?>" class="uk-form-stacked" method="POST">
         
         <div class="uk-grid" data-uk-grid-margin>
@@ -57,14 +57,11 @@
         </div>
     </form>
     <hr>
-    <div id="page-manage-acc-fb">
-        <form action="<?php echo url('/user-tool/upload-acc-fb') ?>" id="atl-form-file" class="uk-form-stacked" method="POST">
-            <div class="uk-grid" data-uk-grid-margin>
-                <div class="uk-width-large-1-1">
-                    <div class="md-card">
-                        <div class="md-card-content">
-                        <span class="uk-text-success uk-text-bold atl-message-success"></span>
-                        <span class="uk-text-danger uk-text-bold atl-message-danger"></span>
+    <form action="<?php echo url('/user-tool/upload-acc-fb') ?>" id="atl-form-file" class="uk-form-stacked" method="POST">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-large-1-1">
+                <div class="md-card">
+                    <div class="md-card-content">
                         <h3 class="heading_a">
                             Upload danh sách tài khoản FB
                             <span class="sub-heading">File chứa tài khoản và pass FB.</span>
@@ -77,13 +74,19 @@
                                 <button type="submit" class="md-btn md-btn-primary atl-choose-file-js">Upload</button>
                             </div>
                         </div>
-                    </div>
+                        <div class="avt-btn-auto" style="display: none">
+                            <br>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1">
+                                    <a class="md-btn md-btn-primary avt-auto-add-acc-js">Tự động thêm tài khoản vào hệ thống</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    
+        </div>
+    </form>
     <hr>
     <div class="md-card uk-margin-medium-bottom">
         <div class="md-card-content">
@@ -124,6 +127,7 @@
             </div>
         </div>
     </div>
+    <div class="uk-notify uk-notify-bottom-right atl-notify-js" style="display: none;" data-notify="<?php echo isset( $notify[0] ) ? $notify[0] : ''; ?>"></div>
 </div>
 <?php 
     registerScrips( [ 'manage-acc-fb' => assets('frontend/js/page-manage-acc-fb-debug.js') ] );

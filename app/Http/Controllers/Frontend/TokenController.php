@@ -15,6 +15,11 @@ class TokenController extends baseController
         $this->userAccess();
         $this->mdToken = new TokenModel();
         $this->checkAdmin();
+        //  $getToken = ApiGetToken::getInstance()->getToken('majuwozeju@payperex2.com', 'XBw@536');
+        
+        //   $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
+        //    pr($infoToken);
+        // die;
     }
 
     public function manageToken(Request $request)
@@ -68,15 +73,15 @@ class TokenController extends baseController
             $checkAcc = $this->mdToken->getBy('account', $request->get('avt_user_name_fb'));
 
             if (empty($checkAcc) && !$request->get('avt_acc_id')) {
-                $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb'));
+                $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb')); // cái này login vào để lấy được cái token 
 
                 if (isset($getToken['access_token'])) {
-                    $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']);
+                    $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
                     $this->mdToken->save([
-                        'account' => $request->get('avt_user_name_fb'),
-                        'password' => $request->get('avt_password_fb'),
-                        'token' => $getToken['access_token'],
-                        'fb_id' => $getToken['uid'],
+                        'account' => $request->get('avt_user_name_fb'), // cai nay la ten tai khoan
+                        'password' => $request->get('avt_password_fb'), // mk
+                        'token' => $getToken['access_token'], // token lay duoc
+                        'fb_id' => $getToken['uid'], //uid
                         'token_status' => 1,
                         'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
                         'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
@@ -142,7 +147,7 @@ class TokenController extends baseController
         if ( !empty( $request->files->get('file') ) ) {
             $dir = FOLDER_UPLOAD . '/acc_fb';
             // Check if dir.
-            if( !is_dir( $dir ) ) {
+            if ( !is_dir( $dir ) ) {
                 mkdir( $dir );
             }
             // Move to folder upload.
@@ -153,5 +158,20 @@ class TokenController extends baseController
             $notice['status']  = false;
         }
         echo json_encode( $notice );
+    }
+
+    public function autoAccFb( Request $request ) {
+        $notice = [];
+        $linkFile = FOLDER_UPLOAD . '/acc_fb/file_acc_fb.txt';
+        if ( file_exists( $linkFile ) ) {
+            $content =  file_get_contents( $linkFile );
+            $listAcc = explode( "\n", $content );
+            foreach ($listAcc as $acc) {
+                $accFB = explode( "|", $acc );
+                print_r($accFB);
+            }
+        } else {
+            $notice['status']  = false;
+        }
     }
 }
