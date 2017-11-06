@@ -23,6 +23,8 @@ class Token implements RouterInterface{
 
 		$route->post('/user-tool/facebook-acc-add','Frontend\TokenController@validateAddFbAc');
 		$route->post('/user-tool/ajax-check-token','Frontend\TokenController@ajaxCheckToken');
+
+		$route->post('/user-tool/upload-acc-fb','Frontend\TokenController@uploadAccfb');
 	}
 
 }

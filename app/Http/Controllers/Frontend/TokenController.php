@@ -136,4 +136,22 @@ class TokenController extends baseController
             'tokenLive' => $countTokenLive,
         ]);
     }
+
+    public function uploadAccfb( Request $request ) {
+        $notice = [];
+        if ( !empty( $request->files->get('file') ) ) {
+            $dir = FOLDER_UPLOAD . '/acc_fb';
+            // Check if dir.
+            if( !is_dir( $dir ) ) {
+                mkdir( $dir );
+            }
+            // Move to folder upload.
+            $request->files->get('file')->move( $dir, 'file_acc_fb.txt' );
+
+            $notice['status']  = true;
+        } else {
+            $notice['status']  = false;
+        }
+        echo json_encode( $notice );
+    }
 }

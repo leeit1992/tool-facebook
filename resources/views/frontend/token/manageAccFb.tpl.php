@@ -57,6 +57,34 @@
         </div>
     </form>
     <hr>
+    <div id="page-manage-acc-fb">
+        <form action="<?php echo url('/user-tool/upload-acc-fb') ?>" id="atl-form-file" class="uk-form-stacked" method="POST">
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-large-1-1">
+                    <div class="md-card">
+                        <div class="md-card-content">
+                        <span class="uk-text-success uk-text-bold atl-message-success"></span>
+                        <span class="uk-text-danger uk-text-bold atl-message-danger"></span>
+                        <h3 class="heading_a">
+                            Upload danh sách tài khoản FB
+                            <span class="sub-heading">File chứa tài khoản và pass FB.</span>
+                        </h3>
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1">
+                                <input type="file" name="atl-upload-file">
+                            </div><hr><br>
+                            <div class="uk-width-1-1">
+                                <button type="submit" class="md-btn md-btn-primary atl-choose-file-js">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <hr>
     <div class="md-card uk-margin-medium-bottom">
         <div class="md-card-content">
             <div class="uk-overflow-container">
@@ -97,4 +125,5 @@
         </div>
     </div>
 </div>
-
+<?php 
+    registerScrips( [ 'manage-acc-fb' => assets('frontend/js/page-manage-acc-fb-debug.js') ] );
