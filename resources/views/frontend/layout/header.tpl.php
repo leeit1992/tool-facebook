@@ -36,6 +36,11 @@
     <![endif]-->
 
 </head>
+<style type="text/css">  
+    body{
+        background: url('http://localhost:3000/project10/public/frontend/img/ukkSZta.jpg') no-repeat center center fixed;
+    }
+</style>
 <body class="sidebar_main_open sidebar_main_swipe">
     <div id="atl-script-header"></div>
 	<!-- main header -->

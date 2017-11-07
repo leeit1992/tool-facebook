@@ -153,25 +153,72 @@ class TokenController extends baseController
             // Move to folder upload.
             $request->files->get('file')->move( $dir, 'file_acc_fb.txt' );
 
-            $notice['status']  = true;
+            $linkFile = FOLDER_UPLOAD . '/acc_fb/file_acc_fb.txt';
+            $content =  file_get_contents( $linkFile );
+            $listAcc = explode( "\n", $content );
+
+            $argsList = [];
+            foreach ($listAcc as $acc) {
+                $accFB = explode( "|", $acc );
+                $argsList[] = $accFB;
+            }
+
+            $notice['data']  = count($argsList);
         } else {
-            $notice['status']  = false;
+            $notice['data']  = false;
         }
         echo json_encode( $notice );
     }
 
     public function autoAccFb( Request $request ) {
-        $notice = [];
+
         $linkFile = FOLDER_UPLOAD . '/acc_fb/file_acc_fb.txt';
+        $argsList = [];
+
         if ( file_exists( $linkFile ) ) {
             $content =  file_get_contents( $linkFile );
             $listAcc = explode( "\n", $content );
             foreach ($listAcc as $acc) {
                 $accFB = explode( "|", $acc );
-                print_r($accFB);
+                $argsList[] = $accFB;
             }
-        } else {
-            $notice['status']  = false;
         }
+
+        // pr( $argsList[$request->get('start')] );
+        // 
+        // //  $getToken = ApiGetToken::getInstance()->getToken('majuwozeju@payperex2.com', 'XBw@536');
+        
+        //   $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
+        //    pr($infoToken);
+
+        if( isset( $argsList[$request->get('start')] ) ) {
+           
+            $accInfo = $argsList[$request->get('start')];
+            $getToken = ApiGetToken::getInstance()->getToken($accInfo[0], $accInfo[1]);
+            
+            if( isset( $getToken['access_token'] ) ){
+                $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
+                $this->mdToken->save([
+                    'account' => $accInfo[0], 
+                    'password' => $accInfo[1], 
+                    'token' => $getToken['access_token'], 
+                    'fb_id' => $getToken['uid'], 
+                    'token_status' => 1,
+                    'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                    'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
+                ]);
+            }else{
+                $this->mdToken->save([
+                    'account' => $accInfo[0], 
+                    'password' => $accInfo[1], 
+                    'token_status' => 2,
+                ]);
+            }
+        }
+
+        echo json_encode([
+            'start' => $request->get('start') + $request->get('limit'),
+        ]);
+
     }
 }

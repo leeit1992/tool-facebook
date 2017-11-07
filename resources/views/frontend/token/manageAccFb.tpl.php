@@ -87,8 +87,14 @@
             </div>
         </div>
     </form>
+    <?php View('frontend/layout/loadAction.tpl'); ?>
     <hr>
     <div class="md-card uk-margin-medium-bottom">
+        <ul class="uk-tab uk-tab-grid">
+            <li class="uk-width-1-3 uk-active"><a href="<?php echo url('/user-tool/manage-token') ?>" class="uk-text-small">Toàn bộ</a></li>
+            <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=live') ?>" class="uk-text-small">Tài khoản đã lấy được token</a></li>
+            <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=die') ?>" class="uk-text-small">Tài khoản chưa lấy được token</a></li>
+        </ul>
         <div class="md-card-content">
             <div class="uk-overflow-container">
                 <table class="uk-table">
@@ -102,6 +108,8 @@
                             <th>Mật khẩu</th>
                             <th>UID</th>
                             <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Trạng thái</th>
                             <th>#</th>
                         </tr>
                     </thead>
@@ -114,7 +122,16 @@
                             <td><?php echo $value['account'] ?></td>
                             <td><?php echo $value['password'] ?></td>
                             <td><?php echo $value['fb_id'] ?></td>
-                             <td><?php echo ( 'male' == $value['gender'] ) ? 'Nam' : 'Nữ'  ?></td>
+                            
+                            <td><?php echo ( 'male' == $value['gender'] ) ? 'Nam' : 'Nữ'  ?></td>
+                            <td><?php echo $value['birthday'] ?></td>
+                            <td>
+                    
+                                <label class="<?php echo (1 == $value['token_status']) ? 'uk-text-primary' : 'uk-text-danger' ?>">
+                                    <?php echo (1 == $value['token_status']) ? 'Oke' : 'Faild' ?>
+                                </label>
+                          
+                            </td>
                             <td>
                                 <a href=""><i class="uk-icon-edit"></i></a> | 
                                 <a href=""><i class="uk-icon-remove"></i></a>

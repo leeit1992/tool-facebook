@@ -18,8 +18,12 @@
             'login_page'  => assets('backend/assets/css/login_page.min.css'),
         ] );
     ?>
-
 </head>
+<style type="text/css">  
+    .login_page{
+        background: url('http://localhost:3000/project10/public/frontend/img/ukkSZta.jpg') no-repeat center center fixed;
+    }
+</style>
 <body class="login_page">
 
     <div class="login_page_wrapper">
