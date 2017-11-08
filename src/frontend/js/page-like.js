@@ -75,8 +75,10 @@
         ajaxAction: function( start = 0, limit = 1, totalToken = 0, timeAction = 2000){
             var self = this;
             var data = {
+                type: 'likePost',
                 start : start,
-                limit: limit
+                limit: limit,
+                objectId : $(".pita-id-post").val()
             };
 
             setTimeout(function(){

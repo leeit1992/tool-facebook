@@ -13,6 +13,8 @@
         events: {
             'submit #atl-form-file' : 'uploadFile',
             'click .avt-auto-add-acc-js' : 'autoAccFb',
+            'click .atl-action-apply-js' : 'actionManage',
+            'click .avt-delete-acc' : 'deleteFBacc',
         },
 
         errorFormTpl: _.template('<div class="uk-notify-message <%= classes %>">\
@@ -23,6 +25,13 @@
                                     </div>'),
 
         initialize: function() {
+            $('.avt-facebook-acc-check-primary').on('ifChecked', function(event){
+                $(".avt-facebook-acc-check-child").iCheck('check');
+            });
+
+            $('.avt-facebook-acc-check-primary').on('ifUnchecked', function(event){
+                $(".avt-facebook-acc-check-child").iCheck('uncheck');
+            });
         },
 
          /**
@@ -130,7 +139,59 @@
                    // $(".avt-filter-token-live").hide();
                 }
             });
+        },
+
+        actionManage: function(e){
+            var action = $( e.currentTarget ).closest('.atl-action-manage').find("select[name=atl-action-manage]").val();
+            var argsID = new Array;
+
+            if( 'delete' == action ) {
+                $(".avt-facebook-acc-check-child", this.el).each(function(){
+                    if(this.checked){
+                        argsID.push($(this).val());
+                    }
+                })
+
+                // Send to server handle.
+                var data = { id: argsID };
+                $.post(AVTDATA.SITE_URL + '/delete-facebook-acc', data, function(result) {
+                    var dataResult = JSON.parse( result );
+                    $.each(argsID,function(i, el){
+                        $(".avt-fb-acc-item-" + el).remove();
+                    })
+                    altair_helpers.content_preloader_hide();
+                    if( dataResult.status ){
+                        UIkit.modal.alert('Delete Success!');
+                    }else{
+                        UIkit.modal.alert('Delete False!');
+                    }
+                });
+            }else{
+                UIkit.modal.alert('Please choose Action!');
+            }
+
+            return false;
+        },
+
+        deleteFBacc: function(e){
+            var itemId = $( e.currentTarget ).attr('data-id');
+
+            var data = { id: itemId };
+
+            $.post(AVTDATA.SITE_URL + '/delete-facebook-acc', data, function(result) {
+                var dataResult = JSON.parse( result );
+                $(".avt-fb-acc-item-" + itemId).remove();
+                altair_helpers.content_preloader_hide();
+                if( dataResult.status ){
+                    UIkit.modal.alert('Delete Success!');
+                }else{
+                    UIkit.modal.alert('Delete False!');
+                }
+            });
+
+            return false;
         }
+
     });
     new MANAGE_ACC_FB;
     

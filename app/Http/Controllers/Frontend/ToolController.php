@@ -4,6 +4,7 @@ use Atl\Foundation\Request;
 use App\Http\Components\Frontend\Controller as baseController;
 use App\Model\BuyModel;
 use App\Model\ServiceModel;
+use App\Model\TokenModel;
 
 class ToolController extends baseController
 {
@@ -12,6 +13,7 @@ class ToolController extends baseController
 		$this->userAccess();
         $this->mdBuy = new BuyModel();
         $this->mdService = new ServiceModel();
+        $this->mdToken = new TokenModel();
 	}  
 
     public function upLikeComment(){
@@ -232,10 +234,32 @@ class ToolController extends baseController
         }
         echo json_encode( $data );
     }
-    
+    //1138030233005264
     public function handleAction(Request $request){
+        $tokenRand = $this->mdToken->queryRand();
+        $get = '';
+        switch ($request->get('type')) {
+            case 'likePost':
+               $get = @file_get_contents('https://graph.facebook.com/'.$request->get('objectId').'/likes?method=POST&access_token='.$tokenRand[0]['token']);
+            break;
+
+            case 'comment':
+                if( $request->get('packageId') ) {
+                    $infoBuy = $this->mdBuy->getBy('id', $request->get('packageId'));
+                    $listComment = explode( "\n", $infoBuy[0]['buy_comment'] );
+                    
+                    $k = array_rand($listComment);
+                    $comment = $listComment[$k];
+                    $comment = str_replace(' ', '%20', $comment);
+                    $get = @file_get_contents('https://graph.facebook.com/'.$request->get('objectId').'/comments?method=POST&message='.$comment.'&access_token='.$tokenRand[0]['token']);
+                }
+                
+            break;
+        }
+
         echo json_encode([
             'start' => $request->get('start') + $request->get('limit'),
+            'status' => $get
         ]);
     }
 }

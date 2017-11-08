@@ -81,4 +81,49 @@ class TokenModel extends Model
             ]
         );
     }
+
+    public function getLinmitbyType( $ofset = 0, $limit = 10, $type = '' ) {
+        return $this->db->select(
+            $this->table,
+            '*',
+            [
+                'token_status' => $type,
+                'ORDER' => [
+                    'id' => 'DESC',
+                ],
+                "LIMIT" => [$ofset, $limit]
+            ]
+        );
+    }
+
+    public function delete( $args ){
+        return $this->db->delete(
+            $this->table,
+            [
+            "AND" => [
+                "id" => $args,
+            ]
+        ]);
+    }
+
+    public function queryRand(){
+
+        return $this->db->query(
+            'SELECT token FROM avt_tokens WHERE token_status = 1
+            ORDER BY RAND()
+            LIMIT 1'
+        )->fetchAll();
+
+        return $this->db->select(
+            $this->table,
+            '*',
+            [
+                'token_status' => 1,
+                'ORDER' => [
+                    'id' => 'RAND()',
+                ],
+                "LIMIT" => 1
+            ]
+        );
+    }
 }

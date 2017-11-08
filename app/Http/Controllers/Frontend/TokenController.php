@@ -6,6 +6,7 @@ use Atl\Foundation\Request;
 use App\Http\Components\Frontend\Controller as baseController;
 use App\Model\TokenModel;
 use App\Http\Components\ApiGetToken;
+use Atl\Pagination\Pagination;
 
 class TokenController extends baseController
 {
@@ -54,15 +55,45 @@ class TokenController extends baseController
         );
     }
 
-    public function facebookManage()
+    public function facebookManage($id = null, $type = 0, $page = null)
     {
-        $listFb = $this->mdToken->getAll();
+
+        switch ($type) {
+            case 1:
+                $baseUrl    = url('/user-tool/facebook-acc/type/1/page/');
+                $argsCondition = [ 'token_status' => 1 ];
+                break;
+            case 2:
+                $baseUrl    = url('/user-tool/facebook-acc/type/2/page/');
+                $argsCondition = [ 'token_status' => 2 ];
+                break;
+            default:
+                $baseUrl    = url('/user-tool/facebook-acc/type/0/page/');
+                $argsCondition = [];
+                break;
+        }
+
+        $ofset      = 50;
+        $totalRow   = $this->mdToken->getCount($argsCondition);
+        
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
+
+        $pagination = new Pagination( $config );
+
+        $listFb = $this->mdToken->getLinmit($pagination->getStartResult( $page ), $ofset);
+        if( $type ) {
+            $listFb = $this->mdToken->getLinmitbyType($pagination->getStartResult( $page ), $ofset, $type);
+        }
 
         return $this->loadTemplate(
             'frontend/token/manageAccFb.tpl',
             [
                 'noticeAction' => Session()->getFlashBag()->get('facebookManage'),
                 'listAccount' => $listFb,
+                'manageAction' => $this->manageAction,
+                'pagination'   => $pagination->link(),
+                'tabActive' => $type,
+                'infoAcc' => $this->mdToken->getBy('id', $id)
             ]
         );
     }
@@ -73,15 +104,15 @@ class TokenController extends baseController
             $checkAcc = $this->mdToken->getBy('account', $request->get('avt_user_name_fb'));
 
             if (empty($checkAcc) && !$request->get('avt_acc_id')) {
-                $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb')); // cái này login vào để lấy được cái token 
+                $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb'));
 
                 if (isset($getToken['access_token'])) {
                     $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
                     $this->mdToken->save([
-                        'account' => $request->get('avt_user_name_fb'), // cai nay la ten tai khoan
-                        'password' => $request->get('avt_password_fb'), // mk
-                        'token' => $getToken['access_token'], // token lay duoc
-                        'fb_id' => $getToken['uid'], //uid
+                        'account' => $request->get('avt_user_name_fb'),
+                        'password' => $request->get('avt_password_fb'),
+                        'token' => $getToken['access_token'],
+                        'fb_id' => $getToken['uid'],
                         'token_status' => 1,
                         'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
                         'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
@@ -98,13 +129,28 @@ class TokenController extends baseController
                     redirect(url('/user-tool/facebook-acc'));
                 }
 
-                $this->mdToken->save([
-                    'account' => $request->get('avt_user_name_fb'),
-                    'password' => $request->get('avt_password_fb'),
-                ], $request->get('avt_acc_id'));
+                $getToken = ApiGetToken::getInstance()->getToken($request->get('avt_user_name_fb'), $request->get('avt_password_fb'));
+
+                if (isset($getToken['access_token'])) {
+
+                    $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
+                    $this->mdToken->save([
+                        'account' => $request->get('avt_user_name_fb'),
+                        'password' => $request->get('avt_password_fb'),
+                        'token' => $getToken['access_token'],
+                        'fb_id' => $getToken['uid'],
+                        'token_status' => 1,
+                        'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                        'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
+                    ],$request->get('avt_acc_id'));
+                    Session()->getFlashBag()->set('facebookManage', ['type' => true, 'notice' => 'Update thông tin thành công.']);
+
+                }else{
+                    Session()->getFlashBag()->set('facebookManage', ['type' => false, 'notice' => 'Không lấy được token cho tài khoản.']);
+                }
             }
 
-            Session()->getFlashBag()->set('facebookManage', ['type' => true, 'notice' => 'Thêm thông tin thành công.']);
+            
         } else {
             Session()->getFlashBag()->set('facebookManage', ['type' => false, 'notice' => 'Tài khoản và mật khẩu không được để trống.']);
         }
@@ -184,41 +230,43 @@ class TokenController extends baseController
             }
         }
 
-        // pr( $argsList[$request->get('start')] );
-        // 
-        // //  $getToken = ApiGetToken::getInstance()->getToken('majuwozeju@payperex2.com', 'XBw@536');
-        
-        //   $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
-        //    pr($infoToken);
-
         if( isset( $argsList[$request->get('start')] ) ) {
            
             $accInfo = $argsList[$request->get('start')];
-            $getToken = ApiGetToken::getInstance()->getToken($accInfo[0], $accInfo[1]);
-            
-            if( isset( $getToken['access_token'] ) ){
-                $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
-                $this->mdToken->save([
-                    'account' => $accInfo[0], 
-                    'password' => $accInfo[1], 
-                    'token' => $getToken['access_token'], 
-                    'fb_id' => $getToken['uid'], 
-                    'token_status' => 1,
-                    'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
-                    'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
-                ]);
-            }else{
-                $this->mdToken->save([
-                    'account' => $accInfo[0], 
-                    'password' => $accInfo[1], 
-                    'token_status' => 2,
-                ]);
-            }
+            $checkExists = $this->mdToken->getBy('account', $accInfo[0]);
+
+            if( empty( $checkExists ) ) {
+                $getToken = ApiGetToken::getInstance()->getToken($accInfo[0], $accInfo[1]);
+                if( isset( $getToken['access_token'] ) ){
+                    $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
+                    $this->mdToken->save([
+                        'account' => $accInfo[0], 
+                        'password' => $accInfo[1], 
+                        'token' => $getToken['access_token'], 
+                        'fb_id' => $getToken['uid'], 
+                        'token_status' => 1,
+                        'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                        'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
+                    ]);
+                }else{
+                    $this->mdToken->save([
+                        'account' => $accInfo[0], 
+                        'password' => $accInfo[1], 
+                        'token_status' => 2,
+                    ]);
+                }
+            } 
         }
 
         echo json_encode([
             'start' => $request->get('start') + $request->get('limit'),
         ]);
 
+    }
+
+    public function ajaxDeleteFacebook(Request $request){
+        $id = $request->get('id');
+        $this->mdToken->delete($id);
+        echo json_encode( ['status' => true] );
     }
 }

@@ -6,7 +6,8 @@
                 <div class="uk-form-row">
                 	<h3 class="heading_a">ID Bài Viết</h3>
                     <div class="md-input-wrapper">
-                        <input type="password" class="md-input"><span class="md-input-bar"></span>
+                        <input type="text" class="md-input pita-id-post">
+                        <span class="md-input-bar"></span>
                     </div>
                     <span class="uk-form-help-block">Để lấy Post ID <a target="_blank" href="http://findpostid.com/">Click</a> Đây. </span>
                 </div>

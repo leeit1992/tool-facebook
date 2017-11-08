@@ -85,8 +85,10 @@
         ajaxActionLike: function( start = 0, limit = 1, totalToken = 0, timeAction = 2000){
             var self = this;
             var data = {
+                type: 'likePost',
                 start : start,
-                limit: limit
+                limit: limit,
+                objectId : $(".pita-id-post").val(),
             };
             setTimeout(function(){
                 $.post(AVTDATA.SITE_URL + '/ajax-tool-action', data, function(result){
@@ -119,8 +121,11 @@
         ajaxActionComment: function( start = 0, limit = 1, totalToken = 0, timeAction = 2000){
             var self = this;
             var data = {
+                type: 'comment',
                 start : start,
-                limit: limit
+                limit: limit,
+                objectId : $(".pita-id-post").val(),
+                packageId : $("#pita-like-comment-number").val(),
             };
             setTimeout(function(){
                 $.post(AVTDATA.SITE_URL + '/ajax-tool-action', data, function(result){

@@ -6,7 +6,7 @@
                 <div class="uk-form-row">
                 	<h3 class="heading_a">ID Người Dùng</h3>
                     <div class="md-input-wrapper">
-                        <input type="password" class="md-input"><span class="md-input-bar"></span>
+                        <input type="text" class="md-input"><span class="md-input-bar"></span>
                     </div>
                     <span class="uk-form-help-block">Để lấy ID <a target="_blank" href="https://findmyfbid.com/">Click</a> Đây. </span>
                 </div>

@@ -39,16 +39,24 @@
                         <div class="uk-width-medium-1-1">
                             <div class="md-input-wrapper md-input-filled">
                                 <label>Tài khoản</label>
-                                <input class="md-input" type="text" name="avt_user_name_fb" />
+                                <input class="md-input" type="text" name="avt_user_name_fb" value="<?php echo isset( $infoAcc[0]['account'] ) ? $infoAcc[0]['account'] : '' ?>" />
                             </div>
                         </div>
                         <div class="uk-width-medium-1-1">
                             <div class="md-input-wrapper md-input-filled">
                                 <label>Mật khẩu</label>
-                                <input class="md-input" type="text" name="avt_password_fb" />
+                                <input class="md-input" type="text" name="avt_password_fb" value="<?php echo isset( $infoAcc[0]['password'] ) ? $infoAcc[0]['password'] : '' ?>" />
                             </div>
                         </div>
                         <div class="uk-width-medium-1-1">
+                            <?php 
+                                if(isset( $infoAcc[0]['id'] )){
+                                    ?>
+                                    <input type="hidden" name="avt_acc_id" value="<?php echo $infoAcc[0]['id'] ?>" />
+                                    <?php
+                                }
+                            ?>
+                            
                             <button class="md-btn">Save</button>
                         </div>
                     </div>
@@ -74,14 +82,6 @@
                                 <button type="submit" class="md-btn md-btn-primary atl-choose-file-js">Upload</button>
                             </div>
                         </div>
-                        <div class="avt-btn-auto" style="display: none">
-                            <br>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-1">
-                                    <a class="md-btn md-btn-primary avt-auto-add-acc-js">Tự động thêm tài khoản vào hệ thống</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -91,18 +91,19 @@
     <hr>
     <div class="md-card uk-margin-medium-bottom">
         <ul class="uk-tab uk-tab-grid">
-            <li class="uk-width-1-3 uk-active"><a href="<?php echo url('/user-tool/manage-token') ?>" class="uk-text-small">Toàn bộ</a></li>
-            <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=live') ?>" class="uk-text-small">Tài khoản đã lấy được token</a></li>
-            <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=die') ?>" class="uk-text-small">Tài khoản chưa lấy được token</a></li>
+            <li class="uk-width-1-3 <?php echo (0 == $tabActive) ? 'uk-active' : '' ?>"><a href="<?php echo url('/user-tool/facebook-acc') ?>" class="uk-text-small">Toàn bộ</a></li>
+            <li class="uk-width-1-3 <?php echo (1 == $tabActive) ? 'uk-active' : '' ?>"><a href="<?php echo url('/user-tool/facebook-acc/type/1') ?>" class="uk-text-small">Tài khoản đã lấy được token</a></li>
+            <li class="uk-width-1-3 <?php echo (2 == $tabActive) ? 'uk-active' : '' ?>"><a href="<?php echo url('/user-tool/facebook-acc/type/2') ?>" class="uk-text-small">Tài khoản chưa lấy được token</a></li>
         </ul>
         <div class="md-card-content">
             <div class="uk-overflow-container">
                 <table class="uk-table">
                     <h3>Danh sách tài khoản</h3>
+                    <?php View( $manageAction ); ?>
                     <thead>
                         <tr>
                             <td>
-                                <input type="checkbox" data-md-icheck="">
+                                <input type="checkbox" class="avt-facebook-acc-check-primary" data-md-icheck="">
                             </td>
                             <th>Tài khoản</th>
                             <th>Mật khẩu</th>
@@ -115,15 +116,19 @@
                     </thead>
                     <tbody>
                         <?php foreach ($listAccount as $value): ?>
-                        <tr>
+                        <tr class="avt-fb-acc-item-<?php echo $value['id'] ?>">
                             <td>
-                                <input type="checkbox" data-md-icheck="">
+                                <input type="checkbox" class="avt-facebook-acc-check-child" value="<?php echo $value['id'] ?>"  data-md-icheck="">
                             </td>
                             <td><?php echo $value['account'] ?></td>
                             <td><?php echo $value['password'] ?></td>
                             <td><?php echo $value['fb_id'] ?></td>
                             
-                            <td><?php echo ( 'male' == $value['gender'] ) ? 'Nam' : 'Nữ'  ?></td>
+                            <td><?php 
+                                if( !empty( $value['gender'] ) ) {
+                                    echo ( 'male' == $value['gender'] ) ? 'Nam' : 'Nữ';
+                                }
+                            ?></td>
                             <td><?php echo $value['birthday'] ?></td>
                             <td>
                     
@@ -133,14 +138,16 @@
                           
                             </td>
                             <td>
-                                <a href=""><i class="uk-icon-edit"></i></a> | 
-                                <a href=""><i class="uk-icon-remove"></i></a>
+                                <a href="<?php echo url('/user-tool/facebook-acc/edit/'.$value['id']) ?>"><i class="uk-icon-edit"></i></a> | 
+                                <a href="#delete-<?php echo $value['id'] ?>" class="avt-delete-acc" data-id="<?php echo $value['id'] ?>"><i class="uk-icon-remove"></i></a>
                             </td>
 
                         </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <?php View( $manageAction ); ?>
+                <?php echo $pagination; ?>
             </div>
         </div>
     </div>

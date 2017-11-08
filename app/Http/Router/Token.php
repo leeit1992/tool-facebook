@@ -18,11 +18,15 @@ class Token implements RouterInterface{
 
 	public function router(&$route){
 		$route->get('/user-tool/facebook-acc','Frontend\TokenController@facebookManage');
+		$route->get('/user-tool/facebook-acc/edit/{id}','Frontend\TokenController@facebookManage');
+		$route->get('/user-tool/facebook-acc/type/{type}/page/{page}','Frontend\TokenController@facebookManage');
+		$route->get('/user-tool/facebook-acc/type/{type}','Frontend\TokenController@facebookManage');
 		
 		$route->get('/user-tool/manage-token','Frontend\TokenController@manageToken');
 
 		$route->post('/user-tool/facebook-acc-add','Frontend\TokenController@validateAddFbAc');
 		$route->post('/user-tool/ajax-check-token','Frontend\TokenController@ajaxCheckToken');
+		$route->post('/user-tool/delete-facebook-acc','Frontend\TokenController@ajaxDeleteFacebook');
 
 		$route->post('/user-tool/upload-acc-fb','Frontend\TokenController@uploadAccfb');
 		$route->post('/user-tool/auto-acc-fb','Frontend\TokenController@autoAccFb');
