@@ -1,8 +1,8 @@
-<div id="avt-page-handle-service">
-    <form action="<?php echo url('/user-tool/validate-packet-service') ?>" method="post" id="avt-form-service" enctype="multipart/form-data">
+<div id="avt-page-like">
+    <form action="<?php echo url('/user-tool/validate-like') ?>" method="post" id="avt-form-like" enctype="multipart/form-data">
         <div class="md-card">
             <div class="user_heading">
-                <h2 class="heading_a" style="color: white;"><?php echo $actionName; ?> gói dịch vụ combo auto
+                <h2 class="heading_a" style="color: white;"><?php echo $actionName; ?> gói dịch vụ tăng like
                 </h2>
             </div>
             <div class="user_content" data-uk-grid-margin>
@@ -10,13 +10,13 @@
                             <div class="uk-width-large-1-2">
                                 <div class="uk-form-row">
                                     <div class="md-input-wrapper <?php echo $input_filled; ?>" >
-                                        <label>Tên gói combo auto</label>
+                                        <label>Tên gói tăng like</label>
                                         <?php
                                             echo $self->renderInput( [
                                                     'name'  => 'avt_service_name',
                                                     'type'  => 'text',
                                                     'class' => 'md-input avt-required-js',
-                                                    'value' => isset( $infoPK['service_name'] ) ? $infoPK['service_name'] : ''
+                                                    'value' => isset( $infoLike['service_name'] ) ? $infoLike['service_name'] : ''
                                                 ] );
                                             ?>
                                         <span class="md-input-bar"></span>
@@ -24,13 +24,13 @@
                                 </div>
                                 <div class="uk-form-row">
                                     <div class="md-input-wrapper <?php echo $input_filled; ?>">
-                                        <label>Giá tiền ( vnđ )</label>
+                                        <label>Giá tiền (VNĐ) / Tháng</label>
                                         <?php
                                             echo $self->renderInput( [
                                                 'name'  => 'avt_service_price',
                                                 'type'  => 'text',
                                                 'class' => 'md-input masked_input avt-required-js',
-                                                'value' => isset( $infoPK['service_price'] ) ? $infoPK['service_price'] : '',
+                                                'value' => isset( $infoLike['service_price'] ) ? $infoLike['service_price'] : '',
                                                 'attr' => [
                                                         'data-inputmask' => "'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'",
                                                         'data-inputmask-showmaskonhover' => 'false'
@@ -39,46 +39,18 @@
                                         ?>
                                         <span class="md-input-bar"></span>
                                     </div>
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="md-input-wrapper <?php echo $input_filled; ?>">
-                                        <label>Giới hạn post / Ngày</label>
-                                        <?php
-                                            echo $self->renderInput( [
-                                                    'name'  => 'avt_service_post',
-                                                    'type'  => 'text',
-                                                    'class' => 'md-input',
-                                                    'value' => isset( $meta['post_limit'] ) ? $meta['post_limit'] : ''
-                                                ] );
-                                            ?>
-                                        <span class="md-input-bar"></span>
-                                    </div>
                                 </div><br>
                             </div>
                             <div class="uk-width-large-1-2">
                                 <div class="uk-form-row">
                                     <div class="md-input-wrapper <?php echo $input_filled; ?>">
-                                        <label>Số like</label>
+                                        <label>Số lượng like</label>
                                         <?php
                                             echo $self->renderInput( [
-                                                    'name'  => 'avt_service_like',
+                                                    'name'  => 'avt_like_number',
                                                     'type'  => 'text',
                                                     'class' => 'md-input avt-required-js',
-                                                    'value' => isset( $meta['service_like'] ) ? $meta['service_like'] : ''
-                                                ] );
-                                            ?>
-                                        <span class="md-input-bar"></span>
-                                    </div>
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="md-input-wrapper <?php echo $input_filled; ?>">
-                                        <label>Số comment</label>
-                                        <?php
-                                            echo $self->renderInput( [
-                                                    'name'  => 'avt_service_comment',
-                                                    'type'  => 'text',
-                                                    'class' => 'md-input avt-required-js',
-                                                    'value' => isset( $meta['service_comment'] ) ? $meta['service_comment'] : ''
+                                                    'value' => isset( $meta['like_number'] ) ? $meta['like_number'] : ''
                                                 ] );
                                             ?>
                                         <span class="md-input-bar"></span>
@@ -91,19 +63,19 @@
                         <button type="submit" class="md-btn md-btn-primary"><?php echo $actionName; ?></button>
                     </div>
                     <?php 
-                        if( !empty( $infoPK ) ) {
+                        if( !empty( $infoLike ) ) {
                             echo $self->renderInput( 
                                 array( 
                                     'name' => 'avt_service_id', 
                                     'type' => 'hidden', 
-                                    'value' => $infoPK['id']
+                                    'value' => $infoLike['id']
                                 ) 
                             );
                             View(
                                 $addButton,
                                 [
-                                    'link' => url('/user-tool/add-packet-service'),
-                                    'title' => 'packet service'
+                                    'link' => url('/user-tool/add-like'),
+                                    'title' => 'tăng like'
                                 ]
                             );
                         }
@@ -114,4 +86,4 @@
     <div class="uk-notify uk-notify-bottom-right atl-notify-js" style="display: none;" data-notify="<?php echo isset( $notify[0] ) ? $notify[0] : ''; ?>"></div>
 </div>
 <?php 
-registerScrips( [ 'page-service' => assets('frontend/js/page-service-debug.js') ] );
+registerScrips( [ 'page-add-like' => assets('frontend/js/page-add-like-debug.js') ] );

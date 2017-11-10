@@ -129,8 +129,76 @@ class ToolController extends baseController
         );
     }
 
+    public function upAddLike(){
+        /*
+         * check user have register package
+         */
+        $userTools = [];
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        foreach ($listBuy as $item) {
+            $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
+            if ( 'up_like' === $packetS[0]['service_type'] ) {
+                array_push( $userTools, $packetS[0]['service_type'] );
+                break;
+            }
+        }
+        if ( empty( $userTools ) ) {
+            redirect( url('/user-tool/error-404?url=' . $_SERVER['REDIRECT_URL']) );
+        }
+
+        $services = [];
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        foreach ($listBuy as $item) {
+            $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
+            if ( 'up_like' === $service[0]['service_type'] ) {
+                $date = $this->countDay( $item['buy_created'], date("Y-m-d H:i:s") );
+                if ( $date < $item['buy_date']*30 ) {
+                    $services[] = $item;
+                }
+            }
+        }
+        return $this->loadTemplate('frontend/tool/up-like.tpl',
+            [ 
+                'services' => $services,
+                'mdService' => $this->mdService
+            ]
+        );
+    }
+
     public function upShare(){
-    	return $this->loadTemplate('frontend/tool/up-share.tpl');
+    	/*
+         * check user have register package
+         */
+        $userTools = [];
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        foreach ($listBuy as $item) {
+            $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
+            if ( 'up_share' === $packetS[0]['service_type'] ) {
+                array_push( $userTools, $packetS[0]['service_type'] );
+                break;
+            }
+        }
+        if ( empty( $userTools ) ) {
+            redirect( url('/user-tool/error-404?url=' . $_SERVER['REDIRECT_URL']) );
+        }
+
+        $services = [];
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        foreach ($listBuy as $item) {
+            $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
+            if ( 'up_share' === $service[0]['service_type'] ) {
+                $date = $this->countDay( $item['buy_created'], date("Y-m-d H:i:s") );
+                if ( $date < $item['buy_date']*30 ) {
+                    $services[] = $item;
+                }
+            }
+        }
+        return $this->loadTemplate('frontend/tool/up-share.tpl',
+            [ 
+                'services' => $services,
+                'mdService' => $this->mdService
+            ]
+        );
     }
 
     public function upFollow(){
@@ -203,6 +271,30 @@ class ToolController extends baseController
             }
         }
         
+        echo json_encode( $data );
+    }
+
+    public function getUpLike( Request $request ) {
+        $data = [];
+
+        $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
+        $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
+
+        $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'like_number' );
+        $data['speedTime'] = $speedTime;
+
+        echo json_encode( $data );
+    }
+
+    public function getUpShare( Request $request ) {
+        $data = [];
+
+        $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
+        $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
+
+        $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'share_number' );
+        $data['speedTime'] = $speedTime;
+
         echo json_encode( $data );
     }
 

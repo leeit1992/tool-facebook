@@ -39,8 +39,26 @@ class Service implements RouterInterface
 		$route->get('/user-tool/manage-packet-comment/page/{page}','Frontend\ServiceController@managePacketComment');
 		$route->get('/user-tool/add-packet-comment','Frontend\ServiceController@handlePacketComment');
 		$route->get('/user-tool/edit-packet-comment/{id}','Frontend\ServiceController@handlePacketComment', [ 'id' => '\d+' ] );
-		
+
 		$route->post('/user-tool/validate-packet-comment','Frontend\ServiceController@validatePacketComment' );
 		$route->post('/user-tool/delete-packet-comment','Frontend\ServiceController@ajaxDelete' );
+		
+		// packet add like
+		$route->get('/user-tool/manage-like','Frontend\ServiceController@manageLike');
+		$route->get('/user-tool/manage-like/page/{page}','Frontend\ServiceController@manageLike');
+		$route->get('/user-tool/add-like','Frontend\ServiceController@handleLike');
+		$route->get('/user-tool/edit-like/{id}','Frontend\ServiceController@handleLike', [ 'id' => '\d+' ] );
+
+		$route->post('/user-tool/validate-like','Frontend\ServiceController@validateLike' );
+		$route->post('/user-tool/delete-like','Frontend\ServiceController@ajaxDelete' );
+
+		// packet add share
+		$route->get('/user-tool/manage-share','Frontend\ServiceController@manageShare');
+		$route->get('/user-tool/manage-share/page/{page}','Frontend\ServiceController@manageShare');
+		$route->get('/user-tool/add-share','Frontend\ServiceController@handleShare');
+		$route->get('/user-tool/edit-share/{id}','Frontend\ServiceController@handleShare', [ 'id' => '\d+' ] );
+
+		$route->post('/user-tool/validate-share','Frontend\ServiceController@validateShare' );
+		$route->post('/user-tool/delete-share','Frontend\ServiceController@ajaxDelete' );
 	}
 }

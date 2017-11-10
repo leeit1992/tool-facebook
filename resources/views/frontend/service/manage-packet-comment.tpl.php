@@ -1,7 +1,7 @@
 <div id="avt-page-packet-comment">
     <div class="md-card uk-margin-medium-bottom">
         <div class="md-card-content">
-            <h3 class="heading_a uk-margin-bottom">Quản lý gói comment</h3>
+            <h3 class="heading_a uk-margin-bottom">Quản lý gói auto comment</h3>
             <?php View( $manageAction ); ?>
             <br>
             <div class="uk-overflow-container">

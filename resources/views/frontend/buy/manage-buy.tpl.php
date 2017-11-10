@@ -52,7 +52,7 @@
                         <td><?php 
                             $post_limit = $mdService->getMetaData( $value['buy_packet'], 'post_limit' );
                             $countUsed = ( $value['buy_used_day'] != $dateCurrent ) ? 0 : $value['buy_run_day'];
-                            if ( $countUsed == $post_limit ) {
+                            if ( $countUsed >= $post_limit ) {
                                 echo '<span class="uk-text-danger uk-text-bold">'.$countUsed. '/'. $post_limit .'</span>';
                             } else {
                                 echo '<span class="uk-text-success uk-text-bold">'.$countUsed. '/'. $post_limit . '</span>';

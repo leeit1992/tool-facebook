@@ -303,6 +303,191 @@ class ServiceController extends baseController
         }   
     }
 
+    /*
+    *
+    *  PACKET UP LIKE
+    *
+    */
+   
+    public function manageLike( $page = null ){
+        $this->checkAdmin();
+        $ofset      = 10;
+        $totalRow   = $this->mdService->getCount( [ 'service_type' => 'up_like' ] );
+        $baseUrl    = url('/user-tool/manage-like/page/');
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
+
+        $pagination = new Pagination($config);
+        // Load template
+        return $this->loadTemplate(
+            'frontend/service/manage-like.tpl',
+            [   
+                'listLike'   => $this->mdService->getLinmitbyType( $pagination->getStartResult( $page ), $ofset, 'up_like' ),
+                'pagination'   => $pagination->link(),
+                'mdService'    => $this->mdService,
+                'helpPrice'    => $this->helpPrice,
+                'addButton'    => $this->addButton,
+                'manageAction' => $this->manageAction
+            ]
+        );
+    }
+
+    public function handleLike( $id = null ){
+        $this->checkAdmin();
+        $infoLike   = [];
+        $metaData   = [];
+
+        // Load data user by action edit user.
+        if( $id ) {
+            $infoLike   = $this->mdService->getBy( 'id', $id );
+            $metaData   = $this->mdService->getAllMetaData( $id );
+            if( empty( $infoLike ) ) {
+                redirect( url('/user-tool/error-404?url=' . $_SERVER['REDIRECT_URL']) );
+            }
+        }
+        // Load template
+        return $this->loadTemplate(
+            'frontend/service/add-like.tpl',
+            [
+                'infoLike'   => !empty( $infoLike[0] ) ? $infoLike[0] : [],
+                'meta'   => $metaData,
+                'actionName' => ( !$id ) ? 'Thêm' : 'Sửa',
+                'input_filled' => ( $infoLike || $metaData ) ? 'md-input-filled' : '',
+                'mdService' => $this->mdService,
+                'notify' => Session()->getFlashBag()->get('serviceFormNotice'),
+                'self'   => $this,
+                'addButton' => $this->addButton,
+                'manageAction' => $this->manageAction
+            ]
+        );
+    }
+
+    public function validateLike( Request $request ) {
+        if( !empty( $request->get('formData') ) ) {
+            parse_str($request->get('formData'), $formData);
+            $notice    = [];
+
+            $lastID = $this->mdService->save( 
+                [
+                    'service_name'  => $formData['avt_service_name'],
+                    'service_price' => $this->helpPrice->convertPriceToInt( $formData['avt_service_price'] ),
+                    'service_type'  => 'up_like'
+                ],
+                isset( $formData['avt_service_id'] ) ? $formData['avt_service_id'] : null
+            );
+
+            // Add meta data for service.
+            $serviceMeta = [
+                'like_number' => $formData['avt_like_number']
+            ];
+            // Loop add add | update meta data.
+            foreach ($serviceMeta as $mtaKey => $metaValue) {
+                $this->mdService->setMetaData( $lastID, $mtaKey, $metaValue );
+            }
+
+            // Set notice success
+            $nameAction = isset( $formData['avt_service_id'] ) ? 'Cập nhật' : 'Thêm mới';
+                    Session()->getFlashBag()->set( 'serviceFormNotice', $nameAction . ' gói dịch vụ thành công' );
+
+            // Set notice success
+            $notice['id']      = $lastID;
+            $notice['status']  = true;
+
+            echo json_encode($notice);
+        }   
+    }
+
+    /*
+    *
+    *  PACKET UP SHARE
+    *
+    */
+   
+    public function manageShare( $page = null ){
+        $this->checkAdmin();
+        $ofset      = 10;
+        $totalRow   = $this->mdService->getCount( [ 'service_type' => 'up_share' ] );
+        $baseUrl    = url('/user-tool/manage-share/page/');
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
+
+        $pagination = new Pagination($config);
+        // Load template
+        return $this->loadTemplate(
+            'frontend/service/manage-share.tpl',
+            [   
+                'listShare'   => $this->mdService->getLinmitbyType( $pagination->getStartResult( $page ), $ofset, 'up_share' ),
+                'pagination'   => $pagination->link(),
+                'mdService'    => $this->mdService,
+                'helpPrice'    => $this->helpPrice,
+                'addButton'    => $this->addButton,
+                'manageAction' => $this->manageAction
+            ]
+        );
+    }
+
+    public function handleShare( $id = null ){
+        $this->checkAdmin();
+        $infoShare   = [];
+        $metaData   = [];
+
+        // Load data user by action edit user.
+        if( $id ) {
+            $infoShare   = $this->mdService->getBy( 'id', $id );
+            $metaData   = $this->mdService->getAllMetaData( $id );
+            if( empty( $infoShare ) ) {
+                redirect( url('/user-tool/error-404?url=' . $_SERVER['REDIRECT_URL']) );
+            }
+        }
+        // Load template
+        return $this->loadTemplate(
+            'frontend/service/add-share.tpl',
+            [
+                'infoShare'    => !empty( $infoShare[0] ) ? $infoShare[0] : [],
+                'meta'         => $metaData,
+                'actionName'   => ( !$id ) ? 'Thêm' : 'Sửa',
+                'input_filled' => ( $infoShare || $metaData ) ? 'md-input-filled' : '',
+                'mdService'    => $this->mdService,
+                'notify'       => Session()->getFlashBag()->get('serviceFormNotice'),
+                'self'         => $this,
+                'addButton'    => $this->addButton,
+                'manageAction' => $this->manageAction
+            ]
+        );
+    }
+
+    public function validateShare( Request $request ) {
+        if( !empty( $request->get('formData') ) ) {
+            parse_str($request->get('formData'), $formData);
+            $notice    = [];
+
+            $lastID = $this->mdService->save( 
+                [
+                    'service_name'  => $formData['avt_service_name'],
+                    'service_price' => $this->helpPrice->convertPriceToInt( $formData['avt_service_price'] ),
+                    'service_type'  => 'up_share'
+                ],
+                isset( $formData['avt_service_id'] ) ? $formData['avt_service_id'] : null
+            );
+
+            // Add meta data for service.
+            $serviceMeta = [
+                'share_number' => $formData['avt_share_number']
+            ];
+            // Loop add add | update meta data.
+            foreach ($serviceMeta as $mtaKey => $metaValue) {
+                $this->mdService->setMetaData( $lastID, $mtaKey, $metaValue );
+            }
+
+            // Set notice success
+            $nameAction = isset( $formData['avt_service_id'] ) ? 'Cập nhật' : 'Thêm mới';
+                    Session()->getFlashBag()->set( 'serviceFormNotice', $nameAction . ' gói dịch vụ thành công' );
+
+            // Set notice success
+            $notice['id']      = $lastID;
+            $notice['status']  = true;
+
+            echo json_encode($notice);
+        }   
+    }
 
     public function ajaxDelete(Request $request){
         $id = $request->get('id');
