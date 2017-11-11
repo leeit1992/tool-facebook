@@ -46,16 +46,16 @@ class BuyModel extends Model
         );
     }
 
-    public function getLinmitByUser( $ofset = 0, $limit = 10, $type = '' ) {
+    public function getByUser( $user = '', $type = '' ) {
         return $this->db->select(
             $this->table,
             '*',
             [
-                'buy_user' => $type,
+                'buy_user' => $user,
+                'buy_type' => $type,
                 'ORDER' => [
                     'id' => 'DESC',
-                ],
-                "LIMIT" => [$ofset, $limit]
+                ]
             ]
         );
     }

@@ -117,9 +117,14 @@ class DataMenu
                         'conditionOpen' => ['handleBuyShare'],
                     ],
                     [
-                        'label' => 'Danh sách dịch vụ đã mua',
+                        'label' => 'Dịch vụ auto đã mua',
                         'link'  => url('/user-tool/manage-buy'),
                         'conditionOpen' => ['manageBuy'],
+                    ],
+                    [
+                        'label' => 'Dịch vụ tăng buff đã mua',
+                        'link'  => url('/user-tool/manage-buff'),
+                        'conditionOpen' => ['manageBuff'],
                     ]
                 );
         }
@@ -181,7 +186,7 @@ class DataMenu
                             [
                                 'label' => 'Tăng like',
                                 'link'  => url('/user-tool/up-add-like'),
-                                'conditionOpen' => ['upLike'],
+                                'conditionOpen' => ['upAddLike'],
                             ]
                         );
                         break;

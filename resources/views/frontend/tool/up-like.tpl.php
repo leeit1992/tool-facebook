@@ -29,7 +29,28 @@
                         </select>
                     </div>
                 </div>
-                <input type="hidden" class="avt_like_numner">
+                <br>
+                <div class="uk-grid" data-uk-grid-margin="">
+                    <div class="uk-width-medium-1-3">
+                        <div class="uk-form-row">
+                            <h3 class="heading_a">Số lượt còn lại</h3>
+                            <div class="md-input-wrapper">
+                                <input type="text" class="md-input avt_total_like" disabled>
+                                <span class="md-input-bar"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-medium-1-3">
+                        <div class="uk-form-row">
+                            <h3 class="heading_a">Số lượt</h3>
+                            <div class="md-input-wrapper">
+                                <input type="text" class="md-input avt_like_number">
+                                <span class="md-input-bar"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <div class="uk-form-row">
                 	<h3 class="heading_a">Thời Gian (ms)</h3>
                     <div class="md-input-wrapper">
@@ -45,6 +66,7 @@
         </div>
     </div>
     <?php View('frontend/layout/loadAction.tpl'); ?>
+    <div class="uk-notify uk-notify-bottom-right atl-notify-js" style="display: none;" data-notify="<?php echo isset( $notify[0] ) ? $notify[0] : ''; ?>"></div>
 </div>
 <?php 
 registerScrips( array(

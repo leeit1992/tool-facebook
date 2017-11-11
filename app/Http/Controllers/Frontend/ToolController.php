@@ -280,8 +280,7 @@ class ToolController extends baseController
         $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
         $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
 
-        $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'like_number' );
-        $data['speedTime'] = $speedTime;
+        $data['total'] = $infoBuy[0]['buy_run_day'];
 
         echo json_encode( $data );
     }
@@ -292,8 +291,7 @@ class ToolController extends baseController
         $infoBuy = $this->mdBuy->getBy( 'id', $request->get('id') );
         $data['numberS'] = $infoBuy[0]['buy_speed']*1000;
 
-        $speedTime = $this->mdService->getMetaData( $infoBuy[0]['buy_packet'], 'share_number' );
-        $data['speedTime'] = $speedTime;
+        $data['total'] = $infoBuy[0]['buy_run_day'];
 
         echo json_encode( $data );
     }
@@ -345,10 +343,29 @@ class ToolController extends baseController
                     $comment = str_replace(' ', '%20', $comment);
                     $get = @file_get_contents('https://graph.facebook.com/'.$request->get('objectId').'/comments?method=POST&message='.$comment.'&access_token='.$tokenRand[0]['token']);
                 }
-                
+            break;
+
+            case 'upLike':
+                $infoBuy = $this->mdBuy->getBy('id', $request->get( 'id' ));
+                $this->mdBuy->save( 
+                    [
+                        'buy_run_day'  => $infoBuy[0]['buy_run_day'] - 1,
+                    ],
+                    $request->get( 'id' )
+                );
+            break;
+
+            case 'upShare':
+                $infoBuy = $this->mdBuy->getBy('id', $request->get( 'id' ));
+                $numberLike = $infoBuy[0]['buy_run_day'] - 1;
+                $this->mdBuy->save( 
+                    [
+                        'buy_run_day'  => $numberLike,
+                    ],
+                    $request->get( 'id' )
+                );
             break;
         }
-
         echo json_encode([
             'start' => $request->get('start') + $request->get('limit'),
             'status' => $get

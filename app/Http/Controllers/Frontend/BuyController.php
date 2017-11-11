@@ -28,19 +28,32 @@ class BuyController extends baseController
      * @return string
      */
     public function manageBuy( $page = null ) {
-        $ofset      = 10;
-        $totalRow   = $this->mdBuy->getCount( [ 'buy_user' => Session()->get('atl_user_id') ] );
-        $baseUrl    = url('/user-tool/manage-buy/page/');
-        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
-
-        $pagination = new Pagination($config);
-
         // Load template
         return $this->loadTemplate(
             'frontend/buy/manage-buy.tpl',
             [   
-                'listBuy'      => $this->mdBuy->getLinmitByUser( $pagination->getStartResult( $page ), $ofset, Session()->get('atl_user_id') ),
-                'pagination'   => $pagination->link(),
+                'listBuy'      => $this->mdBuy->getByUser( Session()->get('atl_user_id'), 'auto'),
+                'self'         => $this,
+                'mdBuy'        => $this->mdBuy,
+                'mdService'    => $this->mdService,
+                'addButton'    => $this->addButton,
+                'manageAction' => $this->manageAction
+            ]
+        );
+    }
+
+    /**
+     * Handle display manage buff.
+     * 
+     * @param  int $page  Number of page.
+     * @return string
+     */
+    public function manageBuff( $page = null ) {
+        // Load template
+        return $this->loadTemplate(
+            'frontend/buy/manage-buff.tpl',
+            [   
+                'listBuff'      => $this->mdBuy->getByUser( Session()->get('atl_user_id'), 'buff'),
                 'self'         => $this,
                 'mdBuy'        => $this->mdBuy,
                 'mdService'    => $this->mdService,
@@ -81,6 +94,7 @@ class BuyController extends baseController
                         'buy_user'     => Session()->get('atl_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
+                        'buy_type'     => 'auto',
                         'buy_created'  => date("Y-m-d H:i:s")
                     ],
                     null
@@ -134,6 +148,7 @@ class BuyController extends baseController
                         'buy_user'    => Session()->get('atl_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
+                        'buy_type'     => 'auto',
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null
@@ -187,6 +202,7 @@ class BuyController extends baseController
                         'buy_user'    => Session()->get('atl_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
+                        'buy_type'     => 'auto',
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null
@@ -239,7 +255,8 @@ class BuyController extends baseController
                         'buy_comment' => '',
                         'buy_user'    => Session()->get('atl_user_id'),
                         'buy_used_day' => date("Y-m-d"),
-                        'buy_run_day'  => 0,
+                        'buy_run_day' => $this->mdService->getMetaData( $formData['avt_buy_packet'], 'like_number' ),
+                        'buy_type'    => 'buff',
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null
@@ -292,7 +309,8 @@ class BuyController extends baseController
                         'buy_comment' => '',
                         'buy_user'    => Session()->get('atl_user_id'),
                         'buy_used_day' => date("Y-m-d"),
-                        'buy_run_day'  => 0,
+                        'buy_run_day'  => $this->mdService->getMetaData( $formData['avt_buy_packet'], 'share_number' ),
+                        'buy_type'    => 'buff',
                         'buy_created' => date("Y-m-d H:i:s")
                     ],
                     null

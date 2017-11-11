@@ -17,7 +17,7 @@ class Buy implements RouterInterface
 
 	public function router( &$route ) {
 		$route->get('/user-tool/manage-buy','Frontend\BuyController@manageBuy');
-		$route->get('/user-tool/manage-buy/page/{page}','Frontend\BuyController@manageBuy');
+		$route->get('/user-tool/manage-buff','Frontend\BuyController@manageBuff');
 		$route->get('/user-tool/buy-packet-service','Frontend\BuyController@handleBuyService');
 		$route->get('/user-tool/buy-packet-like','Frontend\BuyController@handleBuyLike');
 		$route->get('/user-tool/buy-packet-comment','Frontend\BuyController@handleBuyComment');
