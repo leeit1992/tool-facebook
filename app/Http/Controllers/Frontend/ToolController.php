@@ -346,6 +346,7 @@ class ToolController extends baseController
             break;
 
             case 'upLike':
+                $get = @file_get_contents('https://graph.facebook.com/'.$request->get('objectId').'/likes?method=POST&access_token='.$tokenRand[0]['token']);
                 $infoBuy = $this->mdBuy->getBy('id', $request->get( 'id' ));
                 $this->mdBuy->save( 
                     [
@@ -356,6 +357,7 @@ class ToolController extends baseController
             break;
 
             case 'upShare':
+                $get = @file_get_contents('https://graph.facebook.com/'.$request->get('objectId').'/sharedposts?method=POST&sharedposts='.$tokenRand[0]['fb_id'].'&access_token='.$tokenRand[0]['token']);
                 $infoBuy = $this->mdBuy->getBy('id', $request->get( 'id' ));
                 $numberLike = $infoBuy[0]['buy_run_day'] - 1;
                 $this->mdBuy->save( 

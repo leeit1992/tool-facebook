@@ -1,5 +1,5 @@
 <?php
-namespace app\Http\Components;
+namespace App\Http\Components;
 use App\Model\BuyModel;
 use App\Model\ServiceModel;
 

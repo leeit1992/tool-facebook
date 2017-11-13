@@ -12,7 +12,7 @@
                         <th class="uk-text-center uk-text-nowrap">Ngày đăng kí</th>
                         <th class="uk-text-center uk-text-nowrap">Thời hạn</th>
                         <th class="uk-text-center uk-text-nowrap">Tình trạng</th>
-                        <th class="uk-text-center uk-text-nowrap">Giới hạn ngày</th>
+                        <th class="uk-text-center uk-text-nowrap">Giới hạn post</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,13 +50,7 @@
                             }
                         ?> </td>
                         <td><?php 
-                            $post_limit = $mdService->getMetaData( $value['buy_packet'], 'post_limit' );
-                            $countUsed = ( $value['buy_used_day'] != $dateCurrent ) ? 0 : $value['buy_run_day'];
-                            if ( $countUsed >= $post_limit ) {
-                                echo '<span class="uk-text-danger uk-text-bold">'.$countUsed. '/'. $post_limit .'</span>';
-                            } else {
-                                echo '<span class="uk-text-success uk-text-bold">'.$countUsed. '/'. $post_limit . '</span>';
-                            }
+                            echo '<span class="uk-text-success uk-text-bold">'.$value['buy_run_day'].' Post / Ngày</span>';
                         ?></td>
                     </tr>
                     <?php $i++; endforeach; ?>
