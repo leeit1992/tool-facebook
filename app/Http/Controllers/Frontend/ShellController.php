@@ -69,4 +69,13 @@ class ShellController extends baseController
         }
         return $argsPostIds;
     }
+
+    public function argsIDTest(){
+        return [
+            '268984651355_79874654616',
+            '265456456456_79874654616',
+            '262323232234_79874654616',
+            '269898989898_79874654616',
+        ]
+    }
 }
