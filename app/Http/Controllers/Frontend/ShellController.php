@@ -28,7 +28,8 @@ class ShellController extends baseController
         $sec = "1";
 
         $startAction = $request->get('startAction');
-        $startUid = 0;
+        $startUid = ( $request->get('startUid') ) ? $request->get('startUid') : 0;
+        $sttCount = ( $request->get('sttCount') ) ? $request->get('sttCount') : 0;
         if($startAction < count($listBuy) ) : // start action <= count listbuy thì mới chạy
             $infoBuy = $listBuy[$request->get('startAction')]; // lấy ra row dữ liệu tương ứng với start action
             echo 'ID FB : '.$infoBuy['buy_fb'] . ' -- ';
@@ -44,7 +45,6 @@ class ShellController extends baseController
                 $limitPost = $this->mdService->getMetaData( $infoBuy['buy_packet'], 'post_limit' );
                 if ( $infoBuy['buy_run_day'] < $limitPost ):
                     $argsIDTest = $this->argsIDTest();
-                    $startUid = ( $request->get('startUid') ) ? $request->get('startUid') : $startUid;
                     if ( $startUid < count($argsIDTest) ):
                         $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
                         // kiểm tra post đã được like,comment hay chưa?
@@ -60,20 +60,23 @@ class ShellController extends baseController
                                 ],
                                 $infoBuy['id']
                             );
+                            $sttCount = 1;
                         else:
                             echo 'ĐÃ LIKE RỒI';
                         endif;
                         $startUid = $startUid + 1; // tự động + thêm 1
                     else:
+                        if ( $sttCount == 1) {
+                            $this->mdBuy->save( 
+                                [
+                                    'buy_run_day' => $infoBuy['buy_run_day'] + 1,
+                                ],
+                                $infoBuy['id']
+                            );
+                        }
                         $startUid = 0;
+                        $sttCount = 0;
                         $startAction = $startAction + 1; // tự động + thêm 1
-                        // cập nhật +1 số lần post/ ngày
-                        $this->mdBuy->save( 
-                            [
-                                'buy_run_day' => $infoBuy['buy_run_day'] + 1,
-                            ],
-                            $infoBuy['id']
-                        );
                     endif;
                 else:
                     echo 'LIMIT POST IN DAY  ---   ';
@@ -82,7 +85,7 @@ class ShellController extends baseController
                 ?>
                     <html>
                         <head>
-                        <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo url('/user-tool/auto-cronjob?startAction='.$startAction. '&startUid='. $startUid)?>'">
+                        <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo url('/user-tool/auto-cronjob?startAction='.$startAction. '&startUid='. $startUid. '&sttCount='. $sttCount)?>'">
                         </head>
                         <body>
                         <?php
