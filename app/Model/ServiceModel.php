@@ -58,7 +58,7 @@ class ServiceModel extends AtlModel
     }
 
     public function getBy( $key, $value ) {
-        return $this->db->select(
+        $listData =  $this->db->select(
             $this->table,
             '*',
             [
@@ -68,6 +68,15 @@ class ServiceModel extends AtlModel
                     ],
                 ]
         );
+
+        $argsNew = [];
+        foreach ($listData as $value) {
+            $metaData = $this->getAllMetaData( $value['id'] );
+            $value['metaDate'] =$metaData;
+            $argsNew[] = $value;
+        }
+
+        return $argsNew;
     }
 
     public function getCount( $args = null ) {

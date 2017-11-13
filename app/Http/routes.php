@@ -11,6 +11,7 @@
 
 $route->get('/user-tool','Frontend\MainController@index');
 $route->get('/user-tool/error-404','Frontend\MainController@page404');
+$route->get('/user-tool/auto-cronjob','Frontend\ShellController@action');
 
 /*=====  End of Main  ======*/
 

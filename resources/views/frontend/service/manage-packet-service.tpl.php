@@ -1,7 +1,7 @@
 <div id="avt-page-handle-service">
     <div class="md-card uk-margin-medium-bottom">
         <div class="md-card-content">
-            <h3 class="heading_a uk-margin-bottom">Quản lý gói dịch vụ</h3>
+            <h3 class="heading_a uk-margin-bottom">Quản lý gói combo auto</h3>
 
             <?php View( $manageAction ); ?>
             <br>

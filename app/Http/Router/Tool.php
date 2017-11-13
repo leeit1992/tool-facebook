@@ -21,6 +21,7 @@ class Tool implements RouterInterface{
 		$route->get('/user-tool/up-like','Frontend\ToolController@upLikePost');
 		$route->get('/user-tool/up-lie-page','Frontend\ToolController@upLikePage');
 		$route->get('/user-tool/add-comment','Frontend\ToolController@addComment');
+		$route->get('/user-tool/up-add-like','Frontend\ToolController@upAddLike');
 		$route->get('/user-tool/up-share','Frontend\ToolController@upShare');
 		$route->get('/user-tool/up-follow','Frontend\ToolController@upFollow');
 		$route->get('/user-tool/up-like-and-heart','Frontend\ToolController@upLineAndDropHeart');
@@ -30,5 +31,7 @@ class Tool implements RouterInterface{
 		$route->post('/user-tool/get-packet-like-comment','Frontend\ToolController@getPacketLikeComment');
 		$route->post('/user-tool/update-count-using','Frontend\ToolController@updateCountUsing');
 		$route->post('/user-tool/ajax-tool-action','Frontend\ToolController@handleAction');
+		$route->post('/user-tool/get-up-like','Frontend\ToolController@getUpLike');
+		$route->post('/user-tool/get-up-share','Frontend\ToolController@getUpShare');
 	}
 }

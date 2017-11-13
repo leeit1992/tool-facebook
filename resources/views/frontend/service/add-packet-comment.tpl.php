@@ -2,7 +2,7 @@
     <form action="<?php echo url('/user-tool/validate-packet-comment') ?>" method="post" id="avt-form-packet-comment" enctype="multipart/form-data">
         <div class="md-card">
             <div class="user_heading">
-                <h2 class="heading_a" style="color: white;"><?php echo $actionName; ?> gói dịch vụ comment
+                <h2 class="heading_a" style="color: white;"><?php echo $actionName; ?> gói dịch vụ auto comment
                 </h2>
             </div>
             <div class="user_content" data-uk-grid-margin>
@@ -10,7 +10,7 @@
                             <div class="uk-width-large-1-2">
                                 <div class="uk-form-row">
                                     <div class="md-input-wrapper <?php echo $input_filled; ?>" >
-                                        <label>Tên gói comment</label>
+                                        <label>Tên gói auto comment</label>
                                         <?php
                                             echo $self->renderInput( [
                                                     'name'  => 'avt_service_name',

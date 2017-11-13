@@ -6,28 +6,20 @@
                 <thead>
                     <tr>
                         <th class="uk-text-center uk-text-nowrap">#</th>
-                        <th class="uk-text-center uk-text-nowrap">Facebook ID</th>
-                        <th class="uk-text-center uk-text-nowrap">Họ tên</th>
                         <th class="uk-text-center uk-text-nowrap">Gói dịch vụ</th>
                         <th class="uk-text-center uk-text-nowrap">Ngày đăng kí</th>
                         <th class="uk-text-center uk-text-nowrap">Thời hạn</th>
                         <th class="uk-text-center uk-text-nowrap">Tình trạng</th>
-                        <th class="uk-text-center uk-text-nowrap">Giới hạn post</th>
+                        <th class="uk-text-center uk-text-nowrap">Số lần còn lại</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1;
                         $dateCurrent = date("Y-m-d");
-                    foreach ($listBuy as $value): 
+                    foreach ($listBuff as $value): 
                     ?>
                     <tr class="uk-text-center">
                         <td><?php echo $i; ?></td>
-                        <td>
-                            <?php echo $value['buy_fb']; ?>
-                        </td>
-                        <td>
-                            <?php echo $value['buy_name']; ?>
-                        </td>
                         <td>
                             <?php 
                                 $packetS = $mdService->getBy( 'id', $value['buy_packet'] );
@@ -47,11 +39,15 @@
                             } else {
                                 $subDate = $value['buy_date']*30 - $date;
                                 echo '<span class="uk-text-success uk-text-bold">Còn '. $subDate . ' ngày</span>';
-                            }
-                        ?> </td>
-                        <td><?php 
-                            echo '<span class="uk-text-success uk-text-bold">'.$value['buy_run_day'].' Post / Ngày</span>';
-                        ?></td>
+                            } ?>
+                        </td>
+                        <td>
+                            <?php if ( $value['buy_run_day'] > 0 ) {
+                                echo '<span class="uk-text-success uk-text-bold">'.$value['buy_run_day'].'</span>';
+                            } else {
+                                echo '<span class="uk-text-danger uk-text-bold">Đã hết lần sử dụng</span>';
+                            } ?>
+                        </td>
                     </tr>
                     <?php $i++; endforeach; ?>
                 </tbody>

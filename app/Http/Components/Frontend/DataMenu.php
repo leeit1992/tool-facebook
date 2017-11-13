@@ -45,7 +45,7 @@ class DataMenu
      * Data menu action admin.
      */
     public function dataMenu()
-    {   
+    {
         $menu['Dashboard'] = [
                 'label' => 'Dashboard',
                 'icon'  => '<i class="material-icons md-36">&#xE8F0;</i>',
@@ -58,32 +58,32 @@ class DataMenu
         if ( 'admin' === Session()->get('atl_user_role') ) {
             array_push( $submenuSer,
                     [
-                        'label' => 'Thêm gói dịch vụ',
+                        'label' => 'Thêm gói combo auto',
                         'link'  => url('/user-tool/add-packet-service'),
                         'conditionOpen' => ['handlePacketService'],
                     ],
                     [
-                        'label' => 'Quản lý gói dịch vụ',
+                        'label' => 'Quản lý gói combo auto',
                         'link'  => url('/user-tool/manage-packet-service'),
                         'conditionOpen' => ['managePacketService'],
                     ],
                     [
-                        'label' => 'Thêm gói tăng like',
+                        'label' => 'Thêm gói auto like',
                         'link'  => url('/user-tool/add-packet-like'),
                         'conditionOpen' => ['handlePacketLike'],
                     ],
                     [
-                        'label' => 'Quản lý gói tăng like',
+                        'label' => 'Quản lý gói auto like',
                         'link'  => url('/user-tool/manage-packet-like'),
                         'conditionOpen' => ['managePacketLike'],
                     ],
                     [
-                        'label' => 'Thêm gói tăng comment',
+                        'label' => 'Thêm gói auto comment',
                         'link'  => url('/user-tool/add-packet-comment'),
                         'conditionOpen' => ['handlePacketComment'],
                     ],
                     [
-                        'label' => 'Quản lý tăng comment',
+                        'label' => 'Quản lý gói auto comment',
                         'link'  => url('/user-tool/manage-packet-comment'),
                         'conditionOpen' => ['managePacketComment'],
                     ]
@@ -91,34 +91,82 @@ class DataMenu
         } else {
             array_push( $submenuSer,
                     [
-                        'label' => 'Mua gói dịch vụ',
+                        'label' => 'Mua gói combo auto',
                         'link'  => url('/user-tool/buy-packet-service'),
                         'conditionOpen' => ['handleBuyService'],
                     ],
                     [
-                        'label' => 'Mua gói like',
+                        'label' => 'Mua gói auto like',
                         'link'  => url('/user-tool/buy-packet-like'),
                         'conditionOpen' => ['handleBuyLike'],
                     ],
                     [
-                        'label' => 'Mua gói comment',
+                        'label' => 'Mua gói auto comment',
                         'link'  => url('/user-tool/buy-packet-comment'),
                         'conditionOpen' => ['handleBuyComment'],
                     ],
+
                     [
-                        'label' => 'Danh sách dịch vụ đã mua',
+                        'label' => 'Mua gói tăng like',
+                        'link'  => url('/user-tool/buy-add-like'),
+                        'conditionOpen' => ['handleBuyAddLike'],
+                    ],
+                    [
+                        'label' => 'Mua gói tăng share',
+                        'link'  => url('/user-tool/buy-share'),
+                        'conditionOpen' => ['handleBuyShare'],
+                    ],
+                    [
+                        'label' => 'Dịch vụ auto đã mua',
                         'link'  => url('/user-tool/manage-buy'),
                         'conditionOpen' => ['manageBuy'],
+                    ],
+                    [
+                        'label' => 'Dịch vụ tăng buff đã mua',
+                        'link'  => url('/user-tool/manage-buff'),
+                        'conditionOpen' => ['manageBuff'],
                     ]
                 );
         }
         $menu['service'] = [
-                'label'   => 'Dịch vụ',
+                'label'   => 'Dịch vụ auto',
                 'icon'    => '<i class="material-icons md-36">&#xE86D;</i>',
                 'conditionOpen' => ['Frontend\ServiceController', 'Frontend\BuyController'],
                 'display' => '',
                 'submenu' => $submenuSer
             ];
+        if ( 'admin' === Session()->get('atl_user_role') ) {
+                $menu['buff'] = [
+                'label'   => 'Dịch vụ buff tay',
+                'icon'    => '<i class="material-icons md-36">mouse</i>',
+                'conditionOpen' => ['Frontend\ServiceController'],
+                'display' => '',
+                'submenu' => [
+                    [
+                        'label' => 'Thêm gói tăng like',
+                            'link'  => url('/user-tool/add-like'),
+                            'conditionOpen' => ['handleLike'],
+                    ],
+                    [
+                        'label' => 'Quản lý gói tăng like',
+                            'link'  => url('/user-tool/manage-like'),
+                            'conditionOpen' => ['manageLike'],
+                    ],
+                    [
+                        'label' => 'Thêm gói tăng share',
+                            'link'  => url('/user-tool/add-share'),
+                            'conditionOpen' => ['handleShare'],
+                    ],
+                    [
+                        'label' => 'Quản lý gói tăng share',
+                            'link'  => url('/user-tool/manage-share'),
+                            'conditionOpen' => ['manageShare'],
+                    ],
+                ]
+            ];
+        }
+        
+
         $submenuTools = [];
         $mdBuy = new BuyModel();
         $mdService = new ServiceModel();
@@ -133,33 +181,51 @@ class DataMenu
         if (is_array( $userTools ) && !empty( $userTools )) {
             foreach ( $userTools as $items) {
                 switch ( $items ) {
-                    case 'service':
+                    case 'up_like':
                         array_push( $submenuTools, 
                             [
-                                'label' => 'Tăng like + comments',
-                                'link'  => url('/user-tool/up-like-comment'),
-                                'conditionOpen' => ['upLikeComment'],
+                                'label' => 'Tăng like',
+                                'link'  => url('/user-tool/up-add-like'),
+                                'conditionOpen' => ['upAddLike'],
                             ]
                         );
                         break;
-                    case 'like':
+                    case 'up_share':
                         array_push( $submenuTools, 
                             [
-                                'label' => 'Tăng like bài viết',
-                                'link'  => url('/user-tool/up-like'),
-                                'conditionOpen' => ['upLikePost'],
+                                'label' => 'Tăng share',
+                                'link'  => url('/user-tool/up-share'),
+                                'conditionOpen' => ['upShare'],
                             ]
                         );
                         break;
-                    case 'comment':
-                        array_push( $submenuTools, 
-                            [
-                                'label' => 'Tăng comments',
-                                'link'  => url('/user-tool/add-comment'),
-                                'conditionOpen' => ['addComment'],
-                            ]
-                        );
-                        break;
+                    // case 'service':
+                    //     array_push( $submenuTools, 
+                    //         [
+                    //             'label' => 'Tăng like + comments',
+                    //             'link'  => url('/user-tool/up-like-comment'),
+                    //             'conditionOpen' => ['upLikeComment'],
+                    //         ]
+                    //     );
+                    //     break;    
+                    // case 'like':
+                    //     array_push( $submenuTools, 
+                    //         [
+                    //             'label' => 'Tăng like bài viết',
+                    //             'link'  => url('/user-tool/up-like'),
+                    //             'conditionOpen' => ['upLikePost'],
+                    //         ]
+                    //     );
+                    //     break;
+                    // case 'comment':
+                    //     array_push( $submenuTools, 
+                    //         [
+                    //             'label' => 'Tăng comments',
+                    //             'link'  => url('/user-tool/add-comment'),
+                    //             'conditionOpen' => ['addComment'],
+                    //         ]
+                    //     );
+                    //     break;
                 }
             }
             $menu['action-tool'] = [
