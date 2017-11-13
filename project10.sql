@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2017 lúc 08:15 PM
+-- Thời gian đã tạo: Th10 13, 2017 lúc 11:04 AM
 -- Phiên bản máy phục vụ: 10.1.25-MariaDB
 -- Phiên bản PHP: 5.6.31
 
@@ -54,6 +54,7 @@ CREATE TABLE `avt_buy` (
   `buy_used_day` date DEFAULT NULL,
   `buy_run_day` int(11) DEFAULT NULL,
   `buy_type` varchar(255) DEFAULT NULL,
+  `buy_posts` text,
   `buy_created` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -61,10 +62,11 @@ CREATE TABLE `avt_buy` (
 -- Đang đổ dữ liệu cho bảng `avt_buy`
 --
 
-INSERT INTO `avt_buy` (`id`, `buy_fb`, `buy_name`, `buy_packet`, `buy_speed`, `buy_date`, `buy_comment`, `buy_user`, `buy_used_day`, `buy_run_day`, `buy_type`, `buy_created`) VALUES
-(3, '12312312312321', 'Ha', 47, 1, 1, '', 3, '2017-11-08', 1, 'auto', '2017-11-08 14:41:33'),
-(5, '12312312312321', 'Ha', 46, 1, 1, 'Inbox giá đi shop\r\ncó ship không shop\r\ncòn nhiều mẫu không shop', 3, '2017-11-08', 2, 'auto', '2017-11-08 15:50:10'),
-(6, 'asdfasdf', 'Ha', 48, 1, 1, '', 3, '2017-11-09', 15, 'auto', '2017-11-09 12:35:05');
+INSERT INTO `avt_buy` (`id`, `buy_fb`, `buy_name`, `buy_packet`, `buy_speed`, `buy_date`, `buy_comment`, `buy_user`, `buy_used_day`, `buy_run_day`, `buy_type`, `buy_posts`, `buy_created`) VALUES
+(11, '123123123', 'Ha', 44, 1, 1, '', 3, '2017-11-13', 1, 'auto', NULL, '2017-11-13 03:14:59'),
+(12, '456456456', 'Duc', 47, 50, 1, '', 3, '2017-11-13', 1, 'auto', NULL, '2017-11-13 03:15:15'),
+(13, '789789789', 'Ngoc', 44, 1, 1, '', 3, '2017-11-13', 1, 'auto', NULL, '2017-11-13 03:15:26'),
+(14, '', '', 51, 1, 1, '', 3, '2017-11-13', 10, 'buff', NULL, '2017-11-13 05:37:28');
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,10 @@ INSERT INTO `avt_servicemeta` (`id`, `service_id`, `meta_key`, `meta_value`) VAL
 (101, 49, 'comment_number', '10'),
 (102, 49, 'post_limit', '5'),
 (103, 50, 'comment_number', '20'),
-(104, 50, 'post_limit', '5');
+(104, 50, 'post_limit', '5'),
+(105, 51, 'like_number', '10'),
+(106, 52, 'like_number', '20'),
+(107, 53, 'share_number', '10');
 
 -- --------------------------------------------------------
 
@@ -126,7 +131,10 @@ INSERT INTO `avt_services` (`id`, `service_name`, `service_price`, `service_type
 (47, 'L-100', '10000', 'like'),
 (48, 'L-200', '20000', 'like'),
 (49, 'C-100', '10000', 'comment'),
-(50, 'C-200', '20000', 'comment');
+(50, 'C-200', '20000', 'comment'),
+(51, 'AL-100', '10000', 'up_like'),
+(52, 'AL-200', '20000', 'up_like'),
+(53, 'SH-100', '10000', 'up_share');
 
 -- --------------------------------------------------------
 
@@ -301,7 +309,7 @@ CREATE TABLE `avt_users` (
 
 INSERT INTO `avt_users` (`id`, `user_name`, `user_password`, `user_email`, `user_registered`, `user_status`, `user_display_name`, `user_money`) VALUES
 (1, 'Admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', '2017-11-02 09:15:22', 1, 'Admin', 100000000),
-(3, 'NOWAY', 'e10adc3949ba59abbe56e057f20f883e', 'a@gmail.com', '2017-11-04 12:01:02', 1, 'NOWAY', 750000);
+(3, 'NOWAY', 'e10adc3949ba59abbe56e057f20f883e', 'a@gmail.com', '2017-11-04 12:01:02', 1, 'NOWAY', 670000);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -362,17 +370,17 @@ ALTER TABLE `avt_banks`
 -- AUTO_INCREMENT cho bảng `avt_buy`
 --
 ALTER TABLE `avt_buy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT cho bảng `avt_servicemeta`
 --
 ALTER TABLE `avt_servicemeta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 --
 -- AUTO_INCREMENT cho bảng `avt_services`
 --
 ALTER TABLE `avt_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT cho bảng `avt_tokens`
 --

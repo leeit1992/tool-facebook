@@ -12,7 +12,7 @@
                         <th class="uk-text-center uk-text-nowrap">Ngày đăng kí</th>
                         <th class="uk-text-center uk-text-nowrap">Thời hạn</th>
                         <th class="uk-text-center uk-text-nowrap">Tình trạng</th>
-                        <th class="uk-text-center uk-text-nowrap">Giới hạn post</th>
+                        <th class="uk-text-center uk-text-nowrap">Giới hạn post/ Ngày</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,8 +49,9 @@
                                 echo '<span class="uk-text-success uk-text-bold">Còn '. $subDate . ' ngày</span>';
                             }
                         ?> </td>
-                        <td><?php 
-                            echo '<span class="uk-text-success uk-text-bold">'.$value['buy_run_day'].' Post / Ngày</span>';
+                        <td><?php
+                            $limitPost =  $mdService->getMetaData( $value['buy_packet'], 'post_limit' );
+                            echo '<span class="uk-text-success uk-text-bold">'. $value['buy_run_day'] .'  / '. $limitPost .'</span>';
                         ?></td>
                     </tr>
                     <?php $i++; endforeach; ?>
