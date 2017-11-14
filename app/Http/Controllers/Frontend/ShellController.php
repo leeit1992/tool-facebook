@@ -21,6 +21,15 @@ class ShellController extends baseController
 
         $this->apiBuyCheck = ApiPackageService::getInstance();
 
+        $a = $this->getPostUser(
+            100002648777679,
+            1,
+            'EAAAAAYsX7TsBAOiRIZBRUZA6XMgt9VdhCOBMFoNnRAX7ZB48uz7kVI5DRzLgzFaaybx0qGhRJ4tOFisd2yGFgi3mrGFv2vZCX01utj3SsTRlZC3ZBuUIW2jp7ntwEClRSjoqZAgWZA4wP8RFyZBwdMRE0CeciGlqfKTBoPA5lwIyoRbcznbIhYzZAwy92nnpBjIxJkpo2mUOaWpefZBQ2CKnDZB6'
+        );
+
+        var_dump($a);
+        die;
+
     }
 
     public function action(Request $request){
@@ -107,7 +116,13 @@ class ShellController extends baseController
             $checkBuy = json_decode($this->apiBuyCheck->checkStatusPackage($infoBuy['id']), true); // kiểm tra gói còn thời hạn sử dụng không
             
             if ( $checkBuy['expire'] && $checkBuy['limit'] ) {
-                $argsIDTest = $this->argsIDTest2();
+
+                $infoService = $this->mdService->getBy('id', $infoBuy['buy_packet']);
+
+                $accessToken = $this->mdToken->getLinmitbyType(0, 1, 1);
+                $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], $accessToken[0]['token']);
+
+                $argsIDTest = $listPost;
                 // lấy danh sách ID post đã like, cooment
                 $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
                 $statusInsert = false; // thiết lập trạng thái thêm like,comment
@@ -141,7 +156,8 @@ class ShellController extends baseController
     public function getPostUser($uid, $limit, $token){
 
         $versionApi = 'v2.11';
-        $data = @file_get_contents('https://graph.facebook.com/'.$versionApi.'/'.$uid.'?fields=posts.limit('.$limit.')&access_token='.$token);
+        $url = 'https://graph.facebook.com/'.$versionApi.'/'.$uid.'?fields=posts.limit('.$limit.')&access_token='.$token;
+        $data = file_get_contents($url);
         $listData = json_decode($data, true);
 
         $argsPostIds = [];
