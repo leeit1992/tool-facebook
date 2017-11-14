@@ -43,7 +43,7 @@
                     <div class="md-card-content">
                         <?php
                             $hidden = '';
-                            if ( 'admin' !== Session()->get('atl_user_role') ) {
+                            if ( 'admin' !== Session()->get('avt_user_role') ) {
                                 $hidden = 'style="display:none"';
                             }
                         ?>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="uk-form-row" <?php echo $hidden; ?>>
                             <h3 class="heading_c uk-margin-bottom">Phân quyền</h3>
-                                <select data-md-selectize name="atl_user_role">
+                                <select data-md-selectize name="avt_user_role">
                                     <?php 
                                         foreach ($mdUser->getRoleUser() as $key => $value) {
                                             $selected = isset( $meta['user_role'] ) ? selected($meta['user_role'], $key) : '';
@@ -82,7 +82,7 @@
                         <div class="uk-form-row">
                             <h3 class="heading_c">Tiền hiện có (VNĐ)</h3>
                             <?php
-                                if ( 'admin' === Session()->get('atl_user_role') ) {
+                                if ( 'admin' === Session()->get('avt_user_role') ) {
                                     echo $self->renderInput( [
                                         'type'  => 'text',
                                         'name'  => 'atl_user_money', 
@@ -116,7 +116,7 @@
                             if( !empty( $user ) ) {
                                 echo $self->renderInput( 
                                     array( 
-                                        'name' => 'atl_user_id', 
+                                        'name' => 'avt_user_id', 
                                         'type' => 'hidden', 
                                         'value' => $user['id']
                                     ) 

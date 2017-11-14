@@ -21,7 +21,7 @@ class ToolController extends baseController
          * check user have register package
          */
         $userTools = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'service' === $packetS[0]['service_type'] ) {
@@ -34,7 +34,7 @@ class ToolController extends baseController
         }
         
         $services = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'service' === $service[0]['service_type'] ) {
@@ -57,7 +57,7 @@ class ToolController extends baseController
          * check user have register package
          */
         $userTools = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'like' === $packetS[0]['service_type'] ) {
@@ -70,7 +70,7 @@ class ToolController extends baseController
         }
 
         $services = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'like' === $service[0]['service_type'] ) {
@@ -97,7 +97,7 @@ class ToolController extends baseController
          * check user have register package
          */
         $userTools = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'comment' === $packetS[0]['service_type'] ) {
@@ -111,7 +111,7 @@ class ToolController extends baseController
 
         // get list packaget comment
         $services = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'comment' === $service[0]['service_type'] ) {
@@ -134,7 +134,7 @@ class ToolController extends baseController
          * check user have register package
          */
         $userTools = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'up_like' === $packetS[0]['service_type'] ) {
@@ -147,7 +147,7 @@ class ToolController extends baseController
         }
 
         $services = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'up_like' === $service[0]['service_type'] ) {
@@ -170,7 +170,7 @@ class ToolController extends baseController
          * check user have register package
          */
         $userTools = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'up_share' === $packetS[0]['service_type'] ) {
@@ -183,7 +183,7 @@ class ToolController extends baseController
         }
 
         $services = [];
-        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $this->mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $service = $this->mdService->getBy( 'id', $item['buy_packet'] );
             if ( 'up_share' === $service[0]['service_type'] ) {

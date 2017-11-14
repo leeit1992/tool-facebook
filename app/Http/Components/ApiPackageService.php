@@ -34,15 +34,20 @@ class ApiPackageService
         $status = [];
         $status['expire'] = true;
         $status['limit'] = true;
+        $countUsed = 0;
         $infoBuy = $mdBuy->getBy( 'id', $id );
 
         $date = $this->countDay( $infoBuy[0]['buy_created'], date("Y-m-d H:i:s") );
         if ( $date > $infoBuy[0]['buy_date']*30 ) {
             $status['expire'] = false;
         }
-
+        if ( !$status['expire'] ) {
+            return json_encode( $status );
+        }
         $post_limit = $mdService->getMetaData( $infoBuy[0]['buy_packet'], 'post_limit' );
-        $countUsed = ( $infoBuy[0]['buy_used_day'] != date("Y-m-d") ) ? 0 : $infoBuy[0]['buy_run_day'];
+        if ( $infoBuy[0]['buy_used_day'] == date("Y-m-d") ) {
+            $countUsed = $infoBuy[0]['buy_run_day']; 
+        }
         if ( $countUsed >= $post_limit ) {
             $status['limit'] = false;
         }

@@ -55,7 +55,7 @@ class DataMenu
                 'display' => '',
             ];
         $submenuSer = [];
-        if ( 'admin' === Session()->get('atl_user_role') ) {
+        if ( 'admin' === Session()->get('avt_user_role') ) {
             array_push( $submenuSer,
                     [
                         'label' => 'Thêm gói combo auto',
@@ -135,7 +135,7 @@ class DataMenu
                 'display' => '',
                 'submenu' => $submenuSer
             ];
-        if ( 'admin' === Session()->get('atl_user_role') ) {
+        if ( 'admin' === Session()->get('avt_user_role') ) {
                 $menu['buff'] = [
                 'label'   => 'Dịch vụ buff tay',
                 'icon'    => '<i class="material-icons md-36">mouse</i>',
@@ -171,7 +171,7 @@ class DataMenu
         $mdBuy = new BuyModel();
         $mdService = new ServiceModel();
         $userTools = [];
-        $listBuy = $mdBuy->getBy( 'buy_user', Session()->get('atl_user_id') );
+        $listBuy = $mdBuy->getBy( 'buy_user', Session()->get('avt_user_id') );
         foreach ($listBuy as $item) {
             $packetS = $mdService->getBy( 'id', $item['buy_packet'] );
             if ( !in_array( $packetS[0]['service_type'], $userTools ) ) {
@@ -261,7 +261,7 @@ class DataMenu
             //     ]
             // ]
         
-        if ( 'admin' === Session()->get('atl_user_role') ) {
+        if ( 'admin' === Session()->get('avt_user_role') ) {
             $menu['token'] = [
                 'label'   => 'Taì khoản facebook',
                 'icon'    => '<i class="material-icons md-36">&#xE853;</i>',
@@ -283,7 +283,7 @@ class DataMenu
         }
         
         $submenuBank = [];
-        if ( 'admin' === Session()->get('atl_user_role') ) {
+        if ( 'admin' === Session()->get('avt_user_role') ) {
             array_push( $submenuBank, 
                 [
                     'label' => 'Quản lý TT thanh toán',
@@ -312,7 +312,7 @@ class DataMenu
             'display' => '',
             'submenu' => $submenuBank
         ];
-        if ( 'admin' === Session()->get('atl_user_role') ) {
+        if ( 'admin' === Session()->get('avt_user_role') ) {
             $menu['user'] = [
                 'label'   => 'Thành viên',
                 'icon'    => '<i class="material-icons md-36">&#xE87C;</i>',

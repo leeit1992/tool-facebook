@@ -8,10 +8,11 @@
 /*============================
 =            Main            =
 ============================*/
-
+$route->get('','MainController@index');
 $route->get('/user-tool','Frontend\MainController@index');
 $route->get('/user-tool/error-404','Frontend\MainController@page404');
 $route->get('/user-tool/auto-cronjob','Frontend\ShellController@action');
+$route->get('/user-tool/auto-cronjob2','Frontend\ShellController@action2');
 
 /*=====  End of Main  ======*/
 

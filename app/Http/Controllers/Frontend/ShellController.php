@@ -40,10 +40,8 @@ class ShellController extends baseController
             // $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], $accessToken[0]['token']);
 
             $checkBuy = json_decode($this->apiBuyCheck->checkStatusPackage($infoBuy['id']), true);
-            if( $checkBuy['expire'] ):
-                //kiểm tra tài khoản đã dùng đủ số lần giới hạn trong ngày?
-                $limitPost = $this->mdService->getMetaData( $infoBuy['buy_packet'], 'post_limit' );
-                if ( $infoBuy['buy_run_day'] < $limitPost ):
+
+                if ( $checkBuy['expire'] && $checkBuy['limit'] ):
                     $argsIDTest = $this->argsIDTest();
                     if ( $startUid < count($argsIDTest) ):
                         $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
@@ -66,10 +64,12 @@ class ShellController extends baseController
                         endif;
                         $startUid = $startUid + 1; // tự động + thêm 1
                     else:
+                        $infoBuy['buy_run_day'] = ( $infoBuy['buy_used_day'] != date("Y-m-d") ) ? 0 : $infoBuy['buy_run_day'];
                         if ( $sttCount == 1) {
                             $this->mdBuy->save( 
                                 [
                                     'buy_run_day' => $infoBuy['buy_run_day'] + 1,
+                                    'buy_used_day' => date("Y-m-d")
                                 ],
                                 $infoBuy['id']
                             );
@@ -94,8 +94,48 @@ class ShellController extends baseController
                         </body>
                     </html>
                 <?php
-            endif;
         endif;
+    }
+
+     public function action2(Request $request){
+        $listBuy = $this->mdBuy->getBy('buy_type', 'auto');
+
+        for ($i=0; $i < count($listBuy); $i++) { 
+            $infoBuy = $listBuy[$i]; // gán thông tin gói
+            print_r($infoBuy);
+
+            $checkBuy = json_decode($this->apiBuyCheck->checkStatusPackage($infoBuy['id']), true); // kiểm tra gói còn thời hạn sử dụng không
+            
+            if ( $checkBuy['expire'] && $checkBuy['limit'] ) {
+                $argsIDTest = $this->argsIDTest2();
+                // lấy danh sách ID post đã like, cooment
+                $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
+                $statusInsert = false; // thiết lập trạng thái thêm like,comment
+                for ($j=0; $j < count( $argsIDTest ); $j++) {
+                    if ( !in_array( $argsIDTest[ $j ], $argsPost ) ) {
+                        echo $argsIDTest[ $j ] .' - ';
+                        array_push( $argsPost, $argsIDTest[ $j ] );
+                        //lưu vào CSDL
+                        $statusInsert = true; // đã thêm  
+                    } else {
+                        echo ' - Đã like - ';
+                    }
+                }
+                $infoBuy['buy_run_day'] = ( $infoBuy['buy_used_day'] != date("Y-m-d") ) ? 0 : $infoBuy['buy_run_day'];
+                if ( $statusInsert ) { //tăng số lần sử dụng trong ngày
+                    $this->mdBuy->save( 
+                        [
+                            'buy_run_day'  => $infoBuy['buy_run_day'] + 1,
+                            'buy_posts'    => json_encode( $argsPost ),
+                            'buy_used_day' => date("Y-m-d")
+                        ],
+                        $infoBuy['id']
+                    );
+                }
+            } else {
+                echo 'full';
+            }
+        }
     }
 
     public function getPostUser($uid, $limit, $token){
@@ -127,4 +167,22 @@ class ShellController extends baseController
             '4444',
         ];
     }
+     public function argsIDTest2(){
+        // CAI NAY LÀ DỮ LIỆU DEMO.. CÒN ĐƯA VÀO SỬ DỤNG THÌ TÔI SẼ QUERY TỪ DB CỦA FB ĐỂ LẤY SỐ LƯỢNG BÀI VIẾT TÙY THEO GÓI.
+
+        // VD USER ĐĂNG KÝ LÀ 1110000 TÊN LÀ NGỌC
+        // MUA GOI CB100 => 100 LIKE/ 1 BÀI GIỚI HẠN 5 BÀI TRÊN ngày
+        // GIỚI HẠN 5 BÀI NGHĨA LÀ DÙ 1 NGÀY THẰNG ĐÓ CÓ ĐĂNG 10 BÀI VIẾT LÊN TƯỜNG. THÌ TÔI CÓ QUERY RA 10 BÀI CỦA NÓ NHƯNG CHỈ XỬ LÝ 5 BÀI THÔI.
+
+        // SỐ CÒN LẠI KO TÍNH CHO NGÀY HÔM SAU. NGÀY NÀO TÍNH POST CỦA BÀI ĐÓ. VD MAI NÓ CÓ 2 BÀI POST LÊN TƯỞNG. THÌ CHỈ LẤY 2 BÀI ĐÓ THÔI VÀ KO LẤY 5 BÀI CHƯA ĐƯỢC XỬ TỪ HÔM TRƯỚC 
+
+        // TÔI SẼ DÙNG QUERY FB DỂ LẤY RA NHƯNG BÀI TRONG NGÀY CỦA NÓ. VÀ XỬ LÝ. CÁI ARRAY BÊN DƯỚI LÀ DEMO ĐẤY. SẼ TRẢ VỀ ID BÀI VIETS 
+        return [
+            '111',
+            '222',
+            '333',
+            '444'
+        ];
+    }
 }
+// gioi han la 5/ ngay dung ko.. gio snag ngay moi xem nao

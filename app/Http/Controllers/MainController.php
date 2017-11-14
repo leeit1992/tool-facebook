@@ -9,6 +9,6 @@ class MainController extends baseController{
     
     public function index( $page = null ){
         
-        redirect( url( '/atl-admin' ) );
+        redirect( url( '/user-tool' ) );
     }
 }

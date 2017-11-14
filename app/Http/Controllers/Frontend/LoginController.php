@@ -13,7 +13,7 @@ class LoginController extends baseController
     }
 
     public function login() {
-        if (true === Session()->has('atl_user_id')) {
+        if (true === Session()->has('avt_user_id')) {
             redirect(url('/user-tool'));
 
             return true;
@@ -44,11 +44,11 @@ class LoginController extends baseController
 
             $checkUser = $user->checkLogin($request->get('atl_login_acc'), md5($request->get('atl_login_pass')));
             if (!empty($checkUser)) {
-                Session()->set('atl_user_id', $checkUser[0]['id']);
-                Session()->set('atl_user_name', $checkUser[0]['user_name']);
-                Session()->set('atl_user_email', $checkUser[0]['user_email']);
-                Session()->set('atl_user_meta',  $user->getAllMetaData($checkUser[0]['id']));
-                Session()->set('atl_user_role',  $user->getMetaData( $checkUser[0]['id'], 'user_role' ));
+                Session()->set('avt_user_id', $checkUser[0]['id']);
+                Session()->set('avt_user_name', $checkUser[0]['user_name']);
+                Session()->set('avt_user_email', $checkUser[0]['user_email']);
+                Session()->set('avt_user_meta',  $user->getAllMetaData($checkUser[0]['id']));
+                Session()->set('avt_user_role',  $user->getMetaData( $checkUser[0]['id'], 'user_role' ));
                 redirect(url('/user-tool'));
             } else {
                 $error[] = 'error';
@@ -63,9 +63,9 @@ class LoginController extends baseController
         }
     }
     public function logout() {
-        Session()->remove('atl_user_id');
-        Session()->remove('atl_user_name');
-        Session()->remove('atl_user_email');
+        Session()->remove('avt_user_id');
+        Session()->remove('avt_user_name');
+        Session()->remove('avt_user_email');
 
         redirect(url('/atl-login'));
     }

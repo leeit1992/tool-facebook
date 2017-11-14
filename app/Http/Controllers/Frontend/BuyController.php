@@ -32,7 +32,7 @@ class BuyController extends baseController
         return $this->loadTemplate(
             'frontend/buy/manage-buy.tpl',
             [   
-                'listBuy'      => $this->mdBuy->getByUser( Session()->get('atl_user_id'), 'auto'),
+                'listBuy'      => $this->mdBuy->getByUser( Session()->get('avt_user_id'), 'auto'),
                 'self'         => $this,
                 'mdBuy'        => $this->mdBuy,
                 'mdService'    => $this->mdService,
@@ -53,7 +53,7 @@ class BuyController extends baseController
         return $this->loadTemplate(
             'frontend/buy/manage-buff.tpl',
             [   
-                'listBuff'      => $this->mdBuy->getByUser( Session()->get('atl_user_id'), 'buff'),
+                'listBuff'      => $this->mdBuy->getByUser( Session()->get('avt_user_id'), 'buff'),
                 'self'         => $this,
                 'mdBuy'        => $this->mdBuy,
                 'mdService'    => $this->mdService,
@@ -79,7 +79,7 @@ class BuyController extends baseController
         if( !empty( $request->get('formData') ) ) {
             parse_str( $request->get('formData'), $formData );
 
-            $user = $this->mdUser->getUserBy( 'id', Session()->get('atl_user_id') );
+            $user = $this->mdUser->getUserBy( 'id', Session()->get('avt_user_id') );
             $packet = $this->mdService->getBy( 'id', $formData['avt_buy_packet'] );
             $total_price = $packet[0]['service_price']*$formData['avt_buy_date'];
             if ( $user[0]['user_money'] >= $total_price) {
@@ -91,7 +91,7 @@ class BuyController extends baseController
                         'buy_speed'    => $formData['avt_buy_speed'],
                         'buy_date'     => $formData['avt_buy_date'],
                         'buy_comment'  => $formData['avt_buy_comment'],
-                        'buy_user'     => Session()->get('atl_user_id'),
+                        'buy_user'     => Session()->get('avt_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
                         'buy_type'     => 'auto',
@@ -103,7 +103,7 @@ class BuyController extends baseController
                     [
                         'user_money' => $user[0]['user_money'] - $total_price
                     ],
-                    Session()->get('atl_user_id')
+                    Session()->get('avt_user_id')
                 );
 
                 $notice['status']  = true;
@@ -133,7 +133,7 @@ class BuyController extends baseController
         if( !empty( $request->get('formData') ) ) {
             parse_str( $request->get('formData'), $formData );
 
-            $user = $this->mdUser->getUserBy( 'id', Session()->get('atl_user_id') );
+            $user = $this->mdUser->getUserBy( 'id', Session()->get('avt_user_id') );
             $packet = $this->mdService->getBy( 'id', $formData['avt_buy_packet'] );
             $total_price = $packet[0]['service_price']*$formData['avt_buy_date'];
             if ( $user[0]['user_money'] >= $total_price) {
@@ -145,7 +145,7 @@ class BuyController extends baseController
                         'buy_speed'   => $formData['avt_buy_speed'],
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => '',
-                        'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_user'    => Session()->get('avt_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
                         'buy_type'     => 'auto',
@@ -157,7 +157,7 @@ class BuyController extends baseController
                     [
                         'user_money' => $user[0]['user_money'] - $total_price
                     ],
-                    Session()->get('atl_user_id')
+                    Session()->get('avt_user_id')
                 );
 
                 $notice['status']  = true;
@@ -187,7 +187,7 @@ class BuyController extends baseController
         if( !empty( $request->get('formData') ) ) {
             parse_str( $request->get('formData'), $formData );
 
-            $user = $this->mdUser->getUserBy( 'id', Session()->get('atl_user_id') );
+            $user = $this->mdUser->getUserBy( 'id', Session()->get('avt_user_id') );
             $packet = $this->mdService->getBy( 'id', $formData['avt_buy_packet'] );
             $total_price = $packet[0]['service_price']*$formData['avt_buy_date'];
             if ( $user[0]['user_money'] >= $total_price) {
@@ -199,7 +199,7 @@ class BuyController extends baseController
                         'buy_speed'   => $formData['avt_buy_speed'],
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => $formData['avt_buy_comment'],
-                        'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_user'    => Session()->get('avt_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => 0,
                         'buy_type'     => 'auto',
@@ -211,7 +211,7 @@ class BuyController extends baseController
                     [
                         'user_money' => $user[0]['user_money'] - $total_price
                     ],
-                    Session()->get('atl_user_id')
+                    Session()->get('avt_user_id')
                 );
 
                 $notice['status']  = true;
@@ -241,7 +241,7 @@ class BuyController extends baseController
         if( !empty( $request->get('formData') ) ) {
             parse_str( $request->get('formData'), $formData );
 
-            $user = $this->mdUser->getUserBy( 'id', Session()->get('atl_user_id') );
+            $user = $this->mdUser->getUserBy( 'id', Session()->get('avt_user_id') );
             $packet = $this->mdService->getBy( 'id', $formData['avt_buy_packet'] );
             $total_price = $packet[0]['service_price']*$formData['avt_buy_date'];
             if ( $user[0]['user_money'] >= $total_price) {
@@ -253,7 +253,7 @@ class BuyController extends baseController
                         'buy_speed'   => $formData['avt_buy_speed'],
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => '',
-                        'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_user'    => Session()->get('avt_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day' => $this->mdService->getMetaData( $formData['avt_buy_packet'], 'like_number' ),
                         'buy_type'    => 'buff',
@@ -265,7 +265,7 @@ class BuyController extends baseController
                     [
                         'user_money' => $user[0]['user_money'] - $total_price
                     ],
-                    Session()->get('atl_user_id')
+                    Session()->get('avt_user_id')
                 );
 
                 $notice['status']  = true;
@@ -295,7 +295,7 @@ class BuyController extends baseController
         if( !empty( $request->get('formData') ) ) {
             parse_str( $request->get('formData'), $formData );
 
-            $user = $this->mdUser->getUserBy( 'id', Session()->get('atl_user_id') );
+            $user = $this->mdUser->getUserBy( 'id', Session()->get('avt_user_id') );
             $packet = $this->mdService->getBy( 'id', $formData['avt_buy_packet'] );
             $total_price = $packet[0]['service_price']*$formData['avt_buy_date'];
             if ( $user[0]['user_money'] >= $total_price) {
@@ -307,7 +307,7 @@ class BuyController extends baseController
                         'buy_speed'   => $formData['avt_buy_speed'],
                         'buy_date'    => $formData['avt_buy_date'],
                         'buy_comment' => '',
-                        'buy_user'    => Session()->get('atl_user_id'),
+                        'buy_user'    => Session()->get('avt_user_id'),
                         'buy_used_day' => date("Y-m-d"),
                         'buy_run_day'  => $this->mdService->getMetaData( $formData['avt_buy_packet'], 'share_number' ),
                         'buy_type'    => 'buff',
@@ -319,7 +319,7 @@ class BuyController extends baseController
                     [
                         'user_money' => $user[0]['user_money'] - $total_price
                     ],
-                    Session()->get('atl_user_id')
+                    Session()->get('avt_user_id')
                 );
 
                 $notice['status']  = true;

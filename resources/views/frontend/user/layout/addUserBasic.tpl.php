@@ -6,7 +6,7 @@
         <div class="uk-grid" data-uk-grid-margin>
             <div class="uk-width-medium-1-2">
                 <label>Họ và tên</label>
-                <input class="md-input" type="text" name="atl_user_name" value="<?php echo isset( $user['user_name'] ) ? $user['user_name'] : '' ?>" />
+                <input class="md-input" type="text" name="avt_user_name" value="<?php echo isset( $user['user_name'] ) ? $user['user_name'] : '' ?>" />
             </div>
             <div class="uk-width-medium-1-2">
                 <div class="uk-input-group">

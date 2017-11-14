@@ -52,7 +52,7 @@ class Controller extends baseController
      */
     public function userAccess()
     {
-        if (true !== Session()->has('atl_user_id')) {
+        if (true !== Session()->has('avt_user_id')) {
             redirect(url('/atl-login'));
         }
     }
@@ -62,7 +62,7 @@ class Controller extends baseController
      */
     public function checkAdmin()
     {
-        if ( 'admin' !== Session()->get('atl_user_role') ) {
+        if ( 'admin' !== Session()->get('avt_user_role') ) {
             redirect(url('/user-tool/error-404?url='.$route));
         }
     }

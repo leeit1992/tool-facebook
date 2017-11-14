@@ -68,7 +68,7 @@
                             </a>
                             <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
                                 <ul class="uk-nav js-uk-prevent">
-                                    <li><a href="<?php echo url('/user-tool/edit-user/' . Session()->get('atl_user_id') ) ?>">My profile</a></li>
+                                    <li><a href="<?php echo url('/user-tool/edit-user/' . Session()->get('avt_user_id') ) ?>">My profile</a></li>
                                     <li><a href="<?php echo url('/logout') ?>">Logout</a></li>
                                 </ul>
                             </div>
