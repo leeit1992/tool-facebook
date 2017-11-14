@@ -21,15 +21,6 @@ class ShellController extends baseController
 
         $this->apiBuyCheck = ApiPackageService::getInstance();
 
-        $a = $this->getPostUser(
-            100002648777679,
-            1,
-            'EAAAAAYsX7TsBAOiRIZBRUZA6XMgt9VdhCOBMFoNnRAX7ZB48uz7kVI5DRzLgzFaaybx0qGhRJ4tOFisd2yGFgi3mrGFv2vZCX01utj3SsTRlZC3ZBuUIW2jp7ntwEClRSjoqZAgWZA4wP8RFyZBwdMRE0CeciGlqfKTBoPA5lwIyoRbcznbIhYzZAwy92nnpBjIxJkpo2mUOaWpefZBQ2CKnDZB6'
-        );
-
-        var_dump($a);
-        die;
-
     }
 
     public function action(Request $request){
@@ -121,7 +112,7 @@ class ShellController extends baseController
 
                 $accessToken = $this->mdToken->getLinmitbyType(0, 1, 1);
                 $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], $accessToken[0]['token']);
-
+                pr($listPost);
                 $argsIDTest = $listPost;
                 // lấy danh sách ID post đã like, cooment
                 $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
