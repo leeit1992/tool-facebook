@@ -102,7 +102,7 @@ class ShellController extends baseController
 
         for ($i=0; $i < count($listBuy); $i++) { 
             $infoBuy = $listBuy[$i]; // gán thông tin gói
-            print_r($infoBuy);
+            // print_r($infoBuy);
 
             $checkBuy = json_decode($this->apiBuyCheck->checkStatusPackage($infoBuy['id']), true); // kiểm tra gói còn thời hạn sử dụng không
             
@@ -110,16 +110,44 @@ class ShellController extends baseController
 
                 $infoService = $this->mdService->getBy('id', $infoBuy['buy_packet']);
 
-                $accessToken = $this->mdToken->getLinmitbyType(0, 1, 1);
+                $accessToken = $this->mdToken->queryRand();
                 $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], $accessToken[0]['token']);
-                pr($listPost);
+          
                 $argsIDTest = $listPost;
                 // lấy danh sách ID post đã like, cooment
                 $argsPost = ( $infoBuy['buy_posts'] != null ) ? json_decode( $infoBuy['buy_posts'], true ) : [];
                 $statusInsert = false; // thiết lập trạng thái thêm like,comment
+               
                 for ($j=0; $j < count( $argsIDTest ); $j++) {
                     if ( !in_array( $argsIDTest[ $j ], $argsPost ) ) {
-                        echo $argsIDTest[ $j ] .' - ';
+                        pr(
+                            [
+                                'post_id' => $argsIDTest[ $j ],
+                                'infoService' => $infoService
+                            ]
+                        ); // Handle like and comment
+                      
+                        if( isset( $infoService[0]['metaDate']['service_like'] ) ) {
+                            for ($iLike = 0; $iLike <= $infoService[0]['metaDate']['service_like']; $iLike++) { 
+                                $accessTokenL = $this->mdToken->queryRand();
+                                $get['like'][] = @file_get_contents('https://graph.facebook.com/'.$argsIDTest[ $j ].'/likes?method=POST&access_token='.$accessTokenL[0]['token']);
+                            }
+                        }
+
+                        if( isset( $infoService[0]['metaDate']['service_comment'] ) ) {
+                            
+                            for ($i = 0; $i <= $infoService[0]['metaDate']['service_comment']; $i++) { 
+                                $accessTokenC = $this->mdToken->queryRand();
+                                $listComment = explode( "\n", $infoBuy['buy_comment'] );
+                                $k = array_rand($listComment);
+                                $comment = $listComment[$k];
+                                $comment = str_replace(' ', '%20', $comment);
+                                $get['comment'][] = @file_get_contents('https://graph.facebook.com/'.$argsIDTest[ $j ].'/comments?method=POST&message='.$comment.'&access_token='.$accessTokenC[0]['token']);
+                            }
+                        }
+
+                        pr($get);
+
                         array_push( $argsPost, $argsIDTest[ $j ] );
                         //lưu vào CSDL
                         $statusInsert = true; // đã thêm  
@@ -145,15 +173,17 @@ class ShellController extends baseController
     }
 
     public function getPostUser($uid, $limit, $token){
-
         $versionApi = 'v2.11';
         $url = 'https://graph.facebook.com/'.$versionApi.'/'.$uid.'?fields=posts.limit('.$limit.')&access_token='.$token;
-        $data = file_get_contents($url);
+        $data = @file_get_contents($url);
         $listData = json_decode($data, true);
 
         $argsPostIds = [];
         if( is_array($listData) ) {
             foreach ($listData['posts']['data'] as $posts) {
+                // if( date('Y-m-d', strtotime($posts['created_time'])) == date('Y-m-d') ){
+
+                // }
                 $argsPostIds[] = $posts['id'];
             }
         }
