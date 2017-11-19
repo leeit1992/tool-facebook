@@ -24,9 +24,9 @@
     <div class="md-card-content">
         <div class="uk-overflow-container">
             <ul class="uk-tab uk-tab-grid">
-                <li class="uk-width-1-3 uk-active"><a href="<?php echo url('/user-tool/manage-token') ?>" class="uk-text-small">Toàn bộ token (<?php echo ($countAll) ?>)</a></li>
-                <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=live') ?>" class="uk-text-small">Token Live (<span class="avt-c-token-live"><?php echo ($countTokenLive) ?></span>)</a></li>
-                <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token?filterToken=die') ?>" class="uk-text-small">Token Die (<span class="avt-c-token-die"><?php echo ($countTokenDie) ?></span>)</a></li>
+                <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token') ?>" class="uk-text-small">Toàn bộ token (<?php echo ($countAll) ?>)</a></li>
+                <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token/type/1') ?>" class="uk-text-small">Token Live (<span class="avt-c-token-live"><?php echo ($countTokenLive) ?></span>)</a></li>
+                <li class="uk-width-1-3"><a href="<?php echo url('/user-tool/manage-token/type/2') ?>" class="uk-text-small">Token Die (<span class="avt-c-token-die"><?php echo ($countTokenDie) ?></span>)</a></li>
             </ul>
 
             <!-- <div class="avt-load-page">
@@ -86,6 +86,7 @@
                     </tr>
                 </tfoot>
             </table>
+             <?php echo $pagination; ?>
 
             
             

@@ -32,6 +32,10 @@ class Token implements RouterInterface{
 		$route->post('/user-tool/upload-token-fb','Frontend\TokenController@uploadTokenFb');
 		$route->post('/user-tool/auto-acc-fb','Frontend\TokenController@autoAccFb');
 		$route->post('/user-tool/auto-check-token-upload','Frontend\TokenController@autoCheckTokenUpload');
+
+		$route->get('/user-tool/manage-token/type/{type}/page/{page}','Frontend\TokenController@manageToken');
+		$route->get('/user-tool/manage-token/type/{type}','Frontend\TokenController@manageToken');
+
 	}
 
 }

@@ -98,6 +98,12 @@ class ShellController extends baseController
     }
 
      public function action2(Request $request){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $mylog = fopen(SITE_DIR . "/logs/logs.txt", "a+");
+        $txt = "Cronjob time ".date('Y-m-d H:i:s')."\n";
+        fwrite($mylog, $txt);
+        fclose($mylog);
+
         $listBuy = $this->mdBuy->getBy('buy_type', 'auto');
 
         for ($i=0; $i < count($listBuy); $i++) { 
@@ -110,8 +116,8 @@ class ShellController extends baseController
 
                 $infoService = $this->mdService->getBy('id', $infoBuy['buy_packet']);
 
-                $accessToken = $this->mdToken->queryRand();
-                $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], $accessToken[0]['token']);
+                // $accessToken = $this->mdToken->queryRand();
+                $listPost = $this->getPostUser($infoBuy['buy_fb'], $infoService[0]['metaDate']['post_limit'], 'EAAAAAYsX7TsBAOiRIZBRUZA6XMgt9VdhCOBMFoNnRAX7ZB48uz7kVI5DRzLgzFaaybx0qGhRJ4tOFisd2yGFgi3mrGFv2vZCX01utj3SsTRlZC3ZBuUIW2jp7ntwEClRSjoqZAgWZA4wP8RFyZBwdMRE0CeciGlqfKTBoPA5lwIyoRbcznbIhYzZAwy92nnpBjIxJkpo2mUOaWpefZBQ2CKnDZB6');
           
                 $argsIDTest = $listPost;
                 // lấy danh sách ID post đã like, cooment
@@ -134,6 +140,13 @@ class ShellController extends baseController
                             }
                         }
 
+                        if( isset( $infoService[0]['metaDate']['like_number'] ) ) {
+                            for ($iLike = 0; $iLike <= $infoService[0]['metaDate']['like_number']; $iLike++) { 
+                                $accessTokenL = $this->mdToken->queryRand();
+                                $get['like'][] = @file_get_contents('https://graph.facebook.com/'.$argsIDTest[ $j ].'/likes?method=POST&access_token='.$accessTokenL[0]['token']);
+                            }
+                        }
+
                         if( isset( $infoService[0]['metaDate']['service_comment'] ) ) {
                             
                             for ($i = 0; $i <= $infoService[0]['metaDate']['service_comment']; $i++) { 
@@ -146,6 +159,17 @@ class ShellController extends baseController
                             }
                         }
 
+                        if( isset( $infoService[0]['metaDate']['comment_number'] ) ) {
+                            
+                            for ($i = 0; $i <= $infoService[0]['metaDate']['comment_number']; $i++) { 
+                                $accessTokenC = $this->mdToken->queryRand();
+                                $listComment = explode( "\n", $infoBuy['buy_comment'] );
+                                $k = array_rand($listComment);
+                                $comment = $listComment[$k];
+                                $comment = str_replace(' ', '%20', $comment);
+                                $get['comment'][] = @file_get_contents('https://graph.facebook.com/'.$argsIDTest[ $j ].'/comments?method=POST&message='.$comment.'&access_token='.$accessTokenC[0]['token']);
+                            }
+                        }
                         pr($get);
 
                         array_push( $argsPost, $argsIDTest[ $j ] );
@@ -181,10 +205,10 @@ class ShellController extends baseController
         $argsPostIds = [];
         if( is_array($listData) ) {
             foreach ($listData['posts']['data'] as $posts) {
-                // if( date('Y-m-d', strtotime($posts['created_time'])) == date('Y-m-d') ){
-
-                // }
-                $argsPostIds[] = $posts['id'];
+                if( date('Y-m-d', strtotime($posts['created_time'])) == date('Y-m-d') ){
+                    $argsPostIds[] = $posts['id'];
+                }
+                
             }
         }
         return $argsPostIds;

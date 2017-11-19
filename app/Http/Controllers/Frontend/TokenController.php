@@ -16,19 +16,42 @@ class TokenController extends baseController
         $this->userAccess();
         $this->mdToken = new TokenModel();
         $this->checkAdmin();
-        //  $getToken = ApiGetToken::getInstance()->getToken('majuwozeju@payperex2.com', 'XBw@536');
-        
-        //   $infoToken = ApiGetToken::getInstance()->checkToken($getToken['access_token']); 
-        //    pr($infoToken);
-        // die;
     }
 
-    public function manageToken(Request $request)
+    public function manageToken(Request $request, $type = 0, $page = null)
     {
-        $listToken = $this->mdToken->getAll();
+
+
+        switch ($type) {
+            case 1:
+                $baseUrl    = url('/user-tool/manage-token/type/1/page/');
+                $argsCondition = [ 'token_status' => 1 ];
+                break;
+            case 2:
+                $baseUrl    = url('/user-tool/manage-token/type/2/page/');
+                $argsCondition = [ 'token_status' => 2 ];
+                break;
+            default:
+                $baseUrl    = url('/user-tool/manage-token/type/0/page/');
+                $argsCondition = [];
+                break;
+        }
+
+        $ofset      = 100;
+        $totalRow   = $this->mdToken->getCount($argsCondition);
+        
+        $config     = $this->configPagination( $page, $ofset, $totalRow, $baseUrl );
+
+        $pagination = new Pagination( $config );
+
+        $listToken = $this->mdToken->getLinmit($pagination->getStartResult( $page ), $ofset);
+        if( $type ) {
+            $listToken = $this->mdToken->getLinmitbyType($pagination->getStartResult( $page ), $ofset, $type);
+        }
+
         $countAll = $this->mdToken->getCount();
         $countTokenDie = $this->mdToken->getCount(['token_status' => 2]);
-        $countTokenLive = $this->mdToken->getCount(['token_status' => 1]);
+        $countTokenLive = $this->mdToken->getCount(['token_status' => 1]);    
 
         if ('live' == $request->get('filterToken')) {
             $listToken = $this->mdToken->getBy('token_status', 1);
@@ -51,6 +74,7 @@ class TokenController extends baseController
                 'countAll' => $countAll,
                 'countTokenDie' => $countTokenDie,
                 'countTokenLive' => $countTokenLive,
+                'pagination'   => $pagination->link(),
             ]
         );
     }
