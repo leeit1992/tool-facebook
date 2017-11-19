@@ -264,6 +264,68 @@ class TokenController extends baseController
 
     }
 
+    public function uploadTokenFb(Request $request){
+        $notice = [];
+        if ( !empty( $request->files->get('file') ) ) {
+            $dir = FOLDER_UPLOAD . '/token_fb';
+            // Check if dir.
+            if ( !is_dir( $dir ) ) {
+                mkdir( $dir );
+            }
+            // Move to folder upload.
+            $request->files->get('file')->move( $dir, 'file_token.txt' );
+
+            $linkFile = FOLDER_UPLOAD . '/token_fb/file_token.txt';
+            $content =  file_get_contents( $linkFile );
+            $listAcc = explode( "\n", $content );
+
+            $argsList = [];
+            foreach ($listAcc as $acc) {
+                $accFB = explode( "|", $acc );
+                $argsList[] = $accFB;
+            }
+
+            $notice['data']  = count($argsList);
+        } else {
+            $notice['data']  = false;
+        }
+        echo json_encode( $notice );
+    }
+
+    public function autoCheckTokenUpload(Request $request){
+        $linkFile = FOLDER_UPLOAD . '/token_fb/file_token.txt';
+        $argsList = [];
+
+        if ( file_exists( $linkFile ) ) {
+            $content =  file_get_contents( $linkFile );
+            $listAcc = explode( "\n", $content );
+            foreach ($listAcc as $acc) {
+                $accFB = explode( "|", $acc );
+                $argsList[] = $accFB;
+            }
+        }
+
+        if( isset( $argsList[$request->get('start')] ) ) {
+
+            $infoToken = ApiGetToken::getInstance()->checkToken($argsList[$request->get('start')][0]); 
+   
+            if( isset( $infoToken['id'] ) ) {
+     
+                $this->mdToken->save([
+                        'token' => $argsList[$request->get('start')][0], 
+                        'fb_id' => $infoToken['id'], 
+                        'token_status' => 1,
+                        'gender' => isset( $infoToken['gender'] ) ? $infoToken['gender'] : '',
+                        'birthday' => isset( $infoToken['birthday'] ) ? $infoToken['birthday'] : '',
+                    ]);
+            } 
+        }
+
+        echo json_encode([
+            'start' => $request->get('start') + $request->get('limit'),
+        ]);
+    }
+
     public function ajaxDeleteFacebook(Request $request){
         $id = $request->get('id');
         $this->mdToken->delete($id);

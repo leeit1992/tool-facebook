@@ -29,7 +29,9 @@ class Token implements RouterInterface{
 		$route->post('/user-tool/delete-facebook-acc','Frontend\TokenController@ajaxDeleteFacebook');
 
 		$route->post('/user-tool/upload-acc-fb','Frontend\TokenController@uploadAccfb');
+		$route->post('/user-tool/upload-token-fb','Frontend\TokenController@uploadTokenFb');
 		$route->post('/user-tool/auto-acc-fb','Frontend\TokenController@autoAccFb');
+		$route->post('/user-tool/auto-check-token-upload','Frontend\TokenController@autoCheckTokenUpload');
 	}
 
 }
