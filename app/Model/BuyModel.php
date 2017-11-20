@@ -59,4 +59,20 @@ class BuyModel extends Model
             ]
         );
     }
+
+    /**
+     * Handle remove user
+     * 
+     * @param  int | array $args Data id user
+     * @return void
+     */
+    public function delete( $args ){
+        return $this->db->delete(
+            $this->table,
+            [
+            "AND" => [
+                "id" => $args,
+            ]
+        ]);
+    }
 }

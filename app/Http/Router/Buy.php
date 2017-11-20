@@ -29,5 +29,8 @@ class Buy implements RouterInterface
 		$route->post('/user-tool/validate-buy-comment','Frontend\BuyController@validateBuyComment' );
 		$route->post('/user-tool/validate-buy-add-like','Frontend\BuyController@validateBuyAddLike' );
 		$route->post('/user-tool/validate-buy-share','Frontend\BuyController@validateBuyShare' );
+
+		$route->post('/user-tool/delete-buy','Frontend\BuyController@ajaxDelete' );
+		$route->post('/user-tool/delete-buff','Frontend\BuyController@ajaxDelete' );
 	}
 }

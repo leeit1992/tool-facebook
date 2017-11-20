@@ -333,5 +333,17 @@ class BuyController extends baseController
         }   
     }
 
+    public function ajaxDelete(Request $request){
+        $id = $request->get('id');
+        // Remove buy
+        $this->mdBuy->delete( $id );
+
+        $message['status'] = true;
+        if( empty( $request->get('id') ) ){
+            $message['status'] = false;
+        }
+
+        echo json_encode( $message );
+    }
 
 }
